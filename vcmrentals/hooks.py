@@ -4,6 +4,14 @@ app_publisher = "Aman Soni"
 app_description = "rentals"
 app_email = "pankaj.sharma@vcm.org.in"
 app_license = "mit"
+
+
+
+doc_events = {
+    "Ride Order": {
+        "on_update": "vcmrentals.api.update_ride_order_status"
+    }
+}
 # required_apps = []
 
 # Includes in <head>

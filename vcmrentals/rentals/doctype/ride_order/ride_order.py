@@ -57,8 +57,8 @@ class RideOrder(Document):
                                 </table>
                                 <p>Please review the details and approve or reject the ride order.</p>
                                 <p>
-                                    <a href="http://13.126.43.79:8000/api/method/rentals.api.update_ride_order_status?ride_order_id={self.name}&status=Accepted">Accept</a>
-                                    <a href="http://13.126.43.79:8000/api/method/rentals.api.update_ride_order_status?ride_order_id={self.name}&status=Rejected">Reject</a>
+                                    <a href="http:// 35.154.124.187:8000/api/method/vcmrentals.api.update_ride_order_status?ride_order_id={self.name}&status=Accepted">Accept</a>
+                                    <a href="http:// 35.154.124.187:8000/api/method/vcmrentals.api.update_ride_order_status?ride_order_id={self.name}&status=Rejected">Reject</a>
 
                                 </p>
                                 <p>Best regards,<br>Your Ride Booking Team</p>
