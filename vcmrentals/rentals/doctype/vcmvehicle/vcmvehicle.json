@@ -1,0 +1,123 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "Vehicle-.####",
+ "creation": "2024-09-09 15:25:07.213691",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "make",
+  "year",
+  "color",
+  "insurance_expiry",
+  "column_break_sgqo",
+  "is_published",
+  "model",
+  "license_plate",
+  "vehicle_image",
+  "status",
+  "condition"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title"
+  },
+  {
+   "fieldname": "make",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Make",
+   "reqd": 1
+  },
+  {
+   "fieldname": "year",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Year",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "color",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Color",
+   "reqd": 1
+  },
+  {
+   "fieldname": "insurance_expiry",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Insurance Expiry",
+   "reqd": 1
+  },
+  {
+   "fieldname": "model",
+   "fieldtype": "Data",
+   "label": "Model",
+   "reqd": 1
+  },
+  {
+   "fieldname": "license_plate",
+   "fieldtype": "Data",
+   "label": "License Plate"
+  },
+  {
+   "fieldname": "vehicle_image",
+   "fieldtype": "Attach Image",
+   "label": "Vehicle Image"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Active\nOut of Service\nSold\nCrushed"
+  },
+  {
+   "fieldname": "condition",
+   "fieldtype": "Rating",
+   "label": "Condition"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_published",
+   "fieldtype": "Check",
+   "label": "Is Published?"
+  },
+  {
+   "fieldname": "column_break_sgqo",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "image_field": "vehicle_image",
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-09-09 15:40:14.201977",
+ "modified_by": "Administrator",
+ "module": "Rentals",
+ "name": "VcmVehicle",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "title"
+}

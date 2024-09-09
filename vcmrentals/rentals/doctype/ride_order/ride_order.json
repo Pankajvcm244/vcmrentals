@@ -1,0 +1,158 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "Cab.###",
+ "creation": "2024-09-09 15:50:57.590525",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "customer_name",
+  "contact_number",
+  "pickup_time",
+  "ride_type",
+  "vehicle",
+  "email",
+  "odometer_start",
+  "pickup_address",
+  "column_break_pfgk",
+  "status",
+  "state",
+  "drop_time",
+  "vehicle_type",
+  "type",
+  "manager_email",
+  "odometer_end",
+  "drop_address"
+ ],
+ "fields": [
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Customer Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "contact_number",
+   "fieldtype": "Phone",
+   "in_list_view": 1,
+   "label": "Contact Number",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "pickup_time",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Pickup Time",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ride_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Ride Type",
+   "options": "\nOffice Time\nLocal 100Km\nOutStation",
+   "reqd": 1
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "reqd": 1
+  },
+  {
+   "fieldname": "vehicle",
+   "fieldtype": "Link",
+   "label": "Vehicle",
+   "options": "VcmVehicle"
+  },
+  {
+   "fieldname": "pickup_address",
+   "fieldtype": "Small Text",
+   "label": "Pickup Address",
+   "reqd": 1
+  },
+  {
+   "fieldname": "drop_address",
+   "fieldtype": "Small Text",
+   "label": "Drop Address",
+   "reqd": 1
+  },
+  {
+   "fieldname": "manager_email",
+   "fieldtype": "Link",
+   "label": "Manager Email",
+   "options": "Manager Email"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "New\nAccepted\nRejected"
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Select",
+   "label": "State",
+   "options": "Open\nClose"
+  },
+  {
+   "fieldname": "vehicle_type",
+   "fieldtype": "Select",
+   "label": "Vehicle Type",
+   "options": "\n5-Seater Car\n7-Seater Car\nBus"
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "label": "Type",
+   "options": "\nAC\nNON-AC"
+  },
+  {
+   "fieldname": "odometer_start",
+   "fieldtype": "Int",
+   "label": "Odometer Start"
+  },
+  {
+   "fieldname": "odometer_end",
+   "fieldtype": "Int",
+   "label": "Odometer End"
+  },
+  {
+   "fieldname": "column_break_pfgk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "drop_time",
+   "fieldtype": "Datetime",
+   "label": "Drop Time",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-09-09 16:15:28.850420",
+ "modified_by": "Administrator",
+ "module": "Rentals",
+ "name": "Ride Order",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
