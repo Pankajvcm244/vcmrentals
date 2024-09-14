@@ -10,4 +10,4 @@ class VcmVehicle(Document):
 		self.set_title()
 
 	def set_title(self):
-		self.title = f"{self.make} , {self.license_plate}"
+		self.title = f"{self.model} , {self.license_plate}"

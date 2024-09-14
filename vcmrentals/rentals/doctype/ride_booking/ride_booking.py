@@ -1,12 +1,8 @@
-# Copyright (c) 2024, Aman Soni and contributors
-# For license information, please see license.txt
-
-# import frappe
 import frappe
 from frappe.model.document import Document
 
 class RideBooking(Document):
-    
+
     def validate(self):
         # If rate is not provided, set it to the standard rate from Rentals Settings
         if not self.rate:
@@ -27,16 +23,23 @@ class RideBooking(Document):
         # Fetch recipient email from the Ride Booking document
         recipient_email = self.email
 
-        # Fetch driver's details
-        driver_details = frappe.db.get_value('CabDriver', self.driver, ['first_name', 'last_name', 'phone_number'], as_dict=True)
-
-        # Fetch vehicle title
-        vehicle_title = frappe.db.get_value('VcmVehicle', self.vehicle, 'title')
-
-        if recipient_email and driver_details and vehicle_title:
+        # Check if External Travel Agency is selected
+        if self.external_agency:
+            # If external agency is selected, fetch travel agency details from the form
+            driver_full_name = self.driver_name
+            driver_contact = self.driver_number
+            travel_agency_name = self.travel_agency_name
+            vehicle_number = self.vehicle_number
+        else:
+            # If external agency is not selected, fetch the driver's details from the CabDriver DocType
+            driver_details = frappe.db.get_value('CabDriver', self.driver, ['first_name', 'last_name', 'phone_number'], as_dict=True)
             driver_full_name = f"{driver_details.get('first_name')} {driver_details.get('last_name')}"
             driver_contact = driver_details.get('phone_number')
+            travel_agency_name = None  # No agency for internal rides
+            vehicle_number = frappe.db.get_value('VcmVehicle', self.vehicle, 'title')  # Fetch vehicle title
 
+        # Prepare email content
+        if recipient_email and driver_full_name:
             # Prepare the items list for the email
             item_details = ""
             for item in self.items:
@@ -49,7 +52,23 @@ class RideBooking(Document):
                 </tr>
                 """
 
+            # Prepare subject and message for the email
             subject = f"Ride Booking Confirmation - Order {self.order}"
+            
+            # Conditional addition of travel agency details in the email
+            travel_agency_details = ""
+            if self.external_agency:
+                travel_agency_details = f"""
+                <tr>
+                    <th style="background-color: #f2f2f2;">Travel Agency</th>
+                    <td>{travel_agency_name}</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #f2f2f2;">Vehicle Number</th>
+                    <td>{vehicle_number}</td>
+                </tr>
+                """
+
             message = f"""
             <p>Dear Customer,</p>
 
@@ -62,12 +81,13 @@ class RideBooking(Document):
                 </tr>
                 <tr>
                     <th style="background-color: #f2f2f2;">Vehicle</th>
-                    <td>{vehicle_title}</td>
+                    <td>{vehicle_number}</td>
                 </tr>
                 <tr>
                     <th style="background-color: #f2f2f2;">Driver</th>
                     <td>{driver_full_name} ({driver_contact})</td>
                 </tr>
+                {travel_agency_details}
                 <tr>
                     <th style="background-color: #f2f2f2;">Email</th>
                     <td>{recipient_email}</td>

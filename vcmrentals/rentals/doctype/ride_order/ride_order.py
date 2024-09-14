@@ -47,18 +47,35 @@ class RideOrder(Document):
                                         <td>{self.pickup_time}</td>
                                     </tr>
                                     <tr>
+                                        <td><b>Drop Time:</b></td>
+                                        <td>{self.drop_time}</td>
+                                    </tr>
+                                    <tr>
                                         <td><b>Pickup Address:</b></td>
                                         <td>{self.pickup_address}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Drop Address:</b></td>
+                                        <td>{self.drop_address}</td>
                                     </tr>
                                     <tr>
                                         <td><b>Vehicle Type:</b></td>
                                         <td>{self.vehicle_type}</td>
                                     </tr>
+                                    <tr>
+                                        <td><b>Ride Type:</b></td>
+                                        <td>{self.ride_type}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Remarks:</b></td>
+                                        <td>{self.comment}</td>
+                                    </tr>
+                                    
                                 </table>
                                 <p>Please review the details and approve or reject the ride order.</p>
                                 <p>
-                                    <a href="http:// 35.154.124.187:8000/api/method/vcmrentals.api.update_ride_order_status?ride_order_id={self.name}&status=Accepted">Accept</a>
-                                    <a href="http:// 35.154.124.187:8000/api/method/vcmrentals.api.update_ride_order_status?ride_order_id={self.name}&status=Rejected">Reject</a>
+                                    <a href="http://13.235.73.38:8000/api/method/vcmrentals.api.update_ride_order_status?ride_order_id={self.name}&status=Accepted">Accept</a>
+                                    <a href="http://13.235.73.38:8000/api/method/vcmrentals.api.update_ride_order_status?ride_order_id={self.name}&status=Rejected">Reject</a>
 
                                 </p>
                                 <p>Best regards,<br>Your Ride Booking Team</p>
@@ -105,15 +122,31 @@ class RideOrder(Document):
                                         <td><b>Pickup Time:</b></td>
                                         <td>{self.pickup_time}</td>
                                     </tr>
+                                    <tr>
+                                        <td><b>Drop Time:</b></td>
+                                        <td>{self.drop_time}</td>
+                                    </tr>
 
                                     <tr>
                                         <td><b>Pickup Address:</b></td>
                                         <td>{self.pickup_address}</td>
                                     </tr>
+                                    <tr>
+                                        <td><b>Drop Address:</b></td>
+                                        <td>{self.drop_address}</td>
+                                    </tr>
                                    
                                     <tr>
                                         <td><b>Vehicle Type:</b></td>
                                         <td>{self.vehicle_type}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Ride Type:</b></td>
+                                        <td>{self.ride_type}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Remarks:</b></td>
+                                        <td>{self.comment}</td>
                                     </tr>
                                 </table>
                                 <p>Thank you for choosing our service.</p>
@@ -152,10 +185,23 @@ class RideOrder(Document):
                                         <td><b>Pickup Address:</b></td>
                                         <td>{self.pickup_address}</td>
                                     </tr>
+                                     <tr>
+                                        <td><b>Drop Address:</b></td>
+                                        <td>{self.drop_address}</td>
+                                    </tr>
                                     
                                     <tr>
                                         <td><b>Vehicle Type:</b></td>
                                         <td>{self.vehicle_type}</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td><b>Ride Type:</b></td>
+                                        <td>{self.ride_type}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Remarks:</b></td>
+                                        <td>{self.comment}</td>
                                     </tr>
                                 </table>
                                 <p>We apologize for any inconvenience this may have caused.</p>

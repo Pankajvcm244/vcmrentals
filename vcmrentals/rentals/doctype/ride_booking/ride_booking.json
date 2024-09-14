@@ -10,9 +10,20 @@
   "order",
   "vehicle",
   "amended_from",
+  "odometer_end_image",
+  "odometer_start__image",
   "column_break_jbqq",
-  "driver",
   "email",
+  "driver",
+  "odometer_start",
+  "odometer_end",
+  "external_travel_agency_section",
+  "external_agency",
+  "vehicle_number",
+  "travel_agency_name",
+  "column_break_ehoy",
+  "driver_name",
+  "driver_number",
   "section_break_vdqp",
   "items",
   "section_break_qggv",
@@ -41,6 +52,7 @@
    "in_list_view": 1,
    "label": "Order",
    "options": "Ride Order",
+   "permlevel": 1,
    "reqd": 1
   },
   {
@@ -49,19 +61,20 @@
    "in_list_view": 1,
    "label": "Driver",
    "options": "CabDriver",
-   "reqd": 1
+   "permlevel": 1
   },
   {
-   "fetch_from": "order.vehicle",
    "fieldname": "vehicle",
    "fieldtype": "Link",
    "label": "Vehicle",
-   "options": "VcmVehicle"
+   "options": "VcmVehicle",
+   "permlevel": 1
   },
   {
    "fieldname": "email",
    "fieldtype": "Data",
-   "label": "Email"
+   "label": "Email",
+   "permlevel": 1
   },
   {
    "fieldname": "rate",
@@ -72,7 +85,8 @@
    "fieldname": "items",
    "fieldtype": "Table",
    "label": "Items",
-   "options": "Ride Booking Item"
+   "options": "Ride Booking Item",
+   "permlevel": 1
   },
   {
    "fieldname": "column_break_jbqq",
@@ -95,12 +109,68 @@
   {
    "fieldname": "column_break_nblh",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "odometer_start",
+   "fieldtype": "Int",
+   "label": "Odometer Start"
+  },
+  {
+   "fieldname": "odometer_end",
+   "fieldtype": "Int",
+   "label": "Odometer End"
+  },
+  {
+   "fieldname": "odometer_start__image",
+   "fieldtype": "Attach",
+   "label": "Odometer Start  Image"
+  },
+  {
+   "fieldname": "odometer_end_image",
+   "fieldtype": "Attach",
+   "label": "Odometer End Image"
+  },
+  {
+   "fieldname": "external_travel_agency_section",
+   "fieldtype": "Section Break",
+   "label": "External Travel Agency"
+  },
+  {
+   "default": "0",
+   "fieldname": "external_agency",
+   "fieldtype": "Check",
+   "label": "External Agency",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "vehicle_number",
+   "fieldtype": "Data",
+   "label": "Vehicle Number"
+  },
+  {
+   "fieldname": "travel_agency_name",
+   "fieldtype": "Data",
+   "label": "Travel Agency name"
+  },
+  {
+   "fieldname": "column_break_ehoy",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "driver_name",
+   "fieldtype": "Data",
+   "label": "Driver Name"
+  },
+  {
+   "fieldname": "driver_number",
+   "fieldtype": "Data",
+   "label": "Driver Number"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-09 17:30:44.652748",
+ "modified": "2024-09-14 16:50:00.356012",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Ride Booking",
@@ -118,6 +188,27 @@
    "role": "System Manager",
    "share": 1,
    "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "CabAgent",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "VcmDriver",
+   "share": 1,
    "write": 1
   }
  ],
