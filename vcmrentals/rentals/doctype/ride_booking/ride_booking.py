@@ -79,10 +79,7 @@ class RideBooking(Document):
                     <th style="background-color: #f2f2f2;">Order</th>
                     <td>{self.order}</td>
                 </tr>
-                <tr>
-                    <th style="background-color: #f2f2f2;">Vehicle</th>
-                    <td>{vehicle_number}</td>
-                </tr>
+                
                 <tr>
                     <th style="background-color: #f2f2f2;">Driver</th>
                     <td>{driver_full_name} ({driver_contact})</td>

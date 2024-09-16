@@ -113,22 +113,26 @@
   {
    "fieldname": "odometer_start",
    "fieldtype": "Int",
-   "label": "Odometer Start"
+   "label": "Odometer Start",
+   "permlevel": 2
   },
   {
    "fieldname": "odometer_end",
    "fieldtype": "Int",
-   "label": "Odometer End"
+   "label": "Odometer End",
+   "permlevel": 2
   },
   {
    "fieldname": "odometer_start__image",
    "fieldtype": "Attach",
-   "label": "Odometer Start  Image"
+   "label": "Odometer Start  Image",
+   "permlevel": 2
   },
   {
    "fieldname": "odometer_end_image",
    "fieldtype": "Attach",
-   "label": "Odometer End Image"
+   "label": "Odometer End Image",
+   "permlevel": 2
   },
   {
    "fieldname": "external_travel_agency_section",
@@ -170,7 +174,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-14 16:50:00.356012",
+ "modified": "2024-09-16 11:20:39.172351",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Ride Booking",
