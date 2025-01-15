@@ -35,7 +35,3 @@ def update_ride_order_status(ride_order_id, status):
             "message": "Failed to update the ride order status."
         }
 
-
-
-
-
