@@ -6,18 +6,34 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "ncr_entry_allowed",
   "title",
   "make",
-  "year",
-  "color",
-  "insurance_expiry",
-  "column_break_sgqo",
-  "is_published",
+  "column_break_ckgb",
   "model",
   "license_plate",
-  "vehicle_image",
+  "details_section",
+  "odometer_value_last",
+  "location",
   "status",
-  "condition"
+  "column_break_vhhe",
+  "chassis_no",
+  "vehicle_value",
+  "condition",
+  "insurance_details_section",
+  "insurance_company",
+  "policy_no",
+  "policy_type",
+  "column_break_wiln",
+  "start_date",
+  "end_date",
+  "upload_document",
+  "additional_details_section",
+  "fuel_type",
+  "bs_category",
+  "column_break_qfii",
+  "color",
+  "vehicle_image"
  ],
  "fields": [
   {
@@ -34,25 +50,10 @@
    "reqd": 1
   },
   {
-   "fieldname": "year",
-   "fieldtype": "Int",
-   "in_list_view": 1,
-   "label": "Year",
-   "non_negative": 1,
-   "reqd": 1
-  },
-  {
    "fieldname": "color",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Color",
-   "reqd": 1
-  },
-  {
-   "fieldname": "insurance_expiry",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Insurance Expiry",
    "reqd": 1
   },
   {
@@ -75,7 +76,7 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "Active\nOut of Service\nSold\nCrushed"
+   "options": "Active\nDamaged\nOut of Service\nIn Maintenance"
   },
   {
    "fieldname": "condition",
@@ -83,50 +84,120 @@
    "label": "Condition"
   },
   {
-   "default": "0",
-   "fieldname": "is_published",
-   "fieldtype": "Check",
-   "label": "Is Published?"
+   "fieldname": "fuel_type",
+   "fieldtype": "Select",
+   "label": "Fuel Type",
+   "options": "\nPetrol\nDiesel\nEV\nCNG",
+   "reqd": 1
   },
   {
-   "fieldname": "column_break_sgqo",
+   "default": "0",
+   "fieldname": "ncr_entry_allowed",
+   "fieldtype": "Check",
+   "label": "NCR Entry Allowed?"
+  },
+  {
+   "fieldname": "bs_category",
+   "fieldtype": "Select",
+   "label": "BS Category",
+   "options": "\nBS4\nBS6\nBS6 Phase 2\nBS6.2\nElectric\nHybrid",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_ckgb",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "details_section",
+   "fieldtype": "Section Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "odometer_value_last",
+   "fieldtype": "Int",
+   "label": "Odometer Value (Last)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Location",
+   "options": "Budget Location"
+  },
+  {
+   "fieldname": "column_break_vhhe",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "chassis_no",
+   "fieldtype": "Data",
+   "label": "Chassis No"
+  },
+  {
+   "fieldname": "vehicle_value",
+   "fieldtype": "Currency",
+   "label": "Vehicle Value"
+  },
+  {
+   "fieldname": "insurance_details_section",
+   "fieldtype": "Section Break",
+   "label": "Insurance Details"
+  },
+  {
+   "fieldname": "insurance_company",
+   "fieldtype": "Data",
+   "label": "Insurance Company"
+  },
+  {
+   "fieldname": "policy_no",
+   "fieldtype": "Data",
+   "label": "Policy No"
+  },
+  {
+   "fieldname": "column_break_wiln",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date"
+  },
+  {
+   "fieldname": "additional_details_section",
+   "fieldtype": "Section Break",
+   "label": "Additional Details"
+  },
+  {
+   "fieldname": "column_break_qfii",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "policy_type",
+   "fieldtype": "Select",
+   "label": "Policy Type",
+   "options": "\nThird-Party Insurance\nComprehensive Insurance\nZero Depreciation Insurance"
+  },
+  {
+   "fieldname": "upload_document",
+   "fieldtype": "Attach",
+   "label": "Upload Document "
   }
  ],
  "image_field": "vehicle_image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-14 16:22:00.365395",
+ "modified": "2025-07-10 12:13:02.671447",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "VcmVehicle",
  "naming_rule": "Expression (old style)",
  "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "CabAgent",
-   "share": 1,
-   "write": 1
-  }
- ],
+ "permissions": [],
  "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",

@@ -6,110 +6,117 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "customer_name",
+  "employee_code",
+  "employee_name",
   "contact_number",
-  "pickup_time",
-  "ride_type",
-  "email",
-  "pickup_address",
+  "emp_department",
+  "l1_approving_authority",
+  "l2_approving_authority",
+  "l3_approving_authority",
+  "final_approving_authority",
   "column_break_pfgk",
-  "status",
   "state",
-  "drop_time",
-  "vehicle_type",
-  "type",
+  "status",
+  "department",
+  "email",
   "manager_email",
+  "section_break_reul",
+  "date",
+  "pickup_time",
+  "drop_time",
+  "column_break_ehxr",
+  "ride_type",
+  "vehicle_type",
+  "section_break_dhuu",
+  "pickup_address",
+  "column_break_qrpa",
+  "intermediate_stop",
+  "column_break_vpmr",
   "drop_address",
-  "comment"
+  "amended_from"
  ],
  "fields": [
   {
-   "fieldname": "customer_name",
+   "fetch_from": "employee_code.cell_number",
+   "fieldname": "contact_number",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Customer Name",
-   "reqd": 1,
-   "set_only_once": 1
-  },
-  {
-   "fieldname": "contact_number",
-   "fieldtype": "Phone",
-   "in_list_view": 1,
    "label": "Contact Number",
+   "read_only": 1,
    "reqd": 1,
    "set_only_once": 1
   },
   {
    "fieldname": "pickup_time",
-   "fieldtype": "Datetime",
+   "fieldtype": "Time",
    "in_list_view": 1,
    "label": "Pickup Time",
    "reqd": 1,
    "set_only_once": 1
   },
   {
+   "description": " ",
    "fieldname": "ride_type",
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Ride Type",
-   "options": "\nOffice Time\nLocal 100Km\nOutStation",
+   "options": "\nOffice Time\nIntercity\nOutstation",
    "reqd": 1,
    "set_only_once": 1
   },
   {
+   "fetch_from": "employee_code.company_email",
    "fieldname": "email",
    "fieldtype": "Data",
    "label": "Email",
-   "reqd": 1,
+   "read_only": 1,
    "set_only_once": 1
   },
   {
    "fieldname": "pickup_address",
-   "fieldtype": "Small Text",
+   "fieldtype": "Data",
    "label": "Pickup Address",
    "reqd": 1,
    "set_only_once": 1
   },
   {
    "fieldname": "drop_address",
-   "fieldtype": "Small Text",
+   "fieldtype": "Data",
    "label": "Drop Address",
    "reqd": 1,
    "set_only_once": 1
   },
   {
+   "fetch_from": "employee_code.shift_request_approver",
    "fieldname": "manager_email",
-   "fieldtype": "Link",
+   "fieldtype": "Data",
    "label": "Manager Email",
-   "options": "Manager Email",
+   "read_only": 1,
    "set_only_once": 1
   },
   {
    "fieldname": "status",
    "fieldtype": "Select",
+   "hidden": 1,
+   "in_list_view": 1,
    "label": "Status",
-   "options": "New\nAccepted\nRejected",
-   "permlevel": 1
+   "options": "Pending\nCancelled",
+   "read_only": 1
   },
   {
    "fieldname": "state",
    "fieldtype": "Select",
    "label": "State",
    "options": "Open\nClose",
-   "permlevel": 1
+   "read_only": 1
   },
   {
    "fieldname": "vehicle_type",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Vehicle Type",
    "options": "\n5-Seater Car\n7-Seater Car\nBus",
-   "set_only_once": 1
-  },
-  {
-   "fieldname": "type",
-   "fieldtype": "Select",
-   "label": "Type",
-   "options": "\nAC\nNON-AC",
+   "reqd": 1,
    "set_only_once": 1
   },
   {
@@ -118,26 +125,150 @@
   },
   {
    "fieldname": "drop_time",
-   "fieldtype": "Datetime",
+   "fieldtype": "Time",
    "label": "Drop Time",
    "reqd": 1,
    "set_only_once": 1
   },
   {
-   "fieldname": "comment",
+   "fieldname": "section_break_reul",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_ehxr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_dhuu",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_vpmr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "employee_code.employee_name",
+   "fieldname": "employee_name",
    "fieldtype": "Data",
-   "label": "Comment"
+   "in_list_view": 1,
+   "label": "Employee Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "employee_code",
+   "fieldtype": "Link",
+   "label": "Employee Code",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "employee_code.department",
+   "fieldname": "emp_department",
+   "fieldtype": "Data",
+   "label": "EMP Department",
+   "read_only": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "intermediate_stop",
+   "fieldtype": "Data",
+   "label": "Intermediate Stop"
+  },
+  {
+   "fieldname": "column_break_qrpa",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Department",
+   "options": "Department"
+  },
+  {
+   "fieldname": "l1_approving_authority",
+   "fieldtype": "Data",
+   "label": "L1 Approving Authority",
+   "read_only": 1
+  },
+  {
+   "fieldname": "l2_approving_authority",
+   "fieldtype": "Data",
+   "label": "L2 Approving Authority",
+   "read_only": 1
+  },
+  {
+   "fieldname": "l3_approving_authority",
+   "fieldtype": "Data",
+   "label": "L3 Approving Authority",
+   "read_only": 1
+  },
+  {
+   "fieldname": "final_approving_authority",
+   "fieldtype": "Data",
+   "label": "Final Approving Authority",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Ride Order",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2024-09-14 12:38:04.531878",
+ "modified": "2025-07-16 16:44:35.534222",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Ride Order",
  "naming_rule": "Expression (old style)",
  "owner": "Administrator",
- "permissions": [],
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Ride User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Vehicle Agent",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

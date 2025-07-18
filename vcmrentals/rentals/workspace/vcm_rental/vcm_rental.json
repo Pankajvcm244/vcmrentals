@@ -1,0 +1,77 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"lGq3-ldogE\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">VCM RENTAL</span>\",\"col\":12}},{\"id\":\"DsiqakK8Sj\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"V68If8yIMP\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"VcmVehicle\",\"col\":3}},{\"id\":\"30soWlWfmV\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"VCM Orders\",\"col\":3}},{\"id\":\"bX0sBxyp_n\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Assign Vehicle\",\"col\":3}},{\"id\":\"lxZZVo33ua\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Challan\",\"col\":3}},{\"id\":\"w3JfBA818h\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Maintenance\",\"col\":3}},{\"id\":\"2F_fDkXdgj\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"HzLe3h2L2j\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Web Form</b></span>\",\"col\":12}},{\"id\":\"8GoHgKEDJO\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"vQ13_imTTl\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Report</b></span>\",\"col\":12}},{\"id\":\"f-ntxk5IxB\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle & Driver\",\"col\":3}}]",
+ "creation": "2024-09-11 11:56:13.936104",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "both",
+ "idx": 1,
+ "indicator_color": "cyan",
+ "is_hidden": 0,
+ "label": "VCM RENTAL",
+ "links": [],
+ "modified": "2025-07-10 17:32:06.769315",
+ "modified_by": "Administrator",
+ "module": "Rentals",
+ "name": "VCM RENTAL",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 34.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Vehicle Challan",
+   "link_to": "Vehicle Challan",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Vehicle Maintenance",
+   "link_to": "Vehicle Maintenance",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Cyan",
+   "doc_view": "List",
+   "label": "VcmVehicle",
+   "link_to": "VcmVehicle",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Vehicle & Driver",
+   "link_to": "Vehicle Odometer Movement",
+   "type": "Report"
+  },
+  {
+   "color": "Green",
+   "doc_view": "List",
+   "label": "VCM Orders",
+   "link_to": "Ride Order",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Cyan",
+   "doc_view": "List",
+   "label": "Assign Vehicle",
+   "link_to": "Ride Booking",
+   "stats_filter": "[]",
+   "type": "DocType"
+  }
+ ],
+ "title": "VCM RENTAL"
+}
