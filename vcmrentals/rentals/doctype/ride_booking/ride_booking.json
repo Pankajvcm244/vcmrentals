@@ -8,28 +8,38 @@
  "field_order": [
   "section_break_whaq",
   "order",
-  "vehicle",
+  "customer_name",
+  "customer_number",
+  "ride",
+  "seating_capacity",
   "amended_from",
-  "odometer_end_image",
-  "odometer_start__image",
   "column_break_jbqq",
-  "email",
-  "driver",
+  "date",
+  "from_time",
+  "to_time",
+  "starttime",
+  "endtime",
+  "pickup_address",
+  "drop_address",
+  "section_break_hgqk",
+  "vehicle",
+  "color",
+  "assign_vehicle_number",
   "odometer_start",
   "odometer_end",
+  "column_break_jdhp",
+  "driver",
+  "email",
+  "driver_mobile_number",
+  "odometer_start_pic",
+  "odometer_end_pic",
   "external_travel_agency_section",
   "external_agency",
   "vehicle_number",
   "travel_agency_name",
   "column_break_ehoy",
   "driver_name",
-  "driver_number",
-  "section_break_vdqp",
-  "items",
-  "section_break_qggv",
-  "total_amount",
-  "column_break_nblh",
-  "rate"
+  "driver_number"
  ],
  "fields": [
   {
@@ -51,8 +61,8 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Order",
+   "link_filters": "[[\"Ride Order\",\"state\",\"=\",\"Open\"]]",
    "options": "Ride Order",
-   "permlevel": 1,
    "reqd": 1
   },
   {
@@ -60,79 +70,26 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Driver",
-   "options": "CabDriver",
-   "permlevel": 1
+   "link_filters": "[[\"Employee\",\"designation\",\"=\",\"Driver\"]]",
+   "options": "Employee"
   },
   {
    "fieldname": "vehicle",
    "fieldtype": "Link",
    "label": "Vehicle",
-   "options": "VcmVehicle",
-   "permlevel": 1
+   "link_filters": "[[\"VcmVehicle\",\"status\",\"=\",\"Active\"]]",
+   "options": "VcmVehicle"
   },
   {
+   "fetch_from": "driver.company_email",
    "fieldname": "email",
    "fieldtype": "Data",
    "label": "Email",
-   "permlevel": 1
-  },
-  {
-   "fieldname": "rate",
-   "fieldtype": "Currency",
-   "label": "Rate"
-  },
-  {
-   "fieldname": "items",
-   "fieldtype": "Table",
-   "label": "Items",
-   "options": "Ride Booking Item",
-   "permlevel": 1
+   "read_only": 1
   },
   {
    "fieldname": "column_break_jbqq",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_vdqp",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "section_break_qggv",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "total_amount",
-   "fieldtype": "Currency",
-   "label": "Total Amount",
-   "read_only": 1
-  },
-  {
-   "fieldname": "column_break_nblh",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "odometer_start",
-   "fieldtype": "Int",
-   "label": "Odometer Start",
-   "permlevel": 2
-  },
-  {
-   "fieldname": "odometer_end",
-   "fieldtype": "Int",
-   "label": "Odometer End",
-   "permlevel": 2
-  },
-  {
-   "fieldname": "odometer_start__image",
-   "fieldtype": "Attach",
-   "label": "Odometer Start  Image",
-   "permlevel": 2
-  },
-  {
-   "fieldname": "odometer_end_image",
-   "fieldtype": "Attach",
-   "label": "Odometer End Image",
-   "permlevel": 2
   },
   {
    "fieldname": "external_travel_agency_section",
@@ -147,11 +104,13 @@
    "permlevel": 1
   },
   {
+   "depends_on": "eval:doc.external_agency==1\n",
    "fieldname": "vehicle_number",
    "fieldtype": "Data",
    "label": "Vehicle Number"
   },
   {
+   "depends_on": "eval:doc.external_agency==1\n",
    "fieldname": "travel_agency_name",
    "fieldtype": "Data",
    "label": "Travel Agency name"
@@ -161,20 +120,150 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:doc.external_agency==1\n",
    "fieldname": "driver_name",
    "fieldtype": "Data",
    "label": "Driver Name"
   },
   {
+   "depends_on": "eval:doc.external_agency==1\n",
    "fieldname": "driver_number",
    "fieldtype": "Data",
    "label": "Driver Number"
+  },
+  {
+   "fetch_from": "order.pickup_address",
+   "fieldname": "pickup_address",
+   "fieldtype": "Data",
+   "label": "PickUp Address",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "order.drop_address",
+   "fieldname": "drop_address",
+   "fieldtype": "Data",
+   "label": "Drop Address",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "order.contact_number",
+   "fieldname": "customer_number",
+   "fieldtype": "Data",
+   "label": "Customer Number",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "order.ride_type",
+   "fieldname": "ride",
+   "fieldtype": "Data",
+   "label": "Ride Type",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "order.vehicle_type",
+   "fieldname": "seating_capacity",
+   "fieldtype": "Data",
+   "label": "Seating Capacity",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_hgqk",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_jdhp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "vehicle.title",
+   "fieldname": "assign_vehicle_number",
+   "fieldtype": "Data",
+   "label": "Assign Vehicle Number",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "order.employee_name",
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "label": "Customer Name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "vehicle.color",
+   "fieldname": "color",
+   "fieldtype": "Data",
+   "label": "Color",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "driver.cell_number",
+   "fieldname": "driver_mobile_number",
+   "fieldtype": "Data",
+   "label": "Driver Mobile Number",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "order.date",
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fetch_from": "order.pickup_time",
+   "fieldname": "from_time",
+   "fieldtype": "Time",
+   "label": "From Time",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fetch_from": "order.drop_time",
+   "fieldname": "to_time",
+   "fieldtype": "Time",
+   "label": "To Time",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "starttime",
+   "fieldtype": "Datetime",
+   "hidden": 1,
+   "label": "StartTime",
+   "read_only": 1
+  },
+  {
+   "fieldname": "endtime",
+   "fieldtype": "Datetime",
+   "hidden": 1,
+   "label": "EndTime",
+   "read_only": 1
+  },
+  {
+   "fieldname": "odometer_start",
+   "fieldtype": "Int",
+   "label": "Odometer Start"
+  },
+  {
+   "fieldname": "odometer_end",
+   "fieldtype": "Int",
+   "label": "Odometer End"
+  },
+  {
+   "fieldname": "odometer_start_pic",
+   "fieldtype": "Attach",
+   "label": "Odometer Start Pic"
+  },
+  {
+   "fieldname": "odometer_end_pic",
+   "fieldtype": "Attach",
+   "label": "Odometer End Pic"
   }
  ],
  "index_web_pages_for_search": 1,
- "is_submittable": 1,
  "links": [],
- "modified": "2024-09-16 11:20:39.172351",
+ "modified": "2025-07-16 17:06:45.796981",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Ride Booking",
@@ -191,7 +280,6 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
-   "submit": 1,
    "write": 1
   },
   {
@@ -201,17 +289,7 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "CabAgent",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "VcmDriver",
+   "role": "Vehicle Agent",
    "share": 1,
    "write": 1
   }

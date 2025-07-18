@@ -1,480 +1,224 @@
-# # import frappe
-# # from frappe.model.document import Document
+# import frappe
+# from frappe.model.document import Document
+# from frappe.utils import get_url, nowdate
+# import os
 
-# # class RideOrder(Document):
-# #     def validate(self):
-# #         # Check if the document is new and send the approval email to the manager
-# #         if self.is_new():
-# #             self.send_approval_email_to_manager()
-# #         elif self.has_status_changed():
-# #             self.send_status_update_email()
-
-# #     def has_status_changed(self):
-# #         # Fetch the old status from the database
-# #         old_status = frappe.db.get_value("Ride Order", self.name, "status")
-# #         return old_status != self.status
-
-# #     def send_approval_email_to_manager(self):
-# #         # Fetch the email address from the linked Manager Email DocType
-# #         if self.manager_email:
-# #             manager_email_address = frappe.db.get_value("Manager Email", self.manager_email, "Email")
-
-# #             if not manager_email_address:
-# #                 frappe.log_error(message="Manager Email address not found", title="Email Sending Failed")
-# #                 return
-            
-# #             subject = f"Approval Required for Ride Order {self.name}"
-# #             message = f"""
-# #                 <html>
-# #                 <body>
-# #                     <table width="100%" cellpadding="10" cellspacing="0" border="0">
-# #                         <tr>
-# #                             <td>
-# #                                 <h2>Ride Order Approval Needed</h2>
-# #                                 <p>Dear Manager,</p>
-# #                                 <p>A new ride order has been created and requires your approval. Below are the details:</p>
-# #                                 <table width="100%" cellpadding="8" cellspacing="0" border="1" style="border-collapse: collapse;">
-# #                                     <tr>
-# #                                         <td><b>Customer Name:</b></td>
-# #                                         <td>{self.customer_name}</td>
-# #                                     </tr>
-# #                                     <tr>
-# #                                         <td><b>Contact Number:</b></td>
-# #                                         <td>{self.contact_number}</td>
-# #                                     </tr>
-# #                                     <tr>
-# #                                         <td><b>Pickup Time:</b></td>
-# #                                         <td>{self.pickup_time}</td>
-# #                                     </tr>
-# #                                     <tr>
-# #                                         <td><b>Drop Time:</b></td>
-# #                                         <td>{self.drop_time}</td>
-# #                                     </tr>
-# #                                     <tr>
-# #                                         <td><b>Pickup Address:</b></td>
-# #                                         <td>{self.pickup_address}</td>
-# #                                     </tr>
-# #                                     <tr>
-# #                                         <td><b>Drop Address:</b></td>
-# #                                         <td>{self.drop_address}</td>
-# #                                     </tr>
-# #                                     <tr>
-# #                                         <td><b>Vehicle Type:</b></td>
-# #                                         <td>{self.vehicle_type}</td>
-# #                                     </tr>
-# #                                     <tr>
-# #                                         <td><b>Ride Type:</b></td>
-# #                                         <td>{self.ride_type}</td>
-# #                                     </tr>
-# #                                     <tr>
-# #                                         <td><b>Remarks:</b></td>
-# #                                         <td>{self.comment}</td>
-# #                                     </tr>
-                                    
-# #                                 </table>
-# #                                 <p>Please review the details and approve or reject the ride order.</p>
-# #                                 <p>
-# #                                     <a href="http://13.200.187.97:8000/api/method/vcmrentals.api.update_ride_order_status?ride_order_id={self.name}&status=Accepted">Accept</a>
-# #                                     <a href="http://13.200.187.97:8000/api/method/vcmrentals.api.update_ride_order_status?ride_order_id={self.name}&status=Rejected">Reject</a>
-
-# #                                 </p>
-# #                                 <p>Best regards,<br>Your Ride Booking Team</p>
-# #                             </td>
-# #                         </tr>
-# #                     </table>
-# #                 </body>
-# #                 </html>
-                
-# #             """
-
-# #             try:
-# #                 frappe.sendmail(
-# #                     recipients=[manager_email_address],
-# #                     subject=subject,
-# #                     message=message
-# #                 )
-# #             except Exception as e:
-# #                 frappe.log_error(message=str(e), title="Approval Email Sending Failed")
-# #         else:
-# #             frappe.log_error(message="Manager Email field is empty", title="Email Sending Failed")
-
-# #     def send_status_update_email(self):
-# #         submitter_email = self.email  # Email field in Ride Order DocType
-# #         cc_email = "amansoniofficial20@gmail.com,amansonimtr@gmail.com"  # CC Emails
-
-# #         if self.status == "Accepted":
-# #             subject = f"Confirmation of Your Ride Order {self.name}"
-# #             message = f"""
-# #                 <html>
-# #                 <body>
-# #                     <table width="100%" cellpadding="10" cellspacing="0" border="0">
-# #                         <tr>
-# #                             <td>
-# #                                 <h2>Ride Order Confirmation</h2>
-# #                                 <p>Dear {self.customer_name},</p>
-# #                                 <p>Your ride order has been confirmed. Below are the details:</p>
-# #                                 <table width="100%" cellpadding="8" cellspacing="0" border="1" style="border-collapse: collapse;">
-# #                                     <tr>
-# #                                         <td><b>Order Number:</b></td>
-# #                                         <td>{self.name}</td>
-# #                                     </tr>
-# #                                     <tr>
-# #                                         <td><b>Pickup Time:</b></td>
-# #                                         <td>{self.pickup_time}</td>
-# #                                     </tr>
-# #                                     <tr>
-# #                                         <td><b>Drop Time:</b></td>
-# #                                         <td>{self.drop_time}</td>
-# #                                     </tr>
-
-# #                                     <tr>
-# #                                         <td><b>Pickup Address:</b></td>
-# #                                         <td>{self.pickup_address}</td>
-# #                                     </tr>
-# #                                     <tr>
-# #                                         <td><b>Drop Address:</b></td>
-# #                                         <td>{self.drop_address}</td>
-# #                                     </tr>
-                                   
-# #                                     <tr>
-# #                                         <td><b>Vehicle Type:</b></td>
-# #                                         <td>{self.vehicle_type}</td>
-# #                                     </tr>
-# #                                     <tr>
-# #                                         <td><b>Ride Type:</b></td>
-# #                                         <td>{self.ride_type}</td>
-# #                                     </tr>
-# #                                     <tr>
-# #                                         <td><b>Remarks:</b></td>
-# #                                         <td>{self.comment}</td>
-# #                                     </tr>
-# #                                 </table>
-# #                                 <p>Thank you for choosing our service.</p>
-# #                                 <p>Best regards,<br>Your Ride Booking Team</p>
-# #                             </td>
-# #                         </tr>
-# #                     </table>
-# #                 </body>
-# #                 </html>
-# #             """
-# #         elif self.status == "Rejected":
-# #             subject = f"Notification: Your Ride Order {self.name} is Rejected"
-# #             message = f"""
-# #                 <html>
-# #                 <body>
-# #                     <table width="100%" cellpadding="10" cellspacing="0" border="0">
-# #                         <tr>
-# #                             <td>
-# #                                 <h2>Ride Order Rejected</h2>
-# #                                 <p>Dear {self.customer_name},</p>
-# #                                 <p>We regret to inform you that your ride order has been rejected. Below are the details:</p>
-# #                                 <table width="100%" cellpadding="8" cellspacing="0" border="1" style="border-collapse: collapse;">
-# #                                     <tr>
-# #                                         <td><b>Order Number:</b></td>
-# #                                         <td>{self.name}</td>
-# #                                     </tr>
-# #                                     <tr>
-# #                                         <td><b>Pickup Time:</b></td>
-# #                                         <td>{self.pickup_time}</td>
-# #                                     </tr>
-# #                                     <tr>
-# #                                         <td><b>Drop Time:</b></td>
-# #                                         <td>{self.drop_time}</td>
-# #                                     </tr>
-# #                                     <tr>
-# #                                         <td><b>Pickup Address:</b></td>
-# #                                         <td>{self.pickup_address}</td>
-# #                                     </tr>
-# #                                      <tr>
-# #                                         <td><b>Drop Address:</b></td>
-# #                                         <td>{self.drop_address}</td>
-# #                                     </tr>
-                                    
-# #                                     <tr>
-# #                                         <td><b>Vehicle Type:</b></td>
-# #                                         <td>{self.vehicle_type}</td>
-# #                                     </tr>
-                                    
-# #                                     <tr>
-# #                                         <td><b>Ride Type:</b></td>
-# #                                         <td>{self.ride_type}</td>
-# #                                     </tr>
-# #                                     <tr>
-# #                                         <td><b>Remarks:</b></td>
-# #                                         <td>{self.comment}</td>
-# #                                     </tr>
-# #                                 </table>
-# #                                 <p>We apologize for any inconvenience this may have caused.</p>
-# #                                 <p>Best regards,<br>Your Ride Booking Team</p>
-# #                             </td>
-# #                         </tr>
-# #                     </table>
-# #                 </body>
-# #                 </html>
-# #             """
-
-# #         try:
-# #             frappe.sendmail(
-# #                 recipients=[submitter_email],
-# #                 cc=cc_email.split(","),
-# #                 subject=subject,
-# #                 message=message
-# #             )
-# #         except Exception as e:
-# #             frappe.log_error(message=str(e), title="Email Sending Failed")
+# class RideOrder(Document):
+#     # def validate(self):
+#     #     if self.is_new():
+#     #         self.send_approval_email_to_manager()
+#     #     elif self.has_status_changed():
+#     #         self.send_status_update_email()
+#     def validate(self):
+#         if self.is_new() and self.status == "Pending":
+#             self.send_approval_email_to_manager()
+#         elif self.has_status_changed():
+#             self.send_status_update_email()
 
 
-# # @frappe.whitelist()
-# # def update_ride_order_status(ride_order_id, status):
-# #     try:
-# #         ride_order = frappe.get_doc("Ride Order", ride_order_id)
-# #         ride_order.status = status
-# #         ride_order.save(ignore_permissions=True)
-# #         frappe.db.commit()
-# #         return {"success": True, "message": f"Ride order {ride_order_id} has been {status}."}
-# #     except Exception as e:
-# #         frappe.log_error(message=str(e), title="Ride Order Status Update Failed")
-# #         return {"success": False, "message": "Failed to update the ride order status."}
+#     def has_status_changed(self):
+#         old_status = frappe.db.get_value("Ride Order", self.name, "status")
+#         return old_status != self.status
 
-# ///////////////////////////////////////////////////////////////////////////////////
-# ////////////////////////////////////////////////////////////////////////////////
+#     def send_approval_email_to_manager(self):
+#         try:
+#             #  Load HTML from your path
+#             html_path = os.path.join(
+#                 frappe.get_app_path("vcmrentals"),
+#                 "rentals", "doctype", "ride_order", "ride_order.html"
+#             )
+#             with open(html_path, "r") as f:
+#                 html_template = f.read()
 
+#             # accept_link = f"{get_url()}/api/method/vcmrentals.api.update_ride_order_status?ride_order_id={self.name}&status=Accepted"
+#             # reject_link = f"{get_url()}/api/method/vcmrentals.api.update_ride_order_status?ride_order_id={self.name}&status=Rejected"
+
+#             html = html_template\
+#                 .replace("{{ name }}", self.name)\
+#                 .replace("{{ employee_name }}", self.employee_name or "")\
+#                 .replace("{{ employee_code }}", self.employee_code or "")\
+#                 .replace("{{ contact_number }}", self.contact_number or "")\
+#                 .replace("{{ emp_department }}", self.emp_department or "")\
+#                 .replace("{{ email }}", self.email or "")\
+#                 .replace("{{ date }}", str(self.date) or "")\
+#                 .replace("{{ pickup_time }}", self.pickup_time or "")\
+#                 .replace("{{ drop_time }}", self.drop_time or "")\
+#                 .replace("{{ ride_type }}", self.ride_type or "")\
+#                 .replace("{{ vehicle_type }}", self.vehicle_type or "")\
+#                 .replace("{{ pickup_address }}", self.pickup_address or "")\
+#                 .replace("{{ drop_address }}", self.drop_address or "")\
+#                 .replace("{{ current_year }}", str(nowdate().split("-")[0]))
+
+#             frappe.sendmail(
+#                 recipients=[self.manager_email],
+#                 cc=["amansonimtr@gmail.com"],
+#                 subject=f"Approval Required: Ride Order {self.name}",
+#                 message=html
+#             )
+#         except Exception as e:
+#             frappe.log_error(message=str(e), title="Approval Email Sending Failed")
+
+#     def send_status_update_email(self):
+#         status_message = f"Your ride order <b>{self.name}</b> has been <b>{self.status}</b>."
+#         try:
+#             frappe.sendmail(
+#                 recipients=[self.email],
+#                 cc=["aman.soni@vcm.org.in", "amansonimtr@gmail.com"],
+#                 subject=f"Ride Order {self.status}: {self.name}",
+#                 message=status_message
+#             )
+#         except Exception as e:
+#             frappe.log_error(message=str(e), title="Status Update Email Failed")
+
+
+
+
+
+
+
+
+
+
+
+# # Copyright (c) 2025, pankaj.sharma@vcm.org.in and contributors
+# # For license information, please see license.txt
+
+# import frappe
+# import datetime
+# from frappe.model.document import Document
+# from frappe.model.naming import getseries
+# from frappe.utils import nowdate, getdate
+
+
+# from vcmrentals.rentals.doctype.ride_order.ridealm.ride import (
+#     assign_and_notify_next_ride_authority,
+#     get_preq_ride_level,
+# )
+
+# from frappe.workflow.doctype.workflow_action.workflow_action import (
+#     get_doc_workflow_state,
+# )
+
+
+# class RideOrder(Document):
+
+#     def before_save(self):
+#         #self.update_extra_description_from_mrn()
+#         self.refresh_alm()
+        
+
+#     def on_update(self):
+#         assign_and_notify_next_ride_authority(self)
+
+#     def refresh_alm(self):
+#         #logging.debug(f"in PREQ refresh_preq_alm")
+#         if hasattr(self, "department") and self.department == "":
+#             frappe.throw("Department is not set.")
+#         alm_level = get_preq_ride_level(self)
+#         if alm_level is not None:
+#             self.l1_approving_authority = alm_level.l1_approver
+#             self.l2_approving_authority = alm_level.l2_approver
+#             self.l3_approving_authority = alm_level.l3_approver
+#             self.final_approving_authority = alm_level.final_approver
+#             #logging.debug(f"in PREQ refresh_preq_alm {self.name}, {self.l1_approving_authority}, {self.l2_approving_authority}, {self.l3_approving_authority}, {self.final_approving_authority}")
+#         else:
+#             frappe.throw("ALM Levels are not set for Payment Req in this document")
+
+
+
+    
 
 
 import frappe
 from frappe.model.document import Document
-from frappe.utils import get_url
+
+import frappe
+import datetime
+from frappe.model.document import Document
+from frappe.model.naming import getseries
+from frappe.utils import nowdate, getdate
+
+
+from vcmrentals.rentals.doctype.ride_order.ridealm.ride import (
+    assign_and_notify_next_ride_authority,
+    get_preq_ride_level,
+)
+
+from frappe.workflow.doctype.workflow_action.workflow_action import (
+    get_doc_workflow_state,
+)
+
+
+BOOKING_CC = ["aman.soni@vcm.org.in"]
 
 class RideOrder(Document):
-    def validate(self):
-        # Check if the document is new and send the approval email to the manager
-        if self.is_new():
+    def before_save(self):
+        self.refresh_alm()
+
+    def after_insert(self):
+        self.send_draft_email()
+
+    def on_update(self):
+        if self.is_new() and self.status == "Pending":
             self.send_approval_email_to_manager()
-        elif self.has_status_changed():
-            self.send_status_update_email()
+        assign_and_notify_next_ride_authority(self)
 
-    def has_status_changed(self):
-        # Fetch the old status from the database
-        old_status = frappe.db.get_value("Ride Order", self.name, "status")
-        return old_status != self.status
+    def on_submit(self):
+        if self.docstatus == 1:
+            self.send_confirm_email()
+        if self.status == "Approved":
+            self.send_final_approval_email()
 
-    def send_approval_email_to_manager(self):
-        # Fetch the email address from the linked Manager Email DocType
-        if self.manager_email:
-            manager_email_address = frappe.db.get_value("Manager Email", self.manager_email, "Email")
+    def refresh_alm(self):
+        if not self.department:
+            frappe.throw("Department is not set.")
+        alm_level = get_preq_ride_level(self)
+        if not alm_level:
+            frappe.throw("ALM Levels are not set for this document.")
+        self.l1_approving_authority = alm_level.l1_approver
+        self.l2_approving_authority = alm_level.l2_approver
+        self.l3_approving_authority = alm_level.l3_approver
+        self.final_approving_authority = alm_level.final_approver
 
-            if not manager_email_address:
-                frappe.log_error(message="Manager Email address not found", title="Email Sending Failed")
-                return
-            
-            base_url = get_url()  # Dynamically fetch the base URL
-            subject = f"Approval Required for Ride Order {self.name}"
-            message = f"""
-                <html>
-                <body>
-                    <table width="100%" cellpadding="10" cellspacing="0" border="0">
-                        <tr>
-                            <td>
-                                <h2>Ride Order Approval Needed</h2>
-                                <p>Dear Manager,</p>
-                                <p>A new ride order has been created and requires your approval. Below are the details:</p>
-                                <table width="100%" cellpadding="8" cellspacing="0" border="1" style="border-collapse: collapse;">
-                                    <tr>
-                                        <td><b>Customer Name:</b></td>
-                                        <td>{self.customer_name}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Contact Number:</b></td>
-                                        <td>{self.contact_number}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Pickup Time:</b></td>
-                                        <td>{self.pickup_time}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Drop Time:</b></td>
-                                        <td>{self.drop_time}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Pickup Address:</b></td>
-                                        <td>{self.pickup_address}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Drop Address:</b></td>
-                                        <td>{self.drop_address}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Vehicle Type:</b></td>
-                                        <td>{self.vehicle_type}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Ride Type:</b></td>
-                                        <td>{self.ride_type}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Remarks:</b></td>
-                                        <td>{self.comment}</td>
-                                    </tr>
-                                </table>
-                                <p>Please review the details and approve or reject the ride order.</p>
-                                <p>
-                                    <a href="{base_url}/api/method/vcmrentals.api.update_ride_order_status?ride_order_id={self.name}&status=Accepted">Accept</a>
-                                    <a href="{base_url}/api/method/vcmrentals.api.update_ride_order_status?ride_order_id={self.name}&status=Rejected">Reject</a>
-                                </p>
-                                <p>Best regards,<br>Your Ride Booking Team</p>
-                            </td>
-                        </tr>
-                    </table>
-                </body>
-                </html>
-            """
+    def _build_cc_list(self):
+        cc = BOOKING_CC.copy()
+        if self.email:
+            cc.append(self.email)
+        return cc
 
-            try:
-                frappe.sendmail(
-                    recipients=[manager_email_address],
-                    subject=subject,
-                    message=message
-                )
-            except Exception as e:
-                frappe.log_error(message=str(e), title="Approval Email Sending Failed")
-        else:
-            frappe.log_error(message="Manager Email field is empty", title="Email Sending Failed")
+    def send_draft_email(self):
+        frappe.sendmail(
+            recipients=[self.email] if self.email else BOOKING_CC,
+            cc=self._build_cc_list(),
+            subject=f"Thanks for booking {self.name}",
+            message=frappe.render_template(
+                """
+                Hi {{ doc.employee_name or "Guest" }},
 
-    def send_status_update_email(self):
-        submitter_email = self.email  # Email field in Ride Order DocType
-        cc_email = "amansoniofficial20@gmail.com,amansonimtr@gmail.com"  # CC Emails
+                Thank you for booking ride {{ doc.name }}.
+                We will confirm your request shortly.
 
-        if self.status == "Accepted":
-            subject = f"Confirmation of Your Ride Order {self.name}"
-            message = f"""
-                <html>
-                <body>
-                    <table width="100%" cellpadding="10" cellspacing="0" border="0">
-                        <tr>
-                            <td>
-                                <h2>Ride Order Confirmation</h2>
-                                <p>Dear {self.customer_name},</p>
-                                <p>Your ride order has been confirmed. Below are the details:</p>
-                                <table width="100%" cellpadding="8" cellspacing="0" border="1" style="border-collapse: collapse;">
-                                    <tr>
-                                        <td><b>Order Number:</b></td>
-                                        <td>{self.name}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Pickup Time:</b></td>
-                                        <td>{self.pickup_time}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Drop Time:</b></td>
-                                        <td>{self.drop_time}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Pickup Address:</b></td>
-                                        <td>{self.pickup_address}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Drop Address:</b></td>
-                                        <td>{self.drop_address}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Vehicle Type:</b></td>
-                                        <td>{self.vehicle_type}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Ride Type:</b></td>
-                                        <td>{self.ride_type}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Remarks:</b></td>
-                                        <td>{self.comment}</td>
-                                    </tr>
-                                </table>
-                                <p>Thank you for choosing our service.</p>
-                                <p>Best regards,<br>Your Ride Booking Team</p>
-                            </td>
-                        </tr>
-                    </table>
-                </body>
-                </html>
-            """
-        elif self.status == "Rejected":
-            subject = f"Notification: Your Ride Order {self.name} is Rejected"
-            message = f"""
-                <html>
-                <body>
-                    <table width="100%" cellpadding="10" cellspacing="0" border="0">
-                        <tr>
-                            <td>
-                                <h2>Ride Order Rejected</h2>
-                                <p>Dear {self.customer_name},</p>
-                                <p>We regret to inform you that your ride order has been rejected. Below are the details:</p>
-                                <table width="100%" cellpadding="8" cellspacing="0" border="1" style="border-collapse: collapse;">
-                                    <tr>
-                                        <td><b>Order Number:</b></td>
-                                        <td>{self.name}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Pickup Time:</b></td>
-                                        <td>{self.pickup_time}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Drop Time:</b></td>
-                                        <td>{self.drop_time}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Pickup Address:</b></td>
-                                        <td>{self.pickup_address}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Drop Address:</b></td>
-                                        <td>{self.drop_address}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Vehicle Type:</b></td>
-                                        <td>{self.vehicle_type}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Ride Type:</b></td>
-                                        <td>{self.ride_type}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Remarks:</b></td>
-                                        <td>{self.comment}</td>
-                                    </tr>
-                                </table>
-                                <p>We apologize for any inconvenience this may have caused.</p>
-                                <p>Best regards,<br>Your Ride Booking Team</p>
-                            </td>
-                        </tr>
-                    </table>
-                </body>
-                </html>
-            """
+                — VCM Rental
+                """,
+                {"doc": self}
+            ),
+        )
 
-        try:
-            frappe.sendmail(
-                recipients=[submitter_email],
-                cc=cc_email.split(","),
-                subject=subject,
-                message=message
-            )
-        except Exception as e:
-            frappe.log_error(message=str(e), title="Email Sending Failed")
+    def send_confirm_email(self):
+        frappe.sendmail(
+            recipients=[self.email] if self.email else BOOKING_CC,
+            cc=self._build_cc_list(),
+            subject=f"Ride {self.name} confirmed",
+            message=frappe.render_template(
+                """
+                Hi {{ doc.employee_name or "Guest" }},
 
+                Your ride {{ doc.name }} on {{ doc.date }}
+                ({{ doc.pickup_time }}–{{ doc.drop_time }}) is CONFIRMED.
 
-@frappe.whitelist()
-def update_ride_order_status(ride_order_id, status):
-    try:
-        ride_order = frappe.get_doc("Ride Order", ride_order_id)
-        ride_order.status = status
-        ride_order.save(ignore_permissions=True)
-        frappe.db.commit()
-        return {"success": True, "message": f"Ride order {ride_order_id} has been {status}."}
-    except Exception as e:
-        frappe.log_error(message=str(e), title="Ride Order Status Update Failed")
-        return {"success": False, "message": "Failed to update the ride order status."}
-
-
-
-
-
+                Safe travels!
+                — VCM Rental
+                """,
+                {"doc": self}
+            ),
+        )

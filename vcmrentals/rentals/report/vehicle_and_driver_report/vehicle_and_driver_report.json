@@ -10,7 +10,7 @@
  "is_standard": "Yes",
  "json": "{\"columns\":[{\"label\":\"Created On\",\"fieldname\":\"created_on\",\"fieldtype\":\"Datetime\",\"width\":150,\"id\":\"created_on\",\"name\":\"Created On\",\"editable\":false,\"compareValue\":null},{\"label\":\"Order\",\"fieldname\":\"order\",\"fieldtype\":\"Data\",\"width\":100,\"id\":\"order\",\"name\":\"Order\",\"editable\":false,\"compareValue\":null},{\"label\":\"Vehicle Make\",\"fieldname\":\"vehicle_make\",\"fieldtype\":\"Data\",\"width\":150,\"id\":\"vehicle_make\",\"name\":\"Vehicle Make\",\"editable\":false,\"compareValue\":null},{\"label\":\"Driver Name\",\"fieldname\":\"driver_name\",\"fieldtype\":\"Data\",\"width\":150,\"id\":\"driver_name\",\"name\":\"Driver Name\",\"editable\":false,\"compareValue\":null},{\"label\":\"Odometer End\",\"fieldname\":\"odometer_end\",\"fieldtype\":\"Int\",\"width\":100,\"id\":\"odometer_end\",\"name\":\"Odometer End\",\"editable\":false,\"compareValue\":null},{\"label\":\"Odometer Start\",\"fieldname\":\"odometer_start\",\"fieldtype\":\"Int\",\"width\":100,\"id\":\"odometer_start\",\"name\":\"Odometer Start\",\"editable\":false,\"compareValue\":null},{\"label\":\"Source\",\"fieldname\":\"source\",\"fieldtype\":\"Data\",\"width\":150,\"id\":\"source\",\"name\":\"Source\",\"editable\":false,\"compareValue\":null},{\"label\":\"Destination\",\"fieldname\":\"destination\",\"fieldtype\":\"Data\",\"width\":150,\"id\":\"destination\",\"name\":\"Destination\",\"editable\":false,\"compareValue\":null},{\"label\":\"Distance (KM)\",\"fieldname\":\"item_distance\",\"fieldtype\":\"Float\",\"width\":100,\"id\":\"item_distance\",\"name\":\"Distance (KM)\",\"editable\":false,\"compareValue\":null},{\"label\":\"Distance Moved (Km)\",\"fieldname\":\"distance_moved\",\"fieldtype\":\"Float\",\"width\":100,\"id\":\"distance_moved\",\"name\":\"Distance Moved (Km)\",\"editable\":false,\"compareValue\":null}],\"filters\":{}}",
  "letterhead": null,
- "modified": "2024-09-23 10:18:14.133708",
+ "modified": "2025-07-10 12:15:34.257423",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Vehicle And Driver Report",
@@ -23,12 +23,7 @@
  "roles": [
   {
    "role": "System Manager"
-  },
-  {
-   "role": "CabAgent"
-  },
-  {
-   "role": "VcmDriver"
   }
- ]
+ ],
+ "timeout": 0
 }

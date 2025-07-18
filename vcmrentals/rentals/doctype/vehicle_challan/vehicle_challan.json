@@ -1,0 +1,157 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-06-20 12:01:19.688707",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_kdnl",
+  "challan_number",
+  "challantype",
+  "challan_date",
+  "location",
+  "upload_receipt",
+  "column_break_uhku",
+  "vehicle",
+  "driver",
+  "driver_name",
+  "fine_amount_inr",
+  "payment_date",
+  "remarks",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_kdnl",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Vehicle Challan",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "challan_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Challan Number",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "challan_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Challan Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Location",
+   "reqd": 1
+  },
+  {
+   "fieldname": "challantype",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "ChallanType",
+   "options": "\nSpeeding\nNo Helmet\nPollution",
+   "reqd": 1
+  },
+  {
+   "fieldname": "fine_amount_inr",
+   "fieldtype": "Currency",
+   "label": "Fine Amount (INR)",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "payment_date",
+   "fieldtype": "Date",
+   "label": "Payment Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_uhku",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "vehicle",
+   "fieldtype": "Link",
+   "label": "Vehicle",
+   "options": "VcmVehicle",
+   "reqd": 1
+  },
+  {
+   "fieldname": "driver",
+   "fieldtype": "Link",
+   "label": "Driver",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fieldname": "upload_receipt",
+   "fieldtype": "Attach",
+   "label": "Upload Receipt",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "driver.employee_name",
+   "fieldname": "driver_name",
+   "fieldtype": "Data",
+   "label": "Driver Name",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-07-10 12:52:42.260723",
+ "modified_by": "Administrator",
+ "module": "Rentals",
+ "name": "Vehicle Challan",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Vehicle Agent",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

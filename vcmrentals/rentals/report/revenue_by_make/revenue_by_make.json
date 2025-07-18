@@ -9,7 +9,7 @@
  "idx": 0,
  "is_standard": "Yes",
  "letterhead": null,
- "modified": "2024-09-17 10:57:25.520174",
+ "modified": "2025-07-10 12:14:42.136664",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Revenue by Make",
@@ -21,12 +21,7 @@
  "roles": [
   {
    "role": "System Manager"
-  },
-  {
-   "role": "CabAgent"
-  },
-  {
-   "role": "VcmDriver"
   }
- ]
+ ],
+ "timeout": 0
 }

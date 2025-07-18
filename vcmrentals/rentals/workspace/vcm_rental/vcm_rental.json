@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"lGq3-ldogE\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">VCM RENTAL</span>\",\"col\":12}},{\"id\":\"UCrm3TlwK1\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Open Order\",\"col\":4}},{\"id\":\"DsiqakK8Sj\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"V68If8yIMP\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"VcmVehicle\",\"col\":3}},{\"id\":\"30soWlWfmV\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"VCM Orders\",\"col\":3}},{\"id\":\"bX0sBxyp_n\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Assign Vehicle\",\"col\":3}},{\"id\":\"f-iDCSAPmy\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Driver\",\"col\":3}},{\"id\":\"2F_fDkXdgj\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"HzLe3h2L2j\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Web Form</b></span>\",\"col\":12}},{\"id\":\"neJ6ICwmi6\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Book Your Ride\",\"col\":3}},{\"id\":\"8GoHgKEDJO\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"vQ13_imTTl\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Report</b></span>\",\"col\":12}},{\"id\":\"Q2D_YE9UI8\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Cost\",\"col\":3}},{\"id\":\"f-ntxk5IxB\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle & Driver\",\"col\":3}},{\"id\":\"w8P7F3GDX6\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Ride Status & Type\",\"col\":3}}]",
+ "content": "[{\"id\":\"lGq3-ldogE\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">VCM RENTAL</span>\",\"col\":12}},{\"id\":\"DsiqakK8Sj\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"V68If8yIMP\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"VcmVehicle\",\"col\":3}},{\"id\":\"30soWlWfmV\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"VCM Orders\",\"col\":3}},{\"id\":\"bX0sBxyp_n\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Assign Vehicle\",\"col\":3}},{\"id\":\"lxZZVo33ua\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Challan\",\"col\":3}},{\"id\":\"w3JfBA818h\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Maintenance\",\"col\":3}},{\"id\":\"2F_fDkXdgj\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"HzLe3h2L2j\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Web Form</b></span>\",\"col\":12}},{\"id\":\"8GoHgKEDJO\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"vQ13_imTTl\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Report</b></span>\",\"col\":12}},{\"id\":\"f-ntxk5IxB\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle & Driver\",\"col\":3}}]",
  "creation": "2024-09-11 11:56:13.936104",
  "custom_blocks": [],
  "docstatus": 0,
@@ -13,55 +13,33 @@
  "is_hidden": 0,
  "label": "VCM RENTAL",
  "links": [],
- "modified": "2024-09-24 12:40:02.637870",
+ "modified": "2025-07-10 17:32:06.769315",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "VCM RENTAL",
- "number_cards": [
-  {
-   "label": "Open Order",
-   "number_card_name": "Open Order"
-  }
- ],
+ "number_cards": [],
  "owner": "Administrator",
  "parent_page": "",
  "public": 1,
  "quick_lists": [],
- "roles": [
-  {
-   "role": "CabAgent"
-  }
- ],
+ "roles": [],
  "sequence_id": 34.0,
  "shortcuts": [
   {
    "color": "Grey",
    "doc_view": "List",
-   "label": "Book Your Ride",
-   "type": "URL",
-   "url": "http://13.200.187.97:8000/order-a-ride/new"
-  },
-  {
-   "color": "Blue",
-   "doc_view": "List",
-   "label": "Driver",
-   "link_to": "CabDriver",
+   "label": "Vehicle Challan",
+   "link_to": "Vehicle Challan",
    "stats_filter": "[]",
    "type": "DocType"
   },
   {
    "color": "Grey",
    "doc_view": "List",
-   "label": "Vehicle Cost",
-   "link_to": "Revenue by Make",
-   "type": "Report"
-  },
-  {
-   "color": "Grey",
-   "doc_view": "List",
-   "label": "Ride Status & Type",
-   "link_to": "All Over Ride Details",
-   "type": "Dashboard"
+   "label": "Vehicle Maintenance",
+   "link_to": "Vehicle Maintenance",
+   "stats_filter": "[]",
+   "type": "DocType"
   },
   {
    "color": "Cyan",

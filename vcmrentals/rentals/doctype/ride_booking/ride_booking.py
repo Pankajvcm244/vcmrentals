@@ -1,123 +1,296 @@
+# import frappe
+# from frappe import _
+# from frappe.utils import get_datetime
+# from frappe.model.document import Document
+
+# class RideBooking(Document):
+#     def validate(self):
+#         self.check_vehicle_availability()
+
+#     def on_submit(self):
+#         # Get the linked Ride Order name from your link field (adjust fieldname accordingly)
+#         ride_order_name = self.order  
+#         if ride_order_name:
+#             # Update the Ride Order state to 'Close'
+#             frappe.db.set_value('Ride Order', ride_order_name, 'state', 'Close')
+#             # Optionally commit changes immediately
+#             frappe.db.commit()
+
+#     def before_save(self):
+
+#         self.starttime = f"{self.date}T{self.from_time}"
+#         self.endtime = f"{self.date}T{self.to_time}"
+#         #logging.debug(f"Before Save-2 {self.starttime} {self.endtime}")  
+#         #logging.debug(f"Before Save-2 {self.docstatus} ")
+    
+
+#     def check_vehicle_availability(self):
+#         if not self.vehicle or not self.date or not self.from_time or not self.to_time:
+#             return
+
+#         start_time = get_datetime(f"{self.date} {self.from_time}")
+#         end_time = get_datetime(f"{self.date} {self.to_time}")
+
+#         # Check for vehicle overlap
+#         overlapping_vehicle = frappe.db.sql("""
+#             SELECT name FROM `tabRide Booking`
+#             WHERE name != %s
+#             AND vehicle = %s
+#             AND date = %s
+#             AND (
+#                 (%s BETWEEN CONCAT(date, ' ', from_time) AND CONCAT(date, ' ', to_time)) OR
+#                 (%s BETWEEN CONCAT(date, ' ', from_time) AND CONCAT(date, ' ', to_time)) OR
+#                 (CONCAT(date, ' ', from_time) BETWEEN %s AND %s)
+#             )
+#         """, (self.name, self.vehicle, self.date, start_time, end_time, start_time, end_time), as_dict=True)
+
+#         if overlapping_vehicle:
+#             frappe.throw(_("This vehicle is already booked for the selected date and time."))
+
+#         # Check for driver overlap
+#         if self.driver:
+#             overlapping_driver = frappe.db.sql("""
+#                 SELECT name FROM `tabRide Booking`
+#                 WHERE name != %s
+#                 AND driver = %s
+#                 AND date = %s
+#                 AND (
+#                     (%s BETWEEN CONCAT(date, ' ', from_time) AND CONCAT(date, ' ', to_time)) OR
+#                     (%s BETWEEN CONCAT(date, ' ', from_time) AND CONCAT(date, ' ', to_time)) OR
+#                     (CONCAT(date, ' ', from_time) BETWEEN %s AND %s)
+#                 )
+#             """, (self.name, self.driver, self.date, start_time, end_time, start_time, end_time), as_dict=True)
+
+#             if overlapping_driver:
+#                 frappe.throw(_("This driver is already assigned to another ride during the selected date and time."))
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+# import frappe
+# from frappe import _
+# from frappe.utils import get_datetime
+# from frappe.model.document import Document
+
+# class RideBooking(Document):
+#     def validate(self):
+#         self.check_vehicle_availability()
+
+#     def on_submit(self):
+#         # Update linked Ride Order state to 'Close' if order linked
+#         ride_order_name = self.order  
+#         if ride_order_name:
+#             frappe.db.set_value('Ride Order', ride_order_name, 'state', 'Close')
+#             # Optional: commit if needed
+#             # frappe.db.commit()
+
+#     def before_save(self):
+#         if self.docstatus == 0:  # draft
+#             # Only send email if valid recipient email exists
+#             if self.email:
+#                 self.send_draft_email()
+       
+#         self.starttime = f"{self.date}T{self.from_time}"
+#         self.endtime = f"{self.date}T{self.to_time}"
+
+#     def check_vehicle_availability(self):
+#         if not self.vehicle or not self.date or not self.from_time or not self.to_time:
+#             return
+
+#         start_time = get_datetime(f"{self.date} {self.from_time}")
+#         end_time = get_datetime(f"{self.date} {self.to_time}")
+
+#         # Check for vehicle overlap
+#         overlapping_vehicle = frappe.db.sql("""
+#             SELECT name FROM `tabRide Booking`
+#             WHERE name != %s
+#             AND vehicle = %s
+#             AND date = %s
+#             AND (
+#                 (%s BETWEEN CONCAT(date, ' ', from_time) AND CONCAT(date, ' ', to_time)) OR
+#                 (%s BETWEEN CONCAT(date, ' ', from_time) AND CONCAT(date, ' ', to_time)) OR
+#                 (CONCAT(date, ' ', from_time) BETWEEN %s AND %s)
+#             )
+#         """, (self.name, self.vehicle, self.date, start_time, end_time, start_time, end_time), as_dict=True)
+
+#         if overlapping_vehicle:
+#             frappe.throw(_("This vehicle is already booked for the selected date and time."))
+
+#         # Check for driver overlap
+#         if self.driver:
+#             overlapping_driver = frappe.db.sql("""
+#                 SELECT name FROM `tabRide Booking`
+#                 WHERE name != %s
+#                 AND driver = %s
+#                 AND date = %s
+#                 AND (
+#                     (%s BETWEEN CONCAT(date, ' ', from_time) AND CONCAT(date, ' ', to_time)) OR
+#                     (%s BETWEEN CONCAT(date, ' ', from_time) AND CONCAT(date, ' ', to_time)) OR
+#                     (CONCAT(date, ' ', from_time) BETWEEN %s AND %s)
+#                 )
+#             """, (self.name, self.driver, self.date, start_time, end_time, start_time, end_time), as_dict=True)
+
+#             if overlapping_driver:
+#                 frappe.throw(_("This driver is already assigned to another ride during the selected date and time."))
+
+#     def send_draft_email(self):
+#         recipient = self.email
+#         cc_emails = ["aman.soni@vcm.org.in", "amansonimtr@gmail.com"]
+
+#         subject = f"Ride Booking Assign Vehicle: {self.name}"
+
+#         message = f"""
+#         <h2>Ride Booking Draft Saved - {self.name}</h2>
+#         <p>Dear User,</p>
+#         <p>Your ride booking draft has been saved successfully with the following details:</p>
+#         <table border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse; width: 600px;">
+#             <tr><th align="left">Order</th><td>{self.order or '-'}</td></tr>
+#             <tr><th align="left">Customer Name</th><td>{self.customer_name or '-'}</td></tr>
+#             <tr><th align="left">Customer Number</th><td>{self.customer_number or '-'}</td></tr>
+#             <tr><th align="left">Ride Type</th><td>{self.ride or '-'}</td></tr>
+#             <tr><th align="left">Seating Capacity</th><td>{self.seating_capacity or '-'}</td></tr>
+#             <tr><th align="left">Date</th><td>{self.date or '-'}</td></tr>
+#             <tr><th align="left">From Time</th><td>{self.from_time or '-'}</td></tr>
+#             <tr><th align="left">To Time</th><td>{self.to_time or '-'}</td></tr>
+#             <tr><th align="left">PickUp Address</th><td>{self.pickup_address or '-'}</td></tr>
+#             <tr><th align="left">Drop Address</th><td>{self.drop_address or '-'}</td></tr>
+#             <tr><th align="left">Color</th><td>{self.color or '-'}</td></tr>
+#             <tr><th align="left">Assign Vehicle Number</th><td>{self.assign_vehicle_number or '-'}</td></tr>
+#             <tr><th align="left">Driver</th><td>{self.driver or '-'}</td></tr>
+#             <tr><th align="left">Driver Email</th><td>{self.email or '-'}</td></tr>
+#             <tr><th align="left">Driver Mobile Number</th><td>{self.driver_mobile_number or '-'}</td></tr>
+#         </table>
+#         <p>Regards,<br>VCM RENTAL Team</p>
+#         """
+
+#         frappe.sendmail(
+#             recipients=[recipient],
+#             cc=cc_emails,
+#             subject=subject,
+#             message=message,
+#             reference_doctype=self.doctype,
+#             reference_name=self.name
+#         )
+
+
+
+
+
+
+
 import frappe
+from frappe import _
+from frappe.utils import get_datetime
 from frappe.model.document import Document
 
 class RideBooking(Document):
-
     def validate(self):
-        # If rate is not provided, set it to the standard rate from Rentals Settings
-        if not self.rate:
-            self.rate = frappe.db.get_single_value("Rentals Settings", "standard_rate")
+        self.set_start_and_end()
+        self.check_vehicle_availability()
 
-        # Calculate the total distance and amount
-        total_distance = 0
-        for item in self.items:
-            total_distance += item.distance
+    def on_update(self):
+        # if self.booking_status == "Closed":
+        #     self.close_linked_ride_order()
+        self.send_draft_email()
 
-        self.total_amount = total_distance * self.rate
+    def set_start_and_end(self):
+        if self.date and self.from_time and self.to_time:
+            self.starttime = f"{self.date}T{self.from_time}"
+            self.endtime = f"{self.date}T{self.to_time}"
 
-    def after_insert(self):
-        # Send email after the Ride Booking is saved
-        self.send_ride_booking_email()
+    def close_linked_ride_order(self):
+        if self.order:
+            frappe.db.set_value("Ride Order", self.order, "state", "Close")
 
-    def send_ride_booking_email(self):
-        # Fetch recipient email from the Ride Booking document
-        recipient_email = self.email
+    def check_vehicle_availability(self):
+        if not (self.vehicle and self.date and self.from_time and self.to_time):
+            return
 
-        # Check if External Travel Agency is selected
-        if self.external_agency:
-            # If external agency is selected, fetch travel agency details from the form
-            driver_full_name = self.driver_name
-            driver_contact = self.driver_number
-            travel_agency_name = self.travel_agency_name
-            vehicle_number = self.vehicle_number
-        else:
-            # If external agency is not selected, fetch the driver's details from the CabDriver DocType
-            driver_details = frappe.db.get_value('CabDriver', self.driver, ['first_name', 'last_name', 'phone_number'], as_dict=True)
-            driver_full_name = f"{driver_details.get('first_name')} {driver_details.get('last_name')}"
-            driver_contact = driver_details.get('phone_number')
-            travel_agency_name = None  # No agency for internal rides
-            vehicle_number = frappe.db.get_value('VcmVehicle', self.vehicle, 'title')  # Fetch vehicle title
+        start_time = get_datetime(f"{self.date} {self.from_time}")
+        end_time = get_datetime(f"{self.date} {self.to_time}")
 
-        # Prepare email content
-        if recipient_email and driver_full_name:
-            # Prepare the items list for the email
-            item_details = ""
-            for item in self.items:
-                item_details += f"""
-                <tr>
-                    <td>{item.idx}</td>
-                    <td>{item.source}</td>
-                    <td>{item.distance}</td>
-                    <td>{item.destination}</td>
-                </tr>
-                """
-
-            # Prepare subject and message for the email
-            subject = f"Ride Booking Confirmation - Order {self.order}"
-            
-            # Conditional addition of travel agency details in the email
-            travel_agency_details = ""
-            if self.external_agency:
-                travel_agency_details = f"""
-                <tr>
-                    <th style="background-color: #f2f2f2;">Travel Agency</th>
-                    <td>{travel_agency_name}</td>
-                </tr>
-                <tr>
-                    <th style="background-color: #f2f2f2;">Vehicle Number</th>
-                    <td>{vehicle_number}</td>
-                </tr>
-                """
-
-            message = f"""
-            <p>Dear Customer,</p>
-
-            <p>Your ride booking has been confirmed. Here are the details:</p>
-
-            <table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 600px;">
-                <tr>
-                    <th style="background-color: #f2f2f2;">Order</th>
-                    <td>{self.order}</td>
-                </tr>
-                
-                <tr>
-                    <th style="background-color: #f2f2f2;">Driver</th>
-                    <td>{driver_full_name} ({driver_contact})</td>
-                </tr>
-                {travel_agency_details}
-                <tr>
-                    <th style="background-color: #f2f2f2;">Email</th>
-                    <td>{recipient_email}</td>
-                </tr>
-            </table>
-
-            <p><strong>Ride Details:</strong></p>
-            <table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 600px;">
-                <thead>
-                    <tr>
-                        <th style="background-color: #f2f2f2;">No.</th>
-                        <th style="background-color: #f2f2f2;">Source</th>
-                        <th style="background-color: #f2f2f2;">Distance</th>
-                        <th style="background-color: #f2f2f2;">Destination</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {item_details}
-                </tbody>
-            </table>
-
-            <p><strong>Rate per Km:</strong> {self.rate}</p>
-            <p><strong>Total Amount:</strong> ₹ {self.total_amount}</p>
-
-            <p>Thank you for choosing our service.</p>
-
-            <p>Best Regards,<br>Your Company Name</p>
+        overlapping_vehicle = frappe.db.sql(
             """
+            SELECT name FROM `tabRide Booking`
+            WHERE name != %s
+              AND vehicle = %s
+              AND date = %s
+              AND (
+                   (%s BETWEEN CONCAT(date,' ',from_time) AND CONCAT(date,' ',to_time))
+                OR (%s BETWEEN CONCAT(date,' ',from_time) AND CONCAT(date,' ',to_time))
+                OR (CONCAT(date,' ',from_time) BETWEEN %s AND %s)
+              )
+            """,
+            (self.name, self.vehicle, self.date, start_time, end_time, start_time, end_time),
+            as_dict=True,
+        )
+        if overlapping_vehicle:
+            frappe.throw(_("This vehicle is already booked for the selected date and time."))
 
-            # Send email using frappe's sendmail function
-            frappe.sendmail(
-                recipients=recipient_email,
-                subject=subject,
-                message=message,
-                cc=["amansoniofficial20@gmail.com"]  # Add CC recipient
+        if self.driver:
+            overlapping_driver = frappe.db.sql(
+                """
+                SELECT name FROM `tabRide Booking`
+                WHERE name != %s
+                  AND driver = %s
+                  AND date = %s
+                  AND (
+                       (%s BETWEEN CONCAT(date,' ',from_time) AND CONCAT(date,' ',to_time))
+                    OR (%s BETWEEN CONCAT(date,' ',from_time) AND CONCAT(date,' ',to_time))
+                    OR (CONCAT(date,' ',from_time) BETWEEN %s AND %s)
+                  )
+                """,
+                (self.name, self.driver, self.date, start_time, end_time, start_time, end_time),
+                as_dict=True,
             )
+            if overlapping_driver:
+                frappe.throw(_("This driver is already assigned to another ride during the selected date and time."))
+
+    def send_draft_email(self):
+        recipient = self.email
+        cc_emails = ["aman.soni@vcm.org.in", "amansonimtr@gmail.com"]
+
+        subject = f"Ride Booking Assign Vehicle: {self.name}"
+
+        message = f"""
+        <h2>Ride Booking Draft Saved - {self.name}</h2>
+        <p>Dear User,</p>
+        <p>Your ride booking draft has been saved successfully with the following details:</p>
+        <table border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse; width: 600px;">
+            <tr><th align="left">Order</th><td>{self.order or '-'}</td></tr>
+            <tr><th align="left">Customer Name</th><td>{self.customer_name or '-'}</td></tr>
+            <tr><th align="left">Customer Number</th><td>{self.customer_number or '-'}</td></tr>
+            <tr><th align="left">Ride Type</th><td>{self.ride or '-'}</td></tr>
+            <tr><th align="left">Seating Capacity</th><td>{self.seating_capacity or '-'}</td></tr>
+            <tr><th align="left">Date</th><td>{self.date or '-'}</td></tr>
+            <tr><th align="left">From Time</th><td>{self.from_time or '-'}</td></tr>
+            <tr><th align="left">To Time</th><td>{self.to_time or '-'}</td></tr>
+            <tr><th align="left">PickUp Address</th><td>{self.pickup_address or '-'}</td></tr>
+            <tr><th align="left">Drop Address</th><td>{self.drop_address or '-'}</td></tr>
+            <tr><th align="left">Color</th><td>{self.color or '-'}</td></tr>
+            <tr><th align="left">Assign Vehicle Number</th><td>{self.assign_vehicle_number or '-'}</td></tr>
+            <tr><th align="left">Driver</th><td>{self.driver or '-'}</td></tr>
+            <tr><th align="left">Driver Email</th><td>{self.email or '-'}</td></tr>
+            <tr><th align="left">Driver Mobile Number</th><td>{self.driver_mobile_number or '-'}</td></tr>
+        </table>
+        <p>Regards,<br>VCM RENTAL Team</p>
+        """
+
+        frappe.sendmail(
+            recipients=[recipient],
+            cc=cc_emails,
+            subject=subject,
+            message=message,
+            reference_doctype=self.doctype,
+            reference_name=self.name
+        )
