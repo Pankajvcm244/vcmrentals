@@ -7,6 +7,7 @@
  "engine": "InnoDB",
  "field_order": [
   "department",
+  "employee_type",
   "ride_type",
   "l1_approver",
   "l2_approver",
@@ -26,19 +27,17 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Ride Type",
-   "options": "Office Time\nIntercity\nOutstation"
+   "options": "Local\nIntercity\nOutstation"
   },
   {
    "fieldname": "l1_approver",
    "fieldtype": "Link",
-   "in_list_view": 1,
    "label": "L1 Approver",
    "options": "User"
   },
   {
    "fieldname": "l2_approver",
    "fieldtype": "Link",
-   "in_list_view": 1,
    "label": "L2 Approver",
    "options": "User"
   },
@@ -55,12 +54,19 @@
    "in_list_view": 1,
    "label": "Final Approver",
    "options": "User"
+  },
+  {
+   "fieldname": "employee_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Employee Type",
+   "options": "Category C\nCategory B\nCategory A"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-07-16 14:28:45.941356",
+ "modified": "2025-07-22 11:26:53.031216",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Ride ALM Levels",

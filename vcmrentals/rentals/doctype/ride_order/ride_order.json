@@ -6,27 +6,26 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "employee_code",
-  "employee_name",
+  "name1",
+  "department",
+  "employee_type",
   "contact_number",
-  "emp_department",
+  "email",
+  "user_name",
+  "column_break_pfgk",
+  "state",
+  "status",
   "l1_approving_authority",
   "l2_approving_authority",
   "l3_approving_authority",
   "final_approving_authority",
-  "column_break_pfgk",
-  "state",
-  "status",
-  "department",
-  "email",
-  "manager_email",
   "section_break_reul",
   "date",
   "pickup_time",
   "drop_time",
   "column_break_ehxr",
-  "ride_type",
   "vehicle_type",
+  "ride_type",
   "section_break_dhuu",
   "pickup_address",
   "column_break_qrpa",
@@ -37,7 +36,7 @@
  ],
  "fields": [
   {
-   "fetch_from": "employee_code.cell_number",
+   "fetch_from": "name1.contact",
    "fieldname": "contact_number",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -60,16 +59,8 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Ride Type",
-   "options": "\nOffice Time\nIntercity\nOutstation",
+   "options": "\nLocal\nIntercity\nOutstation",
    "reqd": 1,
-   "set_only_once": 1
-  },
-  {
-   "fetch_from": "employee_code.company_email",
-   "fieldname": "email",
-   "fieldtype": "Data",
-   "label": "Email",
-   "read_only": 1,
    "set_only_once": 1
   },
   {
@@ -84,14 +75,6 @@
    "fieldtype": "Data",
    "label": "Drop Address",
    "reqd": 1,
-   "set_only_once": 1
-  },
-  {
-   "fetch_from": "employee_code.shift_request_approver",
-   "fieldname": "manager_email",
-   "fieldtype": "Data",
-   "label": "Manager Email",
-   "read_only": 1,
    "set_only_once": 1
   },
   {
@@ -147,28 +130,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "employee_code.employee_name",
-   "fieldname": "employee_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Employee Name",
-   "read_only": 1
-  },
-  {
-   "fieldname": "employee_code",
-   "fieldtype": "Link",
-   "label": "Employee Code",
-   "options": "Employee",
-   "reqd": 1
-  },
-  {
-   "fetch_from": "employee_code.department",
-   "fieldname": "emp_department",
-   "fieldtype": "Data",
-   "label": "EMP Department",
-   "read_only": 1
-  },
-  {
    "default": "Today",
    "fieldname": "date",
    "fieldtype": "Date",
@@ -184,12 +145,6 @@
   {
    "fieldname": "column_break_qrpa",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "department",
-   "fieldtype": "Link",
-   "label": "Department",
-   "options": "Department"
   },
   {
    "fieldname": "l1_approving_authority",
@@ -224,12 +179,46 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fetch_from": "name1.department",
+   "fieldname": "department",
+   "fieldtype": "Data",
+   "label": "Department",
+   "read_only": 1
+  },
+  {
+   "fieldname": "name1",
+   "fieldtype": "Link",
+   "label": "Name",
+   "options": "Vehicle Booking User"
+  },
+  {
+   "fetch_from": "name1.email",
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "name1.employee_type",
+   "fieldname": "employee_type",
+   "fieldtype": "Data",
+   "label": "Employee Type",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "name1.name1",
+   "fieldname": "user_name",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "User Name"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-16 16:44:35.534222",
+ "modified": "2025-07-22 11:26:40.119305",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Ride Order",
@@ -245,6 +234,7 @@
    "report": 1,
    "role": "Ride User",
    "share": 1,
+   "submit": 1,
    "write": 1
   },
   {
@@ -255,6 +245,7 @@
    "report": 1,
    "role": "Vehicle Agent",
    "share": 1,
+   "submit": 1,
    "write": 1
   },
   {
@@ -266,7 +257,17 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
+   "submit": 1,
    "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Driver",
+   "share": 1
   }
  ],
  "sort_field": "modified",

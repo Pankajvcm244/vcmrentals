@@ -20,11 +20,10 @@ def get_data():
         'transactions': [
             {
                 'label': 'Vehicle Records',
-                'items': ['Vehicle Challan', 'Vehicle Maintenance']
+                'items': ['Vehicle Challan', 'Vehicle Maintenance','Vehicle Insurance Details','Vehicle Pollution Details']
             }
         ]
     }
-
 
 
 

@@ -35,6 +35,7 @@ def get_preq_ride_level(doc):
                     ON level.parent = alm.name
                 WHERE alm.document = "{doc.doctype}"
                     AND level.department = "{doc.department}"
+                    AND level.employee_type = "{doc.employee_type}"
                     AND (level.ride_type = "{doc.ride_type}")   
                 ORDER BY level.idx
                     """,
@@ -84,7 +85,7 @@ def assign_and_notify_next_ride_authority(doc, method="Email"):
         #     send_email_approval(doc, user)
 
     #if current_state == "Final Level Approved":
-    if current_state in ("Final Level Approved", "Rejected"):
+    if current_state in ("Final Level Approved", "Rejected", "Trashed"):
         close_assignments(doc, remove=True)
     frappe.db.commit()
     return

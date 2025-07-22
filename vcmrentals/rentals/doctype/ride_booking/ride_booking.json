@@ -9,6 +9,7 @@
   "section_break_whaq",
   "order",
   "customer_name",
+  "customer_email",
   "customer_number",
   "ride",
   "seating_capacity",
@@ -33,6 +34,11 @@
   "driver_mobile_number",
   "odometer_start_pic",
   "odometer_end_pic",
+  "section_break_brdf",
+  "user_feedback",
+  "column_break_peca",
+  "driver_feedback",
+  "ride_status",
   "external_travel_agency_section",
   "external_agency",
   "vehicle_number",
@@ -61,7 +67,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Order",
-   "link_filters": "[[\"Ride Order\",\"state\",\"=\",\"Open\"]]",
+   "link_filters": "[[\"Ride Order\",\"state\",\"=\",\"Open\"],[\"Ride Order\",\"workflow_state\",\"=\",\"Final Level Approved\"]]",
    "options": "Ride Order",
    "reqd": 1
   },
@@ -182,7 +188,7 @@
    "read_only": 1
   },
   {
-   "fetch_from": "order.employee_name",
+   "fetch_from": "order.user_name",
    "fieldname": "customer_name",
    "fieldtype": "Data",
    "label": "Customer Name",
@@ -200,7 +206,8 @@
    "fieldname": "driver_mobile_number",
    "fieldtype": "Data",
    "label": "Driver Mobile Number",
-   "read_only": 1
+   "read_only": 1,
+   "reqd": 1
   },
   {
    "fetch_from": "order.date",
@@ -243,27 +250,67 @@
   {
    "fieldname": "odometer_start",
    "fieldtype": "Int",
-   "label": "Odometer Start"
+   "label": "Odometer Start",
+   "permlevel": 1
   },
   {
    "fieldname": "odometer_end",
    "fieldtype": "Int",
-   "label": "Odometer End"
+   "label": "Odometer End",
+   "permlevel": 1
   },
   {
    "fieldname": "odometer_start_pic",
    "fieldtype": "Attach",
-   "label": "Odometer Start Pic"
+   "label": "Odometer Start Pic",
+   "permlevel": 1
   },
   {
    "fieldname": "odometer_end_pic",
    "fieldtype": "Attach",
-   "label": "Odometer End Pic"
+   "label": "Odometer End Pic",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "section_break_brdf",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "user_feedback",
+   "fieldtype": "Rating",
+   "label": "User Feedback",
+   "permlevel": 2
+  },
+  {
+   "depends_on": "eval:doc.ride_status == \"Completed\"\n",
+   "fieldname": "driver_feedback",
+   "fieldtype": "Rating",
+   "label": "Driver Feedback",
+   "mandatory_depends_on": "eval:doc.ride_status == \"Completed\"\n\n",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "ride_status",
+   "fieldtype": "Select",
+   "label": "Ride Status",
+   "options": "On Ride\nCompleted",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "column_break_peca",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "order.email",
+   "fieldname": "customer_email",
+   "fieldtype": "Data",
+   "label": "Customer Email",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-16 17:06:45.796981",
+ "modified": "2025-07-22 14:25:49.130379",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Ride Booking",
@@ -290,6 +337,25 @@
    "read": 1,
    "report": 1,
    "role": "Vehicle Agent",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Driver",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Ride User",
    "share": 1,
    "write": 1
   }
