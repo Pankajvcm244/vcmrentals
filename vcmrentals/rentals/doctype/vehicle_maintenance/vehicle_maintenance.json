@@ -1,0 +1,195 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "MAT.####",
+ "creation": "2025-06-20 17:30:16.147714",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_cppp",
+  "vehicle",
+  "service_date",
+  "maintenance_type",
+  "status",
+  "odometer_reading_km",
+  "column_break_unwz",
+  "workshop_name",
+  "total_cost",
+  "attach_bill",
+  "problem_discription",
+  "amended_from",
+  "section_break_gxxk",
+  "insurance_claim_used",
+  "insurance_company",
+  "claim_number",
+  "claim_amount",
+  "column_break_xeoz",
+  "claim_status",
+  "remarks_on_claim"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_cppp",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Vehicle Maintenance",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "vehicle",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Vehicle",
+   "options": "VcmVehicle",
+   "reqd": 1
+  },
+  {
+   "fieldname": "workshop_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Workshop Name",
+   "reqd": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "service_date",
+   "fieldtype": "Data",
+   "label": "Service Date"
+  },
+  {
+   "fieldname": "odometer_reading_km",
+   "fieldtype": "Float",
+   "label": "Odometer Reading (KM)\t",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "attach_bill",
+   "fieldtype": "Attach",
+   "label": "Attach Bill/Invoice",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "\nScheduled\nIn Progress\nCompleted\nCancelled",
+   "reqd": 1
+  },
+  {
+   "fieldname": "total_cost",
+   "fieldtype": "Currency",
+   "label": "Total Cost ",
+   "reqd": 1
+  },
+  {
+   "fieldname": "problem_discription",
+   "fieldtype": "Small Text",
+   "label": "Problem Discription",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "insurance_claim_used",
+   "fieldtype": "Check",
+   "label": "Insurance Claim Used?"
+  },
+  {
+   "fieldname": "maintenance_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Maintenance Type",
+   "options": "\nGeneral Service\nOil Change\nTyre Replacement\nBattery Replacement\nBrake Service\nAC Service\nInsurance Renewal\nWheel Alignment\nOther",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_unwz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_gxxk",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.insurance_claim_used",
+   "fieldname": "insurance_company",
+   "fieldtype": "Data",
+   "label": "Insurance Company"
+  },
+  {
+   "depends_on": "eval:doc.insurance_claim_used",
+   "fieldname": "claim_number",
+   "fieldtype": "Data",
+   "label": "Claim Number"
+  },
+  {
+   "depends_on": "eval:doc.insurance_claim_used",
+   "fieldname": "claim_status",
+   "fieldtype": "Select",
+   "label": "Claim Status",
+   "options": "\nApproved\nRejected\nPaid\nPending"
+  },
+  {
+   "depends_on": "eval:doc.insurance_claim_used",
+   "fieldname": "claim_amount",
+   "fieldtype": "Currency",
+   "label": "Claim Amount"
+  },
+  {
+   "fieldname": "column_break_xeoz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.insurance_claim_used",
+   "fieldname": "remarks_on_claim",
+   "fieldtype": "Small Text",
+   "label": "Remarks on Claim"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-07-10 12:52:21.325361",
+ "modified_by": "Administrator",
+ "module": "Rentals",
+ "name": "Vehicle Maintenance",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Vehicle Agent",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

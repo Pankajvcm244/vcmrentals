@@ -8,16 +8,20 @@
  "field_order": [
   "title",
   "make",
-  "year",
-  "color",
-  "insurance_expiry",
-  "column_break_sgqo",
-  "is_published",
+  "fuel_type",
+  "bs_category",
+  "column_break_ckgb",
   "model",
   "license_plate",
+  "chassis_no",
+  "color",
   "vehicle_image",
+  "details_section",
+  "ncr_entry_allowed",
   "status",
-  "condition"
+  "column_break_vhhe",
+  "condition",
+  "location"
  ],
  "fields": [
   {
@@ -31,40 +35,29 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Make",
-   "reqd": 1
-  },
-  {
-   "fieldname": "year",
-   "fieldtype": "Int",
-   "in_list_view": 1,
-   "label": "Year",
-   "non_negative": 1,
-   "reqd": 1
+   "reqd": 1,
+   "set_only_once": 1
   },
   {
    "fieldname": "color",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Color",
-   "reqd": 1
-  },
-  {
-   "fieldname": "insurance_expiry",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Insurance Expiry",
-   "reqd": 1
+   "reqd": 1,
+   "set_only_once": 1
   },
   {
    "fieldname": "model",
    "fieldtype": "Data",
    "label": "Model",
-   "reqd": 1
+   "reqd": 1,
+   "set_only_once": 1
   },
   {
    "fieldname": "license_plate",
    "fieldtype": "Data",
-   "label": "License Plate"
+   "label": "License Plate",
+   "set_only_once": 1
   },
   {
    "fieldname": "vehicle_image",
@@ -75,7 +68,7 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "Active\nOut of Service\nSold\nCrushed"
+   "options": "Active\nDamaged\nOut of Service\nIn Maintenance"
   },
   {
    "fieldname": "condition",
@@ -83,20 +76,57 @@
    "label": "Condition"
   },
   {
-   "default": "0",
-   "fieldname": "is_published",
-   "fieldtype": "Check",
-   "label": "Is Published?"
+   "fieldname": "fuel_type",
+   "fieldtype": "Select",
+   "label": "Fuel Type",
+   "options": "\nPetrol\nDiesel\nEV\nCNG",
+   "reqd": 1,
+   "set_only_once": 1
   },
   {
-   "fieldname": "column_break_sgqo",
+   "default": "0",
+   "fieldname": "ncr_entry_allowed",
+   "fieldtype": "Check",
+   "label": "NCR Entry Allowed?"
+  },
+  {
+   "fieldname": "bs_category",
+   "fieldtype": "Select",
+   "label": "BS Category",
+   "options": "\nBS4\nBS6\nBS6 Phase 2\nBS6.2\nElectric\nHybrid",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "column_break_ckgb",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "details_section",
+   "fieldtype": "Section Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Location",
+   "options": "Budget Location"
+  },
+  {
+   "fieldname": "column_break_vhhe",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "chassis_no",
+   "fieldtype": "Data",
+   "label": "Chassis No",
+   "set_only_once": 1
   }
  ],
  "image_field": "vehicle_image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-14 16:22:00.365395",
+ "modified": "2025-07-22 14:29:59.689591",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "VcmVehicle",
@@ -116,13 +146,33 @@
    "write": 1
   },
   {
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Driver",
+   "share": 1
+  },
+  {
    "create": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "CabAgent",
+   "role": "Vehicle Agent",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Ride User",
    "share": 1,
    "write": 1
   }
