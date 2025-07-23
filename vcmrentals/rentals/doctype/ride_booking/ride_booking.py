@@ -1,16 +1,15 @@
+
 import frappe
 from frappe import _
-from frappe.utils import get_datetime
+from frappe.utils import get_datetime, now_datetime
 from frappe.model.document import Document
-from frappe.model.document import Document
-from frappe.utils import now_datetime
 from frappe.model.naming import make_autoname
-from frappe.utils import now_datetime
+
 
 class RideBooking(Document):
     def autoname(self):
         today = now_datetime()
-        date_prefix = today.strftime("%y%m")  # day-month, e.g., 2507 for 25 July
+        date_prefix = today.strftime("%y%m")  # e.g., 2507 for July 2025
         prefix = f"RIDE-{date_prefix}-"
         self.name = make_autoname(prefix + ".#####")
 
@@ -42,6 +41,7 @@ class RideBooking(Document):
         start_time = get_datetime(f"{self.date} {self.from_time}")
         end_time = get_datetime(f"{self.date} {self.to_time}")
 
+        # Check vehicle overlapping
         overlapping_vehicle = frappe.db.sql(
             """
             SELECT name FROM `tabRide Booking`
@@ -60,6 +60,7 @@ class RideBooking(Document):
         if overlapping_vehicle:
             frappe.throw(_("This vehicle is already booked for the selected date and time."))
 
+        # Check driver overlapping
         if self.driver:
             overlapping_driver = frappe.db.sql(
                 """
@@ -79,12 +80,31 @@ class RideBooking(Document):
             if overlapping_driver:
                 frappe.throw(_("This driver is already assigned to another ride during the selected date and time."))
 
+    def _build_cc_list(self):
+        try:
+            settings = frappe.get_cached_doc("Vehicle Booking Settings")
+        except frappe.DoesNotExistError:
+            return []
+
+        cc = []
+        if settings.enable_email == "Yes" and settings.ride_order_cc:
+            cc = [email.strip() for email in settings.ride_order_cc.split(",") if email.strip()]
+        return cc
+
     def send_draft_email(self):
+        try:
+            settings = frappe.get_cached_doc("Vehicle Booking Settings")
+        except frappe.DoesNotExistError:
+            return
+
+        if settings.enable_email != "Yes":
+            return
+
         recipients = [self.customer_email] if self.customer_email else []
         if self.email and self.email not in recipients:
             recipients.append(self.email)
 
-        cc_emails = ["aman.sonimtr@vcm.org.in"]
+        cc_emails = self._build_cc_list()
 
         subject = f"🚘 Ride Booking Created: {self.name}"
 

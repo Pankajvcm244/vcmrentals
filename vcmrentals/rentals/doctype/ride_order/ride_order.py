@@ -1,25 +1,21 @@
+
 import frappe
 from frappe.model.document import Document
-from frappe.utils import getdate
-from frappe.model.document import Document
+from frappe.utils import getdate, now_datetime
 from frappe.model.naming import make_autoname
-from frappe.utils import now_datetime
 
 from vcmrentals.rentals.doctype.ride_order.ridealm.ride import (
     assign_and_notify_next_ride_authority,
     get_preq_ride_level,
 )
 
-BOOKING_CC = ["aman.soni@vcm.org.in"]
 
 class RideOrder(Document):
     def autoname(self):
         today = now_datetime()
-        date_prefix = today.strftime("%y%m")  # day-month, e.g., 2507 for 25 July
+        date_prefix = today.strftime("%y%m")  # e.g., 2507 for July 2025
         prefix = f"ORDER-{date_prefix}-"
         self.name = make_autoname(prefix + ".#####")
-    
-
 
     def before_save(self):
         self.refresh_alm()
@@ -28,7 +24,11 @@ class RideOrder(Document):
         self.send_draft_email()
 
     def on_update(self):
-        if self.is_new() and self.status == "Pending":
+        if self.workflow_state == "Rejected":
+            self.send_rejection_email()
+            return
+
+        if self.is_new():
             self.send_approval_email_to_manager()
         assign_and_notify_next_ride_authority(self)
 
@@ -48,14 +48,27 @@ class RideOrder(Document):
         self.final_approving_authority = alm_level.final_approver
 
     def _build_cc_list(self):
-        cc = BOOKING_CC.copy()
+        try:
+            settings = frappe.get_cached_doc("Vehicle Booking Settings")
+        except frappe.DoesNotExistError:
+            return [self.email] if self.email else []
+
+        cc = []
+        if settings.enable_email == "Yes" and settings.ride_order_cc:
+            cc = [email.strip() for email in settings.ride_order_cc.split(",") if email.strip()]
+
         if self.email:
             cc.append(self.email)
+
         return cc
 
     def send_draft_email(self):
+        settings = frappe.get_cached_doc("Vehicle Booking Settings")
+        if settings.enable_email != "Yes":
+            return
+
         frappe.sendmail(
-            recipients=[self.email] if self.email else BOOKING_CC,
+            recipients=[self.email] if self.email else [],
             cc=self._build_cc_list(),
             subject=f"Ride Request Received - {self.name}",
             message=frappe.render_template(
@@ -63,7 +76,7 @@ class RideOrder(Document):
                 <div style="font-family: 'Segoe UI', sans-serif; color: #333; max-width: 600px; margin: auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
                     <div style="background-color: #00bfa5; color: white; padding: 20px;">
                         <h2 style="margin: 0;">Ride Request 📥</h2>
-                        <p style="margin: 5px 0 0;">Hi {{ doc.user_name or "Guest" }},</p>
+                        <p style="margin: 5px 0 0;">Hare Krishna {{ doc.user_name or "Guest" }},</p>
                     </div>
 
                     <div style="padding: 20px;">
@@ -83,7 +96,6 @@ class RideOrder(Document):
 
                         <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;">
 
-
                         <p style="margin-top: 20px;">You’ll receive another email once your ride is confirmed.<br><strong>— Team VCM Rentals</strong></p>
                     </div>
 
@@ -97,8 +109,12 @@ class RideOrder(Document):
         )
 
     def send_confirm_email(self):
+        settings = frappe.get_cached_doc("Vehicle Booking Settings")
+        if settings.enable_email != "Yes":
+            return
+
         frappe.sendmail(
-            recipients=[self.email] if self.email else BOOKING_CC,
+            recipients=[self.email] if self.email else [],
             cc=self._build_cc_list(),
             subject=f"Ride {self.name} Confirmed - VCM Rentals",
             message=frappe.render_template(
@@ -106,7 +122,7 @@ class RideOrder(Document):
                 <div style="font-family: 'Segoe UI', sans-serif; color: #333; max-width: 600px; margin: auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
                     <div style="background-color: #00bfa5; color: white; padding: 20px;">
                         <h2 style="margin: 0;">Ride Confirmed ✅</h2>
-                        <p style="margin: 5px 0 0;">Hi {{ doc.user_name or "Guest" }},</p>
+                        <p style="margin: 5px 0 0;">Hare Krishna {{ doc.user_name or "Guest" }},</p>
                     </div>
 
                     <div style="padding: 20px;">
@@ -122,11 +138,9 @@ class RideOrder(Document):
                             {% if doc.intermediate_stop %}
                             <tr><td style="padding: 8px;">⏸️ <strong>Intermediate Stop</strong></td><td>{{ doc.intermediate_stop }}</td></tr>
                             {% endif %}
-                            
                         </table>
 
                         <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;">
-
 
                         <p style="margin-top: 20px;">Have a safe and pleasant journey!<br><strong>— Team VCM Rentals</strong></p>
                     </div>
@@ -139,3 +153,38 @@ class RideOrder(Document):
                 {"doc": self}
             ),
         )
+    def send_rejection_email(self):
+            settings = frappe.get_cached_doc("Vehicle Booking Settings")
+            if settings.enable_email != "Yes":
+                return
+
+            frappe.sendmail(
+                recipients=[self.email] if self.email else [],
+                cc=self._build_cc_list(),
+                subject=f"Ride Request {self.name} - Rejected ❌",
+                message=frappe.render_template(
+                    """
+                    <div style="font-family: 'Segoe UI', sans-serif; color: #333; max-width: 600px; margin: auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
+                        <div style="background-color: #d32f2f; color: white; padding: 20px;">
+                            <h2 style="margin: 0;">Ride Request Rejected ❌</h2>
+                            <p style="margin: 5px 0 0;">Hare Krishna {{ doc.user_name or "User" }},</p>
+                        </div>
+
+                        <div style="padding: 20px;">
+                            <p>We're sorry to inform you that your ride request <strong>{{ doc.name }}</strong> has been <strong>rejected</strong>.</p>
+
+                            {% if doc.rejection_reason %}
+                                <p><strong>Reason:</strong> {{ doc.rejection_reason }}</p>
+                            {% endif %}
+
+                            <p style="margin-top: 20px;">Please contact support if you have any questions.<br><strong>— Team VCM Rentals</strong></p>
+                        </div>
+
+                        <div style="background-color: #f9f9f9; padding: 10px 20px; text-align: center; font-size: 12px; color: #999;">
+                            © 2025 VCM Rentals • All rights reserved
+                        </div>
+                    </div>
+                    """,
+                    {"doc": self}
+                )
+            )
