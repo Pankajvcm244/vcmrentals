@@ -10,11 +10,14 @@
   "vehicle",
   "service_date",
   "maintenance_type",
+  "other_type",
   "status",
   "odometer_reading_km",
   "column_break_unwz",
   "workshop_name",
-  "total_cost",
+  "total_amount",
+  "paid_by_owner_amount",
+  "paid_by_insurance_amount",
   "attach_bill",
   "problem_discription",
   "amended_from",
@@ -84,12 +87,6 @@
    "reqd": 1
   },
   {
-   "fieldname": "total_cost",
-   "fieldtype": "Currency",
-   "label": "Total Cost ",
-   "reqd": 1
-  },
-  {
    "fieldname": "problem_discription",
    "fieldtype": "Small Text",
    "label": "Problem Discription",
@@ -151,12 +148,35 @@
    "fieldname": "remarks_on_claim",
    "fieldtype": "Small Text",
    "label": "Remarks on Claim"
+  },
+  {
+   "depends_on": "eval:doc.maintenance_type =='Other'",
+   "fieldname": "other_type",
+   "fieldtype": "Data",
+   "label": "Other Type",
+   "mandatory_depends_on": "eval:doc.maintenance_type =='Other'"
+  },
+  {
+   "fieldname": "paid_by_owner_amount",
+   "fieldtype": "Currency",
+   "label": "Paid by Owner Amount"
+  },
+  {
+   "fieldname": "paid_by_insurance_amount",
+   "fieldtype": "Currency",
+   "label": "Paid by Insurance Amount"
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "label": "Total Amount",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-10 12:52:21.325361",
+ "modified": "2025-07-24 17:56:05.686800",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Vehicle Maintenance",

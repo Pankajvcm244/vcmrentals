@@ -6,7 +6,6 @@
  "engine": "InnoDB",
  "field_order": [
   "section_break_bv9p",
-  "pollution_center_name",
   "puc_certificate_number",
   "vehicle",
   "remarks",
@@ -15,7 +14,14 @@
   "issued_date",
   "expiry_date",
   "emission_standard",
-  "document_upload"
+  "document_upload",
+  "pollution_amount",
+  "validity_period",
+  "fuel_type",
+  "model",
+  "bs_category",
+  "engine",
+  "chassis_no"
  ],
  "fields": [
   {
@@ -54,15 +60,10 @@
    "label": "Expiry Date"
   },
   {
-   "fieldname": "pollution_center_name",
-   "fieldtype": "Data",
-   "label": "Pollution Center Name"
-  },
-  {
+   "fetch_from": "vehicle.bs_category",
    "fieldname": "emission_standard",
-   "fieldtype": "Select",
-   "label": "Emission Standard",
-   "options": "BS4\nBS6\nOther"
+   "fieldtype": "Data",
+   "label": "Emission Standard"
   },
   {
    "fieldname": "document_upload",
@@ -81,12 +82,57 @@
   {
    "fieldname": "column_break_mcqa",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "pollution_amount",
+   "fieldtype": "Currency",
+   "label": "Pollution Amount",
+   "reqd": 1
+  },
+  {
+   "fieldname": "validity_period",
+   "fieldtype": "Select",
+   "label": "Validity Period",
+   "options": "1 Year\n6 Month"
+  },
+  {
+   "fetch_from": "vehicle.fuel_type",
+   "fieldname": "fuel_type",
+   "fieldtype": "Data",
+   "label": "Fuel Type",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "vehicle.model",
+   "fieldname": "model",
+   "fieldtype": "Data",
+   "label": "Model"
+  },
+  {
+   "fetch_from": "vehicle.engine_number",
+   "fieldname": "engine",
+   "fieldtype": "Data",
+   "label": "Engine",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "vehicle.chassis_no",
+   "fieldname": "chassis_no",
+   "fieldtype": "Data",
+   "label": "Chassis No",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "vehicle.bs_category",
+   "fieldname": "bs_category",
+   "fieldtype": "Data",
+   "label": "BS Category"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-22 14:10:17.120617",
+ "modified": "2025-07-25 10:43:09.082232",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Vehicle Pollution Details",

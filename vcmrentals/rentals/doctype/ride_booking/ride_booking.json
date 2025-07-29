@@ -14,22 +14,31 @@
   "ride",
   "seating_capacity",
   "amended_from",
+  "data_zvbf",
+  "ride_purpose",
+  "info",
   "column_break_jbqq",
   "date",
+  "trip_end_date",
   "from_time",
   "to_time",
   "starttime",
   "endtime",
   "pickup_address",
+  "intermediate_stop",
   "drop_address",
   "section_break_hgqk",
   "vehicle",
+  "vehicle_title",
   "color",
   "assign_vehicle_number",
   "odometer_start",
+  "odometer_start_time_stamp",
   "odometer_end",
+  "odometer_end_time_stamp",
   "column_break_jdhp",
   "driver",
+  "assigned_driver",
   "email",
   "driver_mobile_number",
   "odometer_start_pic",
@@ -41,8 +50,9 @@
   "ride_status",
   "external_travel_agency_section",
   "external_agency",
-  "vehicle_number",
   "travel_agency_name",
+  "vehicle_number",
+  "travel_agency_number",
   "column_break_ehoy",
   "driver_name",
   "driver_number"
@@ -76,8 +86,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Driver",
-   "link_filters": "[[\"Employee\",\"designation\",\"=\",\"Driver\"]]",
-   "options": "Employee"
+   "options": "Vehicle Driver"
   },
   {
    "fieldname": "vehicle",
@@ -87,7 +96,7 @@
    "options": "VcmVehicle"
   },
   {
-   "fetch_from": "driver.company_email",
+   "fetch_from": "driver.email",
    "fieldname": "email",
    "fieldtype": "Data",
    "label": "Email",
@@ -111,15 +120,18 @@
   },
   {
    "depends_on": "eval:doc.external_agency==1\n",
+   "fetch_from": "travel_agency_name.vehicle_number",
    "fieldname": "vehicle_number",
    "fieldtype": "Data",
-   "label": "Vehicle Number"
+   "label": "Vehicle Number",
+   "read_only": 1
   },
   {
    "depends_on": "eval:doc.external_agency==1\n",
    "fieldname": "travel_agency_name",
-   "fieldtype": "Data",
-   "label": "Travel Agency name"
+   "fieldtype": "Link",
+   "label": "Travel Agency name",
+   "options": "External Travel Agency Vehicle"
   },
   {
    "fieldname": "column_break_ehoy",
@@ -127,15 +139,19 @@
   },
   {
    "depends_on": "eval:doc.external_agency==1\n",
+   "fetch_from": "travel_agency_name.driver_name",
    "fieldname": "driver_name",
    "fieldtype": "Data",
-   "label": "Driver Name"
+   "label": "Driver Name",
+   "read_only": 1
   },
   {
    "depends_on": "eval:doc.external_agency==1\n",
+   "fetch_from": "travel_agency_name.driver_number",
    "fieldname": "driver_number",
    "fieldtype": "Data",
-   "label": "Driver Number"
+   "label": "Driver Number",
+   "read_only": 1
   },
   {
    "fetch_from": "order.pickup_address",
@@ -155,7 +171,7 @@
    "fetch_from": "order.contact_number",
    "fieldname": "customer_number",
    "fieldtype": "Data",
-   "label": "Customer Number",
+   "label": "User Number",
    "read_only": 1
   },
   {
@@ -184,6 +200,7 @@
    "fetch_from": "vehicle.title",
    "fieldname": "assign_vehicle_number",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Assign Vehicle Number",
    "read_only": 1
   },
@@ -191,7 +208,7 @@
    "fetch_from": "order.user_name",
    "fieldname": "customer_name",
    "fieldtype": "Data",
-   "label": "Customer Name",
+   "label": "User Name",
    "read_only": 1
   },
   {
@@ -202,7 +219,7 @@
    "read_only": 1
   },
   {
-   "fetch_from": "driver.cell_number",
+   "fetch_from": "driver.mobile",
    "fieldname": "driver_mobile_number",
    "fieldtype": "Data",
    "label": "Driver Mobile Number",
@@ -213,7 +230,7 @@
    "fetch_from": "order.date",
    "fieldname": "date",
    "fieldtype": "Date",
-   "label": "Date",
+   "label": "Trip Start Date",
    "read_only": 1,
    "reqd": 1
   },
@@ -304,14 +321,86 @@
    "fetch_from": "order.email",
    "fieldname": "customer_email",
    "fieldtype": "Data",
-   "label": "Customer Email",
+   "label": "User Email",
+   "read_only": 1
+  },
+  {
+   "default": "now",
+   "depends_on": "eval:doc.odometer_start",
+   "fieldname": "odometer_start_time_stamp",
+   "fieldtype": "Datetime",
+   "label": "Odometer Start Time Stamp",
+   "read_only": 1
+  },
+  {
+   "default": "now",
+   "depends_on": "eval:doc.odometer_end",
+   "fieldname": "odometer_end_time_stamp",
+   "fieldtype": "Datetime",
+   "label": "Odometer End Time Stamp",
+   "read_only": 1,
+   "set_only_once": 1
+  },
+  {
+   "fetch_from": "order.trip_end_date",
+   "fieldname": "trip_end_date",
+   "fieldtype": "Date",
+   "label": "Trip End Date",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "order.ride_purpose",
+   "fieldname": "ride_purpose",
+   "fieldtype": "Data",
+   "label": "Ride Purpose",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "order.extra_description",
+   "fieldname": "data_zvbf",
+   "fieldtype": "Data",
+   "label": "Extra Description",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "travel_agency_name.travel_agency_number",
+   "fieldname": "travel_agency_number",
+   "fieldtype": "Data",
+   "label": "Travel Agency Number",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "driver.driver_name",
+   "fieldname": "assigned_driver",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Assigned Driver",
+   "read_only": 1
+  },
+  {
+   "fieldname": "info",
+   "fieldtype": "Small Text",
+   "hidden": 1,
+   "label": "Info"
+  },
+  {
+   "fetch_from": "order.intermediate_stop",
+   "fieldname": "intermediate_stop",
+   "fieldtype": "Data",
+   "label": "Intermediate Stop"
+  },
+  {
+   "fetch_from": "vehicle.title",
+   "fieldname": "vehicle_title",
+   "fieldtype": "Data",
+   "label": "Vehicle Title",
    "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-23 12:54:16.119922",
- "modified_by": "aman.soni@vcm.org.in",
+ "modified": "2025-07-28 17:54:50.997301",
+ "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Ride Booking",
  "naming_rule": "Expression (old style)",

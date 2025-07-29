@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"lGq3-ldogE\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">VCM RENTAL</span>\",\"col\":12}},{\"id\":\"DsiqakK8Sj\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"V68If8yIMP\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"VcmVehicle\",\"col\":3}},{\"id\":\"30soWlWfmV\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"VCM Orders\",\"col\":3}},{\"id\":\"bX0sBxyp_n\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Assign Vehicle\",\"col\":3}},{\"id\":\"lxZZVo33ua\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Challan\",\"col\":3}},{\"id\":\"w3JfBA818h\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Maintenance\",\"col\":3}},{\"id\":\"heI_GkYtdj\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Pollution\",\"col\":3}},{\"id\":\"2BtqCOVIP6\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Insurance Details\",\"col\":3}},{\"id\":\"2F_fDkXdgj\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"8GoHgKEDJO\",\"type\":\"spacer\",\"data\":{\"col\":12}}]",
+ "content": "[{\"id\":\"lGq3-ldogE\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">VCM RENTAL</span>\",\"col\":12}},{\"id\":\"DsiqakK8Sj\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"30soWlWfmV\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"VCM Orders\",\"col\":3}},{\"id\":\"bX0sBxyp_n\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Assign Vehicle\",\"col\":3}},{\"id\":\"2F_fDkXdgj\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"lciM85bm7A\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Masters</b></span>\",\"col\":12}},{\"id\":\"V68If8yIMP\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"VcmVehicle\",\"col\":3}},{\"id\":\"Opt8eguOvB\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Booking Users\",\"col\":3}},{\"id\":\"AAxd3INWDi\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Drivers\",\"col\":3}},{\"id\":\"qkk2EZqoSJ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Ride ALM\",\"col\":3}},{\"id\":\"8GoHgKEDJO\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"lxZZVo33ua\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Challan\",\"col\":3}},{\"id\":\"w3JfBA818h\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Maintenance\",\"col\":3}},{\"id\":\"heI_GkYtdj\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Pollution\",\"col\":3}},{\"id\":\"2BtqCOVIP6\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Insurance Details\",\"col\":3}}]",
  "creation": "2024-09-11 11:56:13.936104",
  "custom_blocks": [],
  "docstatus": 0,
@@ -13,7 +13,7 @@
  "is_hidden": 0,
  "label": "VCM RENTAL",
  "links": [],
- "modified": "2025-07-22 14:18:14.320344",
+ "modified": "2025-07-28 12:40:29.876158",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "VCM RENTAL",
@@ -34,6 +34,14 @@
    "type": "DocType"
   },
   {
+   "color": "Red",
+   "doc_view": "List",
+   "label": "Vehicle Booking Users",
+   "link_to": "Vehicle Booking User",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
    "color": "Yellow",
    "doc_view": "List",
    "label": "Vehicle Pollution",
@@ -50,10 +58,26 @@
    "type": "DocType"
   },
   {
+   "color": "Blue",
+   "doc_view": "List",
+   "label": "Drivers",
+   "link_to": "Vehicle Driver",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
    "color": "Grey",
    "doc_view": "List",
    "label": "Vehicle Maintenance",
    "link_to": "Vehicle Maintenance",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Cyan",
+   "doc_view": "List",
+   "label": "Ride ALM",
+   "link_to": "Ride ALM",
    "stats_filter": "[]",
    "type": "DocType"
   },

@@ -7,14 +7,22 @@
  "field_order": [
   "section_break_kdnl",
   "challan_number",
-  "challantype",
+  "challan_type",
+  "other_type",
   "challan_date",
+  "status",
   "location",
+  "mode_of_challan",
   "upload_receipt",
+  "paid_by",
   "column_break_uhku",
   "vehicle",
+  "model",
+  "engine_number",
+  "bs_category",
+  "chassis_no",
+  "fuel_type",
   "driver",
-  "driver_name",
   "fine_amount_inr",
   "payment_date",
   "remarks",
@@ -58,14 +66,6 @@
    "reqd": 1
   },
   {
-   "fieldname": "challantype",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "ChallanType",
-   "options": "\nSpeeding\nNo Helmet\nPollution",
-   "reqd": 1
-  },
-  {
    "fieldname": "fine_amount_inr",
    "fieldtype": "Currency",
    "label": "Fine Amount (INR)",
@@ -75,8 +75,7 @@
   {
    "fieldname": "payment_date",
    "fieldtype": "Date",
-   "label": "Payment Date",
-   "reqd": 1
+   "label": "Payment Date"
   },
   {
    "fieldname": "remarks",
@@ -96,30 +95,90 @@
    "reqd": 1
   },
   {
-   "fieldname": "driver",
-   "fieldtype": "Link",
-   "label": "Driver",
-   "options": "Employee",
-   "reqd": 1
-  },
-  {
    "fieldname": "upload_receipt",
    "fieldtype": "Attach",
    "label": "Upload Receipt",
    "reqd": 1
   },
   {
-   "fetch_from": "driver.employee_name",
-   "fieldname": "driver_name",
+   "fetch_from": "vehicle.model",
+   "fieldname": "model",
    "fieldtype": "Data",
-   "label": "Driver Name",
+   "label": "Model",
    "read_only": 1
+  },
+  {
+   "fetch_from": "vehicle.engine_number",
+   "fieldname": "engine_number",
+   "fieldtype": "Data",
+   "label": "Engine Number",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "vehicle.chassis_no",
+   "fieldname": "chassis_no",
+   "fieldtype": "Data",
+   "label": "Chassis No",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "vehicle.fuel_type",
+   "fieldname": "fuel_type",
+   "fieldtype": "Data",
+   "label": "Fuel Type",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "vehicle.bs_category",
+   "fieldname": "bs_category",
+   "fieldtype": "Data",
+   "label": "BS Category",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.challan_type =='Other'",
+   "fieldname": "other_type",
+   "fieldtype": "Data",
+   "label": "Other Type",
+   "mandatory_depends_on": "eval:doc.challan_type =='Other'"
+  },
+  {
+   "fieldname": "challan_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Challan Type",
+   "options": "Overspeed\nSeatbelt Not Worn\nDriving on Wrong Side\nRed Light / Signal Violation\nDrunk & Drive\nParking Rule Violation\nOther",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Payable\nn Court / Virtual Court\nPaid/Disposed"
+  },
+  {
+   "fieldname": "mode_of_challan",
+   "fieldtype": "Select",
+   "label": "Mode of Challan",
+   "options": "CCTV\nPhysical"
+  },
+  {
+   "fieldname": "paid_by",
+   "fieldtype": "Select",
+   "label": "Paid By ",
+   "options": "Organisation\nDriver"
+  },
+  {
+   "fieldname": "driver",
+   "fieldtype": "Link",
+   "label": "Driver",
+   "options": "Vehicle Driver"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-10 12:52:42.260723",
+ "modified": "2025-07-26 12:59:56.211536",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Vehicle Challan",

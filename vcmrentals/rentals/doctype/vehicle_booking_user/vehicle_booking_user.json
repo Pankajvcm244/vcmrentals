@@ -51,13 +51,13 @@
    "fieldname": "department",
    "fieldtype": "Link",
    "label": "Department",
-   "options": "Department",
+   "options": "Vehicle Department",
    "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-19 12:37:00.635232",
+ "modified": "2025-07-26 10:08:44.118368",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Vehicle Booking User",

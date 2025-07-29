@@ -7,25 +7,32 @@
  "engine": "InnoDB",
  "field_order": [
   "name1",
-  "department",
-  "employee_type",
+  "booking_user_name",
+  "workflow_state",
   "contact_number",
-  "email",
-  "user_name",
-  "column_break_pfgk",
-  "state",
-  "status",
   "l1_approving_authority",
   "l2_approving_authority",
   "l3_approving_authority",
   "final_approving_authority",
+  "column_break_pfgk",
+  "creation_date",
+  "state",
+  "status",
+  "department",
+  "employee_type",
+  "email",
+  "user_name",
   "section_break_reul",
   "date",
   "pickup_time",
+  "trip_end_date",
   "drop_time",
+  "cancellation_reason",
   "column_break_ehxr",
   "vehicle_type",
   "ride_type",
+  "ride_purpose",
+  "extra_description",
   "section_break_dhuu",
   "pickup_address",
   "column_break_qrpa",
@@ -39,7 +46,6 @@
    "fetch_from": "name1.contact",
    "fieldname": "contact_number",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "Contact Number",
    "read_only": 1,
    "reqd": 1,
@@ -48,13 +54,12 @@
   {
    "fieldname": "pickup_time",
    "fieldtype": "Time",
-   "in_list_view": 1,
    "label": "Pickup Time",
    "reqd": 1,
    "set_only_once": 1
   },
   {
-   "description": " ",
+   "description": "<b>Local: Vrindavan,Mathura<br>\nIntercity: Barsana,Agra,Tundla<br>\nOutstation : Delhi,GGN,Jaipur\n</b>",
    "fieldname": "ride_type",
    "fieldtype": "Select",
    "in_list_view": 1,
@@ -89,6 +94,7 @@
   {
    "fieldname": "state",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "State",
    "options": "Open\nClose",
    "read_only": 1
@@ -134,7 +140,7 @@
    "fieldname": "date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "Date",
+   "label": "Trip Start Date",
    "reqd": 1
   },
   {
@@ -213,63 +219,66 @@
    "fieldtype": "Data",
    "hidden": 1,
    "label": "User Name"
+  },
+  {
+   "fieldname": "trip_end_date",
+   "fieldtype": "Date",
+   "label": "Trip End Date",
+   "reqd": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "workflow_state",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Workflow State",
+   "no_copy": 1,
+   "options": "Workflow State"
+  },
+  {
+   "fieldname": "ride_purpose",
+   "fieldtype": "Data",
+   "label": "Ride Purpose",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.workflow_state =='Trashed'",
+   "fieldname": "cancellation_reason",
+   "fieldtype": "Data",
+   "label": "Cancellation Reason",
+   "mandatory_depends_on": "eval:doc.workflow_state =='Trashed'"
+  },
+  {
+   "fieldname": "extra_description",
+   "fieldtype": "Data",
+   "label": "Extra Description"
+  },
+  {
+   "fetch_from": "name1.name1",
+   "fieldname": "booking_user_name",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Booking User Name"
+  },
+  {
+   "default": "Today",
+   "fieldname": "creation_date",
+   "fieldtype": "Date",
+   "label": "Creation Date",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-22 11:26:40.119305",
+ "modified": "2025-07-28 17:11:13.310031",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Ride Order",
  "naming_rule": "Expression (old style)",
  "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Ride User",
-   "share": 1,
-   "submit": 1,
-   "write": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Vehicle Agent",
-   "share": 1,
-   "submit": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "submit": 1,
-   "write": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Driver",
-   "share": 1
-  }
- ],
+ "permissions": [],
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

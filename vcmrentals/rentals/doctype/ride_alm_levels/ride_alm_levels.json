@@ -20,7 +20,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Department",
-   "options": "Department"
+   "options": "Vehicle Department"
   },
   {
    "fieldname": "ride_type",
@@ -66,7 +66,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-07-22 11:26:53.031216",
+ "modified": "2025-07-26 10:14:55.578258",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Ride ALM Levels",
