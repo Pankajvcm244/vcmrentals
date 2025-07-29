@@ -225,6 +225,27 @@ class RideBooking(Document):
             reference_name=self.name
         )
 
+    # def validate_odometer_start(self):
+    #     if self.vehicle and self.odometer_start is not None:
+    #         last_ride = frappe.db.get_value(
+    #             "Ride Booking",
+    #             {
+    #                 "vehicle": self.vehicle,
+    #                 "name": ["!=", self.name]  # exclude current record
+    #             },
+    #             ["name", "odometer_end"],
+    #             order_by="creation desc"
+    #         )
+
+    #         if last_ride and last_ride[1] is not None:
+    #             last_ride_name, last_odometer_end = last_ride
+    #             if self.odometer_start < last_odometer_end:
+    #                 frappe.throw(
+    #                     _("Odometer Start ({}) must be greater than or equal to last Odometer End ({}) from previous ride: {}").format(
+    #                         self.odometer_start, last_odometer_end, last_ride_name
+    #                     )
+    #                 )
+
     def validate_odometer_start(self):
         if self.vehicle and self.odometer_start is not None:
             last_ride = frappe.db.get_value(
@@ -239,12 +260,19 @@ class RideBooking(Document):
 
             if last_ride and last_ride[1] is not None:
                 last_ride_name, last_odometer_end = last_ride
-                if self.odometer_start < last_odometer_end:
+
+                try:
+                    odometer_start = float(self.odometer_start)
+                    last_odometer_end = float(last_odometer_end)
+                except ValueError:
+                    frappe.throw(_("Odometer values must be numeric"))
+
+                if odometer_start < last_odometer_end:
                     frappe.throw(
-                        _("Odometer Start ({}) must be greater than or equal to last Odometer End ({}) from previous ride: {}").format(
-                            self.odometer_start, last_odometer_end, last_ride_name
-                        )
+                        _("Odometer Start ({}) must be greater than or equal to last Odometer End ({}) from previous ride: {}")
+                        .format(odometer_start, last_odometer_end, last_ride_name)
                     )
+
     def set_info_field(self):
         lines = []
 
