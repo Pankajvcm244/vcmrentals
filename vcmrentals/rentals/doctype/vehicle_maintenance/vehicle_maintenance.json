@@ -8,6 +8,10 @@
  "field_order": [
   "section_break_cppp",
   "vehicle",
+  "model",
+  "engine_number",
+  "chassis_no",
+  "bs_category",
   "service_date",
   "maintenance_type",
   "other_type",
@@ -159,24 +163,52 @@
   {
    "fieldname": "paid_by_owner_amount",
    "fieldtype": "Currency",
-   "label": "Paid by Owner Amount"
+   "label": "Paid by Orgnisation"
   },
   {
    "fieldname": "paid_by_insurance_amount",
    "fieldtype": "Currency",
-   "label": "Paid by Insurance Amount"
+   "label": "Paid by Insurance Company"
   },
   {
    "fieldname": "total_amount",
    "fieldtype": "Currency",
    "label": "Total Amount",
    "reqd": 1
+  },
+  {
+   "fetch_from": "vehicle.model",
+   "fieldname": "model",
+   "fieldtype": "Data",
+   "label": "Model",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "vehicle.engine_number",
+   "fieldname": "engine_number",
+   "fieldtype": "Data",
+   "label": "Engine Number",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "vehicle.chassis_no",
+   "fieldname": "chassis_no",
+   "fieldtype": "Data",
+   "label": "Chassis No",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "vehicle.bs_category",
+   "fieldname": "bs_category",
+   "fieldtype": "Data",
+   "label": "BS Category",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-24 17:56:05.686800",
+ "modified": "2025-07-30 17:00:07.428879",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Vehicle Maintenance",

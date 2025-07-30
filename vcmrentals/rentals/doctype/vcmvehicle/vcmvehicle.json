@@ -9,25 +9,26 @@
   "title",
   "registration_number",
   "registration_date",
-  "seating_capacity",
-  "make",
-  "fuel_type",
-  "bs_category",
-  "fitness_upto",
-  "engine_capacity_cc",
-  "column_break_ckgb",
-  "model",
-  "license_plate",
   "chassis_no",
   "engine_number",
   "curb_weight",
-  "owner_name",
-  "color",
-  "vehicle_image",
-  "actual_cost",
-  "column_break_nuiu",
-  "body_type",
   "wheelbase",
+  "engine_capacity_cc",
+  "fitness_upto",
+  "column_break_ckgb",
+  "make",
+  "model",
+  "body_type",
+  "fuel_type",
+  "bs_category",
+  "color",
+  "license_plate",
+  "seating_capacity",
+  "vehicle_image",
+  "column_break_nuiu",
+  "cost_center",
+  "owner_name",
+  "actual_cost",
   "is_hypothecated",
   "loan_start_date",
   "loan_end_date",
@@ -36,9 +37,9 @@
   "bank_city",
   "details_section",
   "ncr_entry_allowed",
-  "status",
-  "column_break_vhhe",
   "condition",
+  "column_break_vhhe",
+  "status",
   "location"
  ],
  "fields": [
@@ -111,7 +112,7 @@
    "fieldname": "bs_category",
    "fieldtype": "Select",
    "label": "BS Category",
-   "options": "Below BS-3\nBS4\nBS6\nBS6 Phase 2\nBS6.2\nElectric\nHybrid",
+   "options": "BS-3 or below\nBS4\nBS6\nBS6 Phase 2\nBS6.2\nElectric\nHybrid",
    "reqd": 1,
    "set_only_once": 1
   },
@@ -138,6 +139,7 @@
    "fieldname": "chassis_no",
    "fieldtype": "Data",
    "label": "Chassis No",
+   "reqd": 1,
    "set_only_once": 1
   },
   {
@@ -159,6 +161,7 @@
    "fieldtype": "Select",
    "label": "Seating Capacity",
    "options": "5 Seater\n7 Seater\nBus\nLoader",
+   "reqd": 1,
    "set_only_once": 1
   },
   {
@@ -184,7 +187,8 @@
    "fieldname": "fitness_upto",
    "fieldtype": "Date",
    "label": "Fitness Upto",
-   "reqd": 1
+   "reqd": 1,
+   "set_only_once": 1
   },
   {
    "fieldname": "engine_capacity_cc",
@@ -224,47 +228,60 @@
    "fieldname": "loan_start_date",
    "fieldtype": "Date",
    "label": "Loan Start Date",
-   "mandatory_depends_on": "eval:doc.is_hypothecated==1"
+   "mandatory_depends_on": "eval:doc.is_hypothecated==1",
+   "set_only_once": 1
   },
   {
    "depends_on": "eval:doc.is_hypothecated==1",
    "fieldname": "loan_end_date",
    "fieldtype": "Date",
    "label": "Loan End Date",
-   "mandatory_depends_on": "eval:doc.is_hypothecated==1"
+   "mandatory_depends_on": "eval:doc.is_hypothecated==1",
+   "set_only_once": 1
   },
   {
    "depends_on": "eval:doc.is_hypothecated==1",
    "fieldname": "loan_tenure_in_months",
    "fieldtype": "Int",
    "label": "Loan Tenure (in months)",
-   "mandatory_depends_on": "eval:doc.is_hypothecated==1"
+   "mandatory_depends_on": "eval:doc.is_hypothecated==1",
+   "set_only_once": 1
   },
   {
    "depends_on": "eval:doc.is_hypothecated==1",
    "fieldname": "bank_name",
    "fieldtype": "Data",
    "label": "Bank Name",
-   "mandatory_depends_on": "eval:doc.is_hypothecated==1"
+   "mandatory_depends_on": "eval:doc.is_hypothecated==1",
+   "set_only_once": 1
   },
   {
    "depends_on": "eval:doc.is_hypothecated==1",
    "fieldname": "bank_city",
    "fieldtype": "Data",
    "label": "Bank City",
-   "mandatory_depends_on": "eval:doc.is_hypothecated==1"
+   "mandatory_depends_on": "eval:doc.is_hypothecated==1",
+   "set_only_once": 1
   },
   {
    "default": "0",
    "fieldname": "is_hypothecated",
    "fieldtype": "Check",
-   "label": "Vehicle under Hypothecation"
+   "label": "Vehicle under Hypothecation",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "set_only_once": 1
   }
  ],
  "image_field": "vehicle_image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-25 11:51:08.926388",
+ "modified": "2025-07-30 16:49:16.425978",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "VcmVehicle",
@@ -315,7 +332,7 @@
    "write": 1
   }
  ],
- "search_fields": "seating_capacity,make",
+ "search_fields": "seating_capacity,make,ncr_entry_allowed",
  "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",

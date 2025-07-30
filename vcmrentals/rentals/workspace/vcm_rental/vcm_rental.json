@@ -1,19 +1,19 @@
 {
  "charts": [],
- "content": "[{\"id\":\"lGq3-ldogE\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">VCM RENTAL</span>\",\"col\":12}},{\"id\":\"DsiqakK8Sj\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"30soWlWfmV\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"VCM Orders\",\"col\":3}},{\"id\":\"bX0sBxyp_n\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Assign Vehicle\",\"col\":3}},{\"id\":\"2F_fDkXdgj\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"lciM85bm7A\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Masters</b></span>\",\"col\":12}},{\"id\":\"V68If8yIMP\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"VcmVehicle\",\"col\":3}},{\"id\":\"Opt8eguOvB\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Booking Users\",\"col\":3}},{\"id\":\"AAxd3INWDi\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Drivers\",\"col\":3}},{\"id\":\"qkk2EZqoSJ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Ride ALM\",\"col\":3}},{\"id\":\"8GoHgKEDJO\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"lxZZVo33ua\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Challan\",\"col\":3}},{\"id\":\"w3JfBA818h\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Maintenance\",\"col\":3}},{\"id\":\"heI_GkYtdj\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Pollution\",\"col\":3}},{\"id\":\"2BtqCOVIP6\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Insurance Details\",\"col\":3}}]",
+ "content": "[{\"id\":\"lGq3-ldogE\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">VCM RENTAL</span>\",\"col\":12}},{\"id\":\"DsiqakK8Sj\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"30soWlWfmV\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"VCM Orders\",\"col\":4}},{\"id\":\"bX0sBxyp_n\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Assign Vehicle\",\"col\":4}},{\"id\":\"FtxKqu_5b1\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Calender Booked \",\"col\":4}},{\"id\":\"2F_fDkXdgj\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"lciM85bm7A\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Masters</b></span>\",\"col\":12}},{\"id\":\"D-eBkyPT6j\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"V68If8yIMP\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"VcmVehicle\",\"col\":3}},{\"id\":\"XbmJ4dDoQl\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Department\",\"col\":3}},{\"id\":\"Opt8eguOvB\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Booking Users\",\"col\":3}},{\"id\":\"DFrndpp2Y1\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"AAxd3INWDi\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Drivers\",\"col\":3}},{\"id\":\"qkk2EZqoSJ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Ride ALM\",\"col\":3}},{\"id\":\"JjKSfR8I0K\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Booking Settings\",\"col\":3}},{\"id\":\"8GoHgKEDJO\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"lxZZVo33ua\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Challan\",\"col\":3}},{\"id\":\"w3JfBA818h\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Maintenance\",\"col\":3}},{\"id\":\"heI_GkYtdj\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Pollution\",\"col\":3}},{\"id\":\"2BtqCOVIP6\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Insurance Details\",\"col\":3}}]",
  "creation": "2024-09-11 11:56:13.936104",
  "custom_blocks": [],
  "docstatus": 0,
  "doctype": "Workspace",
  "for_user": "",
  "hide_custom": 0,
- "icon": "both",
+ "icon": "add-round",
  "idx": 1,
- "indicator_color": "cyan",
+ "indicator_color": "",
  "is_hidden": 0,
  "label": "VCM RENTAL",
  "links": [],
- "modified": "2025-07-28 12:40:29.876158",
+ "modified": "2025-07-30 16:54:56.150124",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "VCM RENTAL",
@@ -32,6 +32,21 @@
    "link_to": "Vehicle Challan",
    "stats_filter": "[]",
    "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Vehicle Department",
+   "link_to": "Vehicle Department",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Calender Booked ",
+   "type": "URL",
+   "url": "http://127.0.0.1:8000/app/ride-booking/view/calendar/Vehicle%20Booking"
   },
   {
    "color": "Red",
@@ -55,6 +70,13 @@
    "label": "Vehicle Insurance Details",
    "link_to": "Vehicle Insurance Details",
    "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Vehicle Booking Settings",
+   "link_to": "Vehicle Booking Settings",
    "type": "DocType"
   },
   {

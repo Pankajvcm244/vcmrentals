@@ -6,22 +6,22 @@
  "engine": "InnoDB",
  "field_order": [
   "section_break_bv9p",
-  "puc_certificate_number",
   "vehicle",
-  "remarks",
+  "model",
+  "engine",
+  "chassis_no",
+  "bs_category",
+  "emission_standard",
+  "fuel_type",
   "amended_from",
   "column_break_mcqa",
+  "puc_certificate_number",
   "issued_date",
   "expiry_date",
-  "emission_standard",
   "document_upload",
   "pollution_amount",
   "validity_period",
-  "fuel_type",
-  "model",
-  "bs_category",
-  "engine",
-  "chassis_no"
+  "remarks"
  ],
  "fields": [
   {
@@ -106,7 +106,8 @@
    "fetch_from": "vehicle.model",
    "fieldname": "model",
    "fieldtype": "Data",
-   "label": "Model"
+   "label": "Model",
+   "read_only": 1
   },
   {
    "fetch_from": "vehicle.engine_number",
@@ -126,13 +127,14 @@
    "fetch_from": "vehicle.bs_category",
    "fieldname": "bs_category",
    "fieldtype": "Data",
-   "label": "BS Category"
+   "label": "BS Category",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-25 10:43:09.082232",
+ "modified": "2025-07-30 17:17:05.578935",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Vehicle Pollution Details",
