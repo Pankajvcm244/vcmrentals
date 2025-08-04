@@ -17,6 +17,7 @@
   "column_break_pfgk",
   "creation_date",
   "state",
+  "vehicle_status",
   "status",
   "department",
   "employee_type",
@@ -267,18 +268,42 @@
    "fieldtype": "Date",
    "label": "Creation Date",
    "read_only": 1
+  },
+  {
+   "fieldname": "vehicle_status",
+   "fieldtype": "Select",
+   "label": "Vehicle Status",
+   "options": "Not Assigned\nAssigned",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
- "links": [],
- "modified": "2025-07-28 17:11:13.310031",
+ "links": [
+  {
+   "link_doctype": "Ride Booking",
+   "link_fieldname": "order"
+  }
+ ],
+ "modified": "2025-08-02 17:27:20.731479",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Ride Order",
  "naming_rule": "Expression (old style)",
  "owner": "Administrator",
- "permissions": [],
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

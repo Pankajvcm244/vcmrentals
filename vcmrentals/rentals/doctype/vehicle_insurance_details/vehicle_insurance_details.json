@@ -20,8 +20,23 @@
   "policy_number",
   "policy_start_date",
   "policy_expiry_date",
-  "idb",
-  "amount_paid"
+  "idv",
+  "amount_paid",
+  "extra_coverages_section",
+  "zero_depreciation_cover",
+  "engine_protection_cover",
+  "return_to_invoice_rti_cover",
+  "no_claim_bonus_ncb_protection",
+  "column_break_zhay",
+  "roadside_assistance_rsa",
+  "consumables_cover",
+  "key_replacement_cover",
+  "daily_allowance",
+  "column_break_bcbv",
+  "tyre_protect_cover",
+  "loss_of_personal_belongings",
+  "passenger_personal_accident_cover",
+  "emi_protection_cover"
  ],
  "fields": [
   {
@@ -88,15 +103,11 @@
    "reqd": 1
   },
   {
-   "fieldname": "idb",
-   "fieldtype": "Currency",
-   "label": "Vehicle IDB"
-  },
-  {
    "description": "Total amount paid for this insurance policy",
    "fieldname": "amount_paid",
    "fieldtype": "Currency",
-   "label": "Amount Paid"
+   "label": "Amount Paid",
+   "reqd": 1
   },
   {
    "fetch_from": "vehicle.model",
@@ -131,12 +142,115 @@
    "fieldname": "bs_category",
    "fieldtype": "Data",
    "label": "BS Category"
+  },
+  {
+   "fieldname": "idv",
+   "fieldtype": "Currency",
+   "label": "Vehicle IDV",
+   "reqd": 1
+  },
+  {
+   "fieldname": "extra_coverages_section",
+   "fieldtype": "Section Break",
+   "label": "Extra Coverages"
+  },
+  {
+   "default": "0",
+   "fieldname": "zero_depreciation_cover",
+   "fieldtype": "Check",
+   "label": "Zero Depreciation Cover",
+   "set_only_once": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "engine_protection_cover",
+   "fieldtype": "Check",
+   "label": "Engine Protection Cover",
+   "set_only_once": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "return_to_invoice_rti_cover",
+   "fieldtype": "Check",
+   "label": "Return to Invoice (RTI) Cover",
+   "set_only_once": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "no_claim_bonus_ncb_protection",
+   "fieldtype": "Check",
+   "label": "No Claim Bonus (NCB) Protection",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "column_break_zhay",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "roadside_assistance_rsa",
+   "fieldtype": "Check",
+   "label": "Roadside Assistance (RSA)",
+   "set_only_once": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "consumables_cover",
+   "fieldtype": "Check",
+   "label": "Consumables Cover",
+   "set_only_once": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "key_replacement_cover",
+   "fieldtype": "Check",
+   "label": "Key Replacement Cover",
+   "set_only_once": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "daily_allowance",
+   "fieldtype": "Check",
+   "label": "Daily Allowance ",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "column_break_bcbv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "tyre_protect_cover",
+   "fieldtype": "Check",
+   "label": "Tyre Protect Cover",
+   "set_only_once": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "loss_of_personal_belongings",
+   "fieldtype": "Check",
+   "label": "Loss of Personal Belongings",
+   "set_only_once": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "passenger_personal_accident_cover",
+   "fieldtype": "Check",
+   "label": "Passenger Personal Accident Cover",
+   "set_only_once": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "emi_protection_cover",
+   "fieldtype": "Check",
+   "label": "EMI Protection Cover ",
+   "set_only_once": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-30 17:20:52.868227",
+ "modified": "2025-08-04 17:12:24.361435",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Vehicle Insurance Details",

@@ -131,7 +131,7 @@ class RideOrder(Document):
                 """
                 <div style="font-family: 'Segoe UI', sans-serif; color: #333; max-width: 600px; margin: auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
                     <div style="background-color: #00bfa5; color: white; padding: 20px;">
-                        <h2 style="margin: 0;">Ride Request 📥</h2>
+                        <h2 style="margin: 0;">Ride Request 🚘</h2>
                         <p style="margin: 5px 0 0;">Hare Krishna {{ doc.user_name or "Guest" }},</p>
                     </div>
 
@@ -139,8 +139,11 @@ class RideOrder(Document):
                         <p>We’ve received your request for ride <strong>{{ doc.name }}</strong>. Our team will confirm your booking shortly.</p>
 
                         <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
-                            <tr><td style="padding: 8px;">📅 <strong>Date</strong></td><td>{{ doc.date }}</td></tr>
+                            <tr><td style="padding: 8px;">📅 <strong>Trip Start Date</strong></td><td>{{ doc.date }}</td></tr>
+                            <tr><td style="padding: 8px;">📅 <strong>Trip End Date</strong></td><td>{{ doc.trip_end_date }}</td></tr>
                             <tr><td style="padding: 8px;">🕒 <strong>Pickup Time</strong></td><td>{{ doc.pickup_time }}</td></tr>
+                            <tr><td style="padding: 8px;">🕒 <strong>Drop Time</strong></td><td>{{ doc.drop_time }}</td></tr>
+                            <tr><td style="padding: 8px;">🏢 <strong>Department</strong></td><td>{{ doc.department }}</td></tr>
                             <tr><td style="padding: 8px;">🚘 <strong>Vehicle Type</strong></td><td>{{ doc.vehicle_type }}</td></tr>
                             <tr><td style="padding: 8px;">📍 <strong>Pickup Address</strong></td><td>{{ doc.pickup_address }}</td></tr>
                             <tr><td style="padding: 8px;">📌 <strong>Drop Address</strong></td><td>{{ doc.drop_address }}</td></tr>
@@ -185,10 +188,11 @@ class RideOrder(Document):
                         <p>Your ride <strong>{{ doc.name }}</strong> has been <span style="color: green;"><strong>CONFIRMED</strong></span>.</p>
 
                         <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
-                            <tr><td style="padding: 8px;">📅 <strong>Date</strong></td><td>{{ doc.date }}</td></tr>
-                            <tr><td style="padding: 8px;"><strong>Trip End Date:</strong></td><td>{{ doc.trip_end_date }}</td></tr>
+                            <tr><td style="padding: 8px;">📅 <strong>Trip Start Date</strong></td><td>{{ doc.date }}</td></tr>
+                            <tr><td style="padding: 8px;">📅 <strong>Trip End Date:</strong></td><td>{{ doc.trip_end_date }}</td></tr>
                             <tr><td style="padding: 8px;">🕒 <strong>Pickup Time</strong></td><td>{{ doc.pickup_time }}</td></tr>
                             <tr><td style="padding: 8px;">🕓 <strong>Drop Time</strong></td><td>{{ doc.drop_time }}</td></tr>
+                            <tr><td style="padding: 8px;">🏢 <strong>Department</strong></td><td>{{ doc.department }}</td></tr>
                             <tr><td style="padding: 8px;">🚘 <strong>Vehicle Type</strong></td><td>{{ doc.vehicle_type }}</td></tr>
                             <tr><td style="padding: 8px;">📍 <strong>Pickup Address</strong></td><td>{{ doc.pickup_address }}</td></tr>
                             <tr><td style="padding: 8px;">📌 <strong>Drop Address</strong></td><td>{{ doc.drop_address }}</td></tr>
@@ -265,7 +269,7 @@ class RideOrder(Document):
             <div style="font-family: 'Segoe UI', sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.06);">
                 <div style="background-color: #00695c; color: white; padding: 20px;">
                     <h2 style="margin: 0;">Ride Order Update 🚘</h2>
-                    <p style="margin: 4px 0 0;">Ride ID: <strong>{{ doc.name }}</strong></p>
+                    <p style="margin: 4px 0 0;">Ride ID: <strong>{{ doc.name}}</strong></p>
                 </div>
 
                 <div style="padding: 20px; color: #333;">
@@ -313,7 +317,7 @@ class RideOrder(Document):
             """
             <div style="font-family: 'Segoe UI', sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; border-radius: 8px;">
                 <div style="background-color: #b71c1c; color: white; padding: 20px;">
-                    <h2 style="margin: 0;">Ride Cancelled 🗑️</h2>
+                    <h2 style="margin: 0;">Ride Cancelled 🚘</h2>
                     <p style="margin: 4px 0 0;">Ride ID: <strong>{{ doc.name }}</strong></p>
                 </div>
 
@@ -325,6 +329,8 @@ class RideOrder(Document):
                         <tr><td style="padding: 6px;"><strong>Trip Start Date:</strong></td><td>{{ doc.date }}</td></tr>
                         <tr><td style="padding: 6px;"><strong>Trip End Date:</strong></td><td>{{ doc.trip_end_date }}</td></tr>
                         <tr><td style="padding: 6px;"><strong>Pickup Time:</strong></td><td>{{ doc.pickup_time }}</td></tr>
+                        <tr><td style="padding: 6px;"><strong>Drop Time:</strong></td><td>{{ doc.drop_time }}</td></tr>
+                        <tr><td style="padding: 6px;"><strong>Department:</strong></td><td>{{ doc.department }}</td></tr>
                         <tr><td style="padding: 6px;"><strong>Pickup Address:</strong></td><td>{{ doc.pickup_address }}</td></tr>
                         <tr><td style="padding: 6px;"><strong>Drop Address:</strong></td><td>{{ doc.drop_address }}</td></tr>
                     </table>

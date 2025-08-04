@@ -6,9 +6,6 @@
  "engine": "InnoDB",
  "field_order": [
   "travel_agency",
-  "vehicle_number",
-  "driver_name",
-  "driver_number",
   "travel_agency_number"
  ],
  "fields": [
@@ -17,28 +14,6 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Travel Agency ",
-   "reqd": 1
-  },
-  {
-   "fieldname": "vehicle_number",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Vehicle Number",
-   "reqd": 1
-  },
-  {
-   "fieldname": "driver_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Driver Name",
-   "reqd": 1
-  },
-  {
-   "fieldname": "driver_number",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Driver Number",
-   "length": 10,
    "reqd": 1
   },
   {
@@ -51,7 +26,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-28 16:59:47.373857",
+ "modified": "2025-08-01 12:11:27.331794",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "External Travel Agency Vehicle",

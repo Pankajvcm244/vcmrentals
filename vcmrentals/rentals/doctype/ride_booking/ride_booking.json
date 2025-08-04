@@ -10,6 +10,7 @@
   "order",
   "customer_name",
   "customer_email",
+  "user_department",
   "customer_number",
   "ride",
   "seating_capacity",
@@ -18,6 +19,7 @@
   "ride_purpose",
   "info",
   "column_break_jbqq",
+  "emergency_contact",
   "date",
   "trip_end_date",
   "from_time",
@@ -45,17 +47,19 @@
   "odometer_end_pic",
   "section_break_brdf",
   "user_feedback",
+  "user_rating_reason",
   "column_break_peca",
   "driver_feedback",
   "ride_status",
+  "driver_rating_reason",
   "external_travel_agency_section",
   "external_agency",
   "travel_agency_name",
-  "vehicle_number",
   "travel_agency_number",
   "column_break_ehoy",
-  "driver_name",
-  "driver_number"
+  "vehicle_number",
+  "driver_number",
+  "driver_name"
  ],
  "fields": [
   {
@@ -122,14 +126,6 @@
   },
   {
    "depends_on": "eval:doc.external_agency==1\n",
-   "fetch_from": "travel_agency_name.vehicle_number",
-   "fieldname": "vehicle_number",
-   "fieldtype": "Data",
-   "label": "Vehicle Number",
-   "read_only": 1
-  },
-  {
-   "depends_on": "eval:doc.external_agency==1\n",
    "fieldname": "travel_agency_name",
    "fieldtype": "Link",
    "label": "Travel Agency name",
@@ -138,22 +134,6 @@
   {
    "fieldname": "column_break_ehoy",
    "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval:doc.external_agency==1\n",
-   "fetch_from": "travel_agency_name.driver_name",
-   "fieldname": "driver_name",
-   "fieldtype": "Data",
-   "label": "Driver Name",
-   "read_only": 1
-  },
-  {
-   "depends_on": "eval:doc.external_agency==1\n",
-   "fetch_from": "travel_agency_name.driver_number",
-   "fieldname": "driver_number",
-   "fieldtype": "Data",
-   "label": "Driver Number",
-   "read_only": 1
   },
   {
    "fetch_from": "order.pickup_address",
@@ -326,21 +306,16 @@
    "read_only": 1
   },
   {
-   "default": "now",
-   "depends_on": "eval:doc.odometer_start",
    "fieldname": "odometer_start_time_stamp",
    "fieldtype": "Datetime",
    "label": "Odometer Start Time Stamp",
    "read_only": 1
   },
   {
-   "default": "now",
-   "depends_on": "eval:doc.odometer_end",
    "fieldname": "odometer_end_time_stamp",
    "fieldtype": "Datetime",
    "label": "Odometer End Time Stamp",
-   "read_only": 1,
-   "set_only_once": 1
+   "read_only": 1
   },
   {
    "fetch_from": "order.trip_end_date",
@@ -397,11 +372,57 @@
    "fieldtype": "Data",
    "label": "Vehicle Title",
    "read_only": 1
+  },
+  {
+   "fieldname": "emergency_contact",
+   "fieldtype": "Data",
+   "label": "Emergency Contact Number",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.external_agency==1\n",
+   "fieldname": "vehicle_number",
+   "fieldtype": "Data",
+   "label": "Vehicle Number",
+   "mandatory_depends_on": "eval:doc.external_agency==1\n"
+  },
+  {
+   "depends_on": "eval:doc.external_agency==1\n",
+   "fieldname": "driver_number",
+   "fieldtype": "Data",
+   "label": "Driver Number",
+   "length": 10,
+   "mandatory_depends_on": "eval:doc.external_agency==1\n"
+  },
+  {
+   "depends_on": "eval:doc.external_agency==1\n",
+   "fieldname": "driver_name",
+   "fieldtype": "Data",
+   "label": "Driver Name",
+   "mandatory_depends_on": "eval:doc.external_agency==1\n"
+  },
+  {
+   "fetch_from": "order.department",
+   "fieldname": "user_department",
+   "fieldtype": "Data",
+   "label": "User Department",
+   "read_only": 1
+  },
+  {
+   "fieldname": "user_rating_reason",
+   "fieldtype": "Data",
+   "label": "Reason for Low Rating"
+  },
+  {
+   "fieldname": "driver_rating_reason",
+   "fieldtype": "Data",
+   "label": "Reason",
+   "permlevel": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-30 14:21:14.304869",
+ "modified": "2025-08-04 17:00:19.644785",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Ride Booking",

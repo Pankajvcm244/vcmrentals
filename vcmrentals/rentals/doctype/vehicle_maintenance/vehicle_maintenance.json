@@ -15,15 +15,13 @@
   "service_date",
   "maintenance_type",
   "other_type",
-  "status",
   "odometer_reading_km",
   "column_break_unwz",
+  "status",
   "workshop_name",
   "total_amount",
-  "paid_by_owner_amount",
-  "paid_by_insurance_amount",
   "attach_bill",
-  "problem_discription",
+  "problem_description",
   "amended_from",
   "section_break_gxxk",
   "insurance_claim_used",
@@ -32,6 +30,8 @@
   "claim_amount",
   "column_break_xeoz",
   "claim_status",
+  "paid_by_insurance_amount",
+  "paid_by_owner_amount",
   "remarks_on_claim"
  ],
  "fields": [
@@ -68,7 +68,8 @@
    "default": "Today",
    "fieldname": "service_date",
    "fieldtype": "Data",
-   "label": "Service Date"
+   "label": "Service Date",
+   "reqd": 1
   },
   {
    "fieldname": "odometer_reading_km",
@@ -91,12 +92,6 @@
    "reqd": 1
   },
   {
-   "fieldname": "problem_discription",
-   "fieldtype": "Small Text",
-   "label": "Problem Discription",
-   "reqd": 1
-  },
-  {
    "default": "0",
    "fieldname": "insurance_claim_used",
    "fieldtype": "Check",
@@ -107,7 +102,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Maintenance Type",
-   "options": "\nGeneral Service\nOil Change\nTyre Replacement\nBattery Replacement\nBrake Service\nAC Service\nInsurance Renewal\nWheel Alignment\nOther",
+   "options": "\nGeneral Service\nOil Change\nTyre Replacement\nBattery Replacement\nBrake Service\nAC Service\nWheel Alignment\nOther",
    "reqd": 1
   },
   {
@@ -161,11 +156,13 @@
    "mandatory_depends_on": "eval:doc.maintenance_type =='Other'"
   },
   {
+   "depends_on": "eval:doc.insurance_claim_used",
    "fieldname": "paid_by_owner_amount",
    "fieldtype": "Currency",
    "label": "Paid by Orgnisation"
   },
   {
+   "depends_on": "eval:doc.insurance_claim_used",
    "fieldname": "paid_by_insurance_amount",
    "fieldtype": "Currency",
    "label": "Paid by Insurance Company"
@@ -203,12 +200,18 @@
    "fieldtype": "Data",
    "label": "BS Category",
    "read_only": 1
+  },
+  {
+   "fieldname": "problem_description",
+   "fieldtype": "Small Text",
+   "label": "Problem Description",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-30 17:00:07.428879",
+ "modified": "2025-08-01 12:35:27.963615",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Vehicle Maintenance",

@@ -8,6 +8,7 @@
   "vehicle_booking_seetings_section",
   "enable_email",
   "enable_whatsup",
+  "emergency_contact_number",
   "column_break_uhxo",
   "ride_order_cc"
  ],
@@ -41,12 +42,18 @@
   {
    "fieldname": "column_break_uhxo",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "emergency_contact_number",
+   "fieldtype": "Data",
+   "label": "Emergency Contact Number",
+   "length": 10
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-07-22 17:14:52.012996",
+ "modified": "2025-08-01 12:02:27.535373",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Vehicle Booking Settings",

@@ -13,9 +13,13 @@ class RideBooking(Document):
         prefix = f"RIDE-CON-{date_prefix}-"
         self.name = make_autoname(prefix + ".#####")
 
+  
     # def validate(self):
     #     self.set_start_and_end()
     #     self.check_vehicle_availability()
+    #     self.validate_odometer_start()
+    #     self.check_vehicle_assignment()
+
 
     #     # Send email only if the document is new
     #     if self.is_new():
@@ -26,21 +30,23 @@ class RideBooking(Document):
         self.validate_odometer_start()
         self.check_vehicle_assignment()
 
+        # 🔹 Update linked Ride Order Vehicle Status to "Assigned"
+        if self.order:
+            frappe.db.set_value("Ride Order", self.order, "vehicle_status", "Assigned")
 
-        # Send email only if the document is new
+        # 🔹 Send email only if the document is new
         if self.is_new():
             self.send_draft_email()
 
     def before_save(self):
         self.set_info_field()
+    
+    def before_insert(self):
+        settings = frappe.get_single("Vehicle Booking Settings")
+        if settings.emergency_contact_number:
+            self.emergency_contact = settings.emergency_contact_number
 
-    # def before_save(self):
-    #     def before_save(self):
-    #         self.set_info_field()
 
-    #     self.starttime = f"{self.date}T{self.from_time}"
-    #     self.endtime = f"{self.date}T{self.to_time}"
-  
 
     def on_update(self):
         if self.ride_status == "Completed":
@@ -225,26 +231,6 @@ class RideBooking(Document):
             reference_name=self.name
         )
 
-    # def validate_odometer_start(self):
-    #     if self.vehicle and self.odometer_start is not None:
-    #         last_ride = frappe.db.get_value(
-    #             "Ride Booking",
-    #             {
-    #                 "vehicle": self.vehicle,
-    #                 "name": ["!=", self.name]  # exclude current record
-    #             },
-    #             ["name", "odometer_end"],
-    #             order_by="creation desc"
-    #         )
-
-    #         if last_ride and last_ride[1] is not None:
-    #             last_ride_name, last_odometer_end = last_ride
-    #             if self.odometer_start < last_odometer_end:
-    #                 frappe.throw(
-    #                     _("Odometer Start ({}) must be greater than or equal to last Odometer End ({}) from previous ride: {}").format(
-    #                         self.odometer_start, last_odometer_end, last_ride_name
-    #                     )
-    #                 )
 
     def validate_odometer_start(self):
         if self.vehicle and self.odometer_start is not None:

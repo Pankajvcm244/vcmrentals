@@ -75,13 +75,13 @@
   {
    "fieldname": "payment_date",
    "fieldtype": "Date",
-   "label": "Payment Date"
+   "label": "Payment Date",
+   "reqd": 1
   },
   {
    "fieldname": "remarks",
    "fieldtype": "Small Text",
-   "label": "Remarks",
-   "reqd": 1
+   "label": "Remarks"
   },
   {
    "fieldname": "column_break_uhku",
@@ -154,7 +154,7 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "Payable\nn Court / Virtual Court\nPaid/Disposed"
+   "options": "Payable\nIn Court / Virtual Court\nPaid / Disposed"
   },
   {
    "fieldname": "mode_of_challan",
@@ -178,7 +178,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-26 12:59:56.211536",
+ "modified": "2025-08-01 12:39:55.099693",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Vehicle Challan",

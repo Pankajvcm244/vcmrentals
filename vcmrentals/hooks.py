@@ -158,6 +158,16 @@ doc_events = {
 # 		"vcmrentals.tasks.monthly"
 # 	],
 # }
+                                
+scheduler_events = {
+    "cron": {
+        "0 2 * * *": [   # runs every day at 2:00 AM (server time)
+            "vcmrentals.rentals.reminder_utils.send_insurance_expiry_reminders",
+            "vcmrentals.rentals.reminder_utils.send_pollution_expiry_reminders",
+            "vcmrentals.rentals.reminder_utils.send_driver_license_expiry_reminders"
+        ]
+    }
+}
 
 # Testing
 # -------
