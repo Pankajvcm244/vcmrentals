@@ -1,0 +1,216 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-06-20 12:01:19.688707",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_kdnl",
+  "challan_number",
+  "challan_type",
+  "other_type",
+  "challan_date",
+  "status",
+  "location",
+  "mode_of_challan",
+  "upload_receipt",
+  "paid_by",
+  "column_break_uhku",
+  "vehicle",
+  "model",
+  "engine_number",
+  "bs_category",
+  "chassis_no",
+  "fuel_type",
+  "driver",
+  "fine_amount_inr",
+  "payment_date",
+  "remarks",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_kdnl",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Vehicle Challan",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "challan_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Challan Number",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "challan_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Challan Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Location",
+   "reqd": 1
+  },
+  {
+   "fieldname": "fine_amount_inr",
+   "fieldtype": "Currency",
+   "label": "Fine Amount (INR)",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "payment_date",
+   "fieldtype": "Date",
+   "label": "Payment Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "column_break_uhku",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "vehicle",
+   "fieldtype": "Link",
+   "label": "Vehicle",
+   "options": "VcmVehicle",
+   "reqd": 1
+  },
+  {
+   "fieldname": "upload_receipt",
+   "fieldtype": "Attach",
+   "label": "Upload Receipt",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "vehicle.model",
+   "fieldname": "model",
+   "fieldtype": "Data",
+   "label": "Model",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "vehicle.engine_number",
+   "fieldname": "engine_number",
+   "fieldtype": "Data",
+   "label": "Engine Number",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "vehicle.chassis_no",
+   "fieldname": "chassis_no",
+   "fieldtype": "Data",
+   "label": "Chassis No",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "vehicle.fuel_type",
+   "fieldname": "fuel_type",
+   "fieldtype": "Data",
+   "label": "Fuel Type",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "vehicle.bs_category",
+   "fieldname": "bs_category",
+   "fieldtype": "Data",
+   "label": "BS Category",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.challan_type =='Other'",
+   "fieldname": "other_type",
+   "fieldtype": "Data",
+   "label": "Other Type",
+   "mandatory_depends_on": "eval:doc.challan_type =='Other'"
+  },
+  {
+   "fieldname": "challan_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Challan Type",
+   "options": "Overspeed\nSeatbelt Not Worn\nDriving on Wrong Side\nRed Light / Signal Violation\nDrunk & Drive\nParking Rule Violation\nOther",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Payable\nIn Court / Virtual Court\nPaid / Disposed"
+  },
+  {
+   "fieldname": "mode_of_challan",
+   "fieldtype": "Select",
+   "label": "Mode of Challan",
+   "options": "CCTV\nPhysical"
+  },
+  {
+   "fieldname": "paid_by",
+   "fieldtype": "Select",
+   "label": "Paid By ",
+   "options": "Organisation\nDriver"
+  },
+  {
+   "fieldname": "driver",
+   "fieldtype": "Link",
+   "label": "Driver",
+   "options": "Vehicle Driver"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-08-01 12:39:55.099693",
+ "modified_by": "Administrator",
+ "module": "Rentals",
+ "name": "Vehicle Challan",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Vehicle Agent",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

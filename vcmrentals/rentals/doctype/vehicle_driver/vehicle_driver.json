@@ -1,0 +1,126 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-07-26 10:58:19.038437",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "emp_id",
+  "driver_name",
+  "mobile",
+  "dob",
+  "driver_license_number",
+  "column_break_nzxp",
+  "disable",
+  "driver_license_issue_date",
+  "driver_license_expiry_date",
+  "cost_center",
+  "email"
+ ],
+ "fields": [
+  {
+   "fieldname": "emp_id",
+   "fieldtype": "Data",
+   "label": "EMP ID",
+   "reqd": 1
+  },
+  {
+   "fieldname": "driver_name",
+   "fieldtype": "Data",
+   "label": "Driver Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "dob",
+   "fieldtype": "Date",
+   "label": "DOB",
+   "reqd": 1
+  },
+  {
+   "fieldname": "driver_license_issue_date",
+   "fieldtype": "Date",
+   "label": "Driver License Issue Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "driver_license_expiry_date",
+   "fieldtype": "Date",
+   "label": "Driver License Expiry Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "reqd": 1
+  },
+  {
+   "fieldname": "mobile",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Mobile",
+   "length": 10,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_nzxp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "disable",
+   "fieldtype": "Check",
+   "label": "Disable"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "reqd": 1
+  },
+  {
+   "fieldname": "driver_license_number",
+   "fieldtype": "Data",
+   "label": "Driver License Number",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-07-26 12:53:58.669511",
+ "modified_by": "Administrator",
+ "module": "Rentals",
+ "name": "Vehicle Driver",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Vehicle Agent",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "mobile,cost_center,email",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "driver_name"
+}
