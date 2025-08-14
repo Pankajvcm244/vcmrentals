@@ -6,7 +6,8 @@
  "engine": "InnoDB",
  "field_order": [
   "travel_agency",
-  "travel_agency_number"
+  "travel_agency_number",
+  "owner_name"
  ],
  "fields": [
   {
@@ -22,11 +23,17 @@
    "label": "Travel Agency Number",
    "length": 10,
    "reqd": 1
+  },
+  {
+   "fieldname": "owner_name",
+   "fieldtype": "Data",
+   "label": "Owner Name",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-08-01 12:11:27.331794",
+ "modified": "2025-08-08 10:59:05.582954",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "External Travel Agency Vehicle",

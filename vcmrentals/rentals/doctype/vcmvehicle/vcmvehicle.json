@@ -75,8 +75,8 @@
   {
    "fieldname": "license_plate",
    "fieldtype": "Data",
-   "label": "License Plate",
-   "set_only_once": 1
+   "hidden": 1,
+   "label": "License Plate"
   },
   {
    "fieldname": "vehicle_image",
@@ -281,7 +281,7 @@
  "image_field": "vehicle_image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-31 11:43:19.631201",
+ "modified": "2025-08-08 10:58:15.904034",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "VcmVehicle",

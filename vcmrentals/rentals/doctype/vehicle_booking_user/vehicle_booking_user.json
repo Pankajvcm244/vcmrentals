@@ -39,6 +39,8 @@
    "description": "Category A : GM/VP <br>\nCategory B : Manager Devotee <br>\nCategory C : Executive",
    "fieldname": "employee_type",
    "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Employee Type",
    "options": "Category C\nCategory B\nCategory A",
    "reqd": 1
@@ -50,6 +52,8 @@
   {
    "fieldname": "department",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Department",
    "options": "Vehicle Department",
    "reqd": 1
@@ -57,7 +61,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-26 10:08:44.118368",
+ "modified": "2025-08-11 13:20:02.896479",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Vehicle Booking User",

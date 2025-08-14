@@ -270,6 +270,7 @@ class RideOrder(Document):
                 <div style="background-color: #00695c; color: white; padding: 20px;">
                     <h2 style="margin: 0;">Ride Order Update 🚘</h2>
                     <p style="margin: 4px 0 0;">Ride ID: <strong>{{ doc.name}}</strong></p>
+                    
                 </div>
 
                 <div style="padding: 20px; color: #333;">
@@ -280,6 +281,8 @@ class RideOrder(Document):
                     </p>
 
                     <table style="width: 100%; margin-top: 20px; border-collapse: collapse;">
+                        <tr><td style="padding: 6px;"><strong>Name:</strong></td><td>{{ doc.user_name or "Guest" }}</td></tr>
+                        <tr><td style="padding: 6px;"><strong>Department:</strong></td><td>{{ doc.department }}</td></tr>
                         <tr><td style="padding: 6px;"><strong>Trip Start Date:</strong></td><td>{{ doc.date }}</td></tr>
                         <tr><td style="padding: 6px;"><strong>Trip End Date:</strong></td><td>{{ doc.trip_end_date }}</td></tr>
                         <tr><td style="padding: 6px;"><strong>Pickup Time:</strong></td><td>{{ doc.pickup_time }}</td></tr>

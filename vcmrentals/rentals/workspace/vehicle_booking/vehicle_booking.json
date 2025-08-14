@@ -11,12 +11,12 @@
  "idx": 1,
  "indicator_color": "",
  "is_hidden": 0,
- "label": "VCM RENTAL",
+ "label": "Vehicle Booking",
  "links": [],
- "modified": "2025-08-02 17:36:18.746750",
- "modified_by": "aman.soni@vcm.org.in",
+ "modified": "2025-08-08 10:49:53.302689",
+ "modified_by": "Administrator",
  "module": "Rentals",
- "name": "VCM RENTAL",
+ "name": "Vehicle Booking",
  "number_cards": [],
  "owner": "Administrator",
  "parent_page": "",
@@ -136,5 +136,5 @@
    "type": "DocType"
   }
  ],
- "title": "VCM RENTAL"
+ "title": "Vehicle Booking"
 }

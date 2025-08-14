@@ -272,6 +272,7 @@
   {
    "fieldname": "vehicle_status",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Vehicle Status",
    "options": "Not Assigned\nAssigned",
    "read_only": 1
@@ -285,7 +286,7 @@
    "link_fieldname": "order"
   }
  ],
- "modified": "2025-08-02 17:27:20.731479",
+ "modified": "2025-08-11 13:22:07.171741",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Ride Order",

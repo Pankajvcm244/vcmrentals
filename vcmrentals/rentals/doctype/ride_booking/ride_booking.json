@@ -56,6 +56,7 @@
   "external_agency",
   "travel_agency_name",
   "travel_agency_number",
+  "owner_name",
   "column_break_ehoy",
   "vehicle_number",
   "driver_number",
@@ -190,6 +191,7 @@
    "fetch_from": "order.user_name",
    "fieldname": "customer_name",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "User Name",
    "read_only": 1
   },
@@ -290,6 +292,7 @@
   {
    "fieldname": "ride_status",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Ride Status",
    "options": "On Ride\nCompleted",
    "permlevel": 1
@@ -405,6 +408,7 @@
    "fetch_from": "order.department",
    "fieldname": "user_department",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "User Department",
    "read_only": 1
   },
@@ -418,11 +422,18 @@
    "fieldtype": "Data",
    "label": "Reason",
    "permlevel": 1
+  },
+  {
+   "fetch_from": "travel_agency_name.owner_name",
+   "fieldname": "owner_name",
+   "fieldtype": "Data",
+   "label": "Owner Name",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-08-04 17:00:19.644785",
+ "modified": "2025-08-11 13:21:28.610852",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Ride Booking",

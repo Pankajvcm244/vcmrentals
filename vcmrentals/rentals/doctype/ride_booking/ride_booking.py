@@ -65,6 +65,7 @@ class RideBooking(Document):
 
 
 
+   
     def check_vehicle_availability(self):
         if not (self.vehicle and self.date and self.trip_end_date and self.from_time and self.to_time):
             return
@@ -75,15 +76,21 @@ class RideBooking(Document):
         # --- Vehicle Overlap Check ---
         overlapping_vehicle = frappe.db.sql("""
             SELECT name FROM `tabRide Booking`
-            WHERE name != %s
-            AND vehicle = %s
+            WHERE name != %(name)s
+            AND vehicle = %(vehicle)s
+            AND ride_status != 'Completed'
             AND (
-                (%s BETWEEN CONCAT(date, ' ', from_time) AND CONCAT(trip_end_date, ' ', to_time))
-                OR (%s BETWEEN CONCAT(date, ' ', from_time) AND CONCAT(trip_end_date, ' ', to_time))
-                OR (CONCAT(date, ' ', from_time) BETWEEN %s AND %s)
-                OR (CONCAT(trip_end_date, ' ', to_time) BETWEEN %s AND %s)
+                (%(start)s BETWEEN CONCAT(date, ' ', from_time) AND CONCAT(trip_end_date, ' ', to_time))
+                OR (%(end)s BETWEEN CONCAT(date, ' ', from_time) AND CONCAT(trip_end_date, ' ', to_time))
+                OR (CONCAT(date, ' ', from_time) BETWEEN %(start)s AND %(end)s)
+                OR (CONCAT(trip_end_date, ' ', to_time) BETWEEN %(start)s AND %(end)s)
             )
-        """, (self.name, self.vehicle, start_time, end_time, start_time, end_time, start_time, end_time), as_dict=True)
+        """, {
+            "name": self.name,
+            "vehicle": self.vehicle,
+            "start": start_time,
+            "end": end_time
+        }, as_dict=True)
 
         if overlapping_vehicle:
             frappe.throw(_("This vehicle is already booked for the selected date and time range."))
@@ -92,18 +99,27 @@ class RideBooking(Document):
         if self.driver:
             overlapping_driver = frappe.db.sql("""
                 SELECT name FROM `tabRide Booking`
-                WHERE name != %s
-                AND driver = %s
+                WHERE name != %(name)s
+                AND driver = %(driver)s
+                AND ride_status != 'Completed'
                 AND (
-                    (%s BETWEEN CONCAT(date, ' ', from_time) AND CONCAT(trip_end_date, ' ', to_time))
-                    OR (%s BETWEEN CONCAT(date, ' ', from_time) AND CONCAT(trip_end_date, ' ', to_time))
-                    OR (CONCAT(date, ' ', from_time) BETWEEN %s AND %s)
-                    OR (CONCAT(trip_end_date, ' ', to_time) BETWEEN %s AND %s)
+                    (%(start)s BETWEEN CONCAT(date, ' ', from_time) AND CONCAT(trip_end_date, ' ', to_time))
+                    OR (%(end)s BETWEEN CONCAT(date, ' ', from_time) AND CONCAT(trip_end_date, ' ', to_time))
+                    OR (CONCAT(date, ' ', from_time) BETWEEN %(start)s AND %(end)s)
+                    OR (CONCAT(trip_end_date, ' ', to_time) BETWEEN %(start)s AND %(end)s)
                 )
-            """, (self.name, self.driver, start_time, end_time, start_time, end_time, start_time, end_time), as_dict=True)
+            """, {
+                "name": self.name,
+                "driver": self.driver,
+                "start": start_time,
+                "end": end_time
+            }, as_dict=True)
 
             if overlapping_driver:
                 frappe.throw(_("This driver is already assigned to another ride during the selected date and time range."))
+
+
+
     
     def _build_cc_list(self):
             try:
@@ -117,7 +133,6 @@ class RideBooking(Document):
             return cc
 
 
-        
     def send_draft_email(self):
         try:
             settings = frappe.get_cached_doc("Vehicle Booking Settings")
@@ -127,9 +142,27 @@ class RideBooking(Document):
         if settings.enable_email != "Yes":
             return
 
+        # Main customer email
         recipients = [self.customer_email] if self.customer_email else []
+
         if self.email and self.email not in recipients:
             recipients.append(self.email)
+
+        # 🔹 Add approvers from linked Ride Order (if present)
+        if self.order:
+            try:
+                ride_order = frappe.get_doc("Ride Order", self.order)
+                approver_fields = [
+                    ride_order.l1_approving_authority,
+                    ride_order.l2_approving_authority,
+                    ride_order.l3_approving_authority,
+                    ride_order.final_approving_authority
+                ]
+                for approver_email in approver_fields:
+                    if approver_email and approver_email not in recipients:
+                        recipients.append(approver_email)
+            except frappe.DoesNotExistError:
+                pass
 
         cc_emails = self._build_cc_list()
 
@@ -187,6 +220,7 @@ class RideBooking(Document):
             reference_doctype=self.doctype,
             reference_name=self.name
         )
+
     def send_completion_email(self):
         if not self.customer_email:
             return
@@ -279,6 +313,9 @@ class RideBooking(Document):
 
         if self.driver:
             lines.append(f"Driver: {self.assigned_driver}")
+
+        if self.ride_status:
+            lines.append(f"Ride Status: {self.ride_status}")
 
         self.info = "\n".join(lines)
 
