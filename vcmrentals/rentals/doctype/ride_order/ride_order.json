@@ -106,7 +106,6 @@
    "in_list_view": 1,
    "label": "Vehicle Type",
    "options": "\n5-Seater Car\n7-Seater Car\nBus",
-   "reqd": 1,
    "set_only_once": 1
   },
   {
@@ -286,7 +285,7 @@
    "link_fieldname": "order"
   }
  ],
- "modified": "2025-08-11 13:22:07.171741",
+ "modified": "2025-09-03 14:32:04.673231",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Ride Order",
@@ -305,6 +304,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []
