@@ -1,0 +1,172 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-07-21 10:17:49.177928",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_bv9p",
+  "vehicle",
+  "model",
+  "engine",
+  "chassis_no",
+  "bs_category",
+  "emission_standard",
+  "fuel_type",
+  "amended_from",
+  "column_break_mcqa",
+  "puc_certificate_number",
+  "issued_date",
+  "expiry_date",
+  "document_upload",
+  "pollution_amount",
+  "validity_period",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_bv9p",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Vehicle Pollution Details",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "vehicle",
+   "fieldtype": "Link",
+   "label": "Vehicle",
+   "options": "VcmVehicle"
+  },
+  {
+   "fieldname": "puc_certificate_number",
+   "fieldtype": "Data",
+   "label": "PUC Certificate Number"
+  },
+  {
+   "fieldname": "issued_date",
+   "fieldtype": "Date",
+   "label": "Issued Date"
+  },
+  {
+   "fieldname": "expiry_date",
+   "fieldtype": "Date",
+   "label": "Expiry Date"
+  },
+  {
+   "fetch_from": "vehicle.bs_category",
+   "fieldname": "emission_standard",
+   "fieldtype": "Data",
+   "label": "Emission Standard"
+  },
+  {
+   "fieldname": "document_upload",
+   "fieldtype": "Attach",
+   "in_list_view": 1,
+   "label": "Document Upload",
+   "reqd": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Remarks",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_mcqa",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "pollution_amount",
+   "fieldtype": "Currency",
+   "label": "Pollution Amount",
+   "reqd": 1
+  },
+  {
+   "fieldname": "validity_period",
+   "fieldtype": "Select",
+   "label": "Validity Period",
+   "options": "1 Year\n6 Month"
+  },
+  {
+   "fetch_from": "vehicle.fuel_type",
+   "fieldname": "fuel_type",
+   "fieldtype": "Data",
+   "label": "Fuel Type",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "vehicle.model",
+   "fieldname": "model",
+   "fieldtype": "Data",
+   "label": "Model",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "vehicle.engine_number",
+   "fieldname": "engine",
+   "fieldtype": "Data",
+   "label": "Engine",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "vehicle.chassis_no",
+   "fieldname": "chassis_no",
+   "fieldtype": "Data",
+   "label": "Chassis No",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "vehicle.bs_category",
+   "fieldname": "bs_category",
+   "fieldtype": "Data",
+   "label": "BS Category",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-07-30 17:17:05.578935",
+ "modified_by": "Administrator",
+ "module": "Rentals",
+ "name": "Vehicle Pollution Details",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Vehicle Agent",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

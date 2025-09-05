@@ -1,0 +1,140 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"lGq3-ldogE\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">VCM RENTAL</span>\",\"col\":12}},{\"id\":\"DsiqakK8Sj\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"30soWlWfmV\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"VCM Orders\",\"col\":4}},{\"id\":\"bX0sBxyp_n\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Assign Vehicle\",\"col\":4}},{\"id\":\"FtxKqu_5b1\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Calender Booked \",\"col\":4}},{\"id\":\"2F_fDkXdgj\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"lciM85bm7A\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Masters</b></span>\",\"col\":12}},{\"id\":\"D-eBkyPT6j\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"V68If8yIMP\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"VcmVehicle\",\"col\":3}},{\"id\":\"XbmJ4dDoQl\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Department\",\"col\":3}},{\"id\":\"Opt8eguOvB\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Booking Users\",\"col\":3}},{\"id\":\"xXkQfrDEpE\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"External Travel Agency Vehicle\",\"col\":3}},{\"id\":\"DFrndpp2Y1\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"AAxd3INWDi\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Drivers\",\"col\":3}},{\"id\":\"qkk2EZqoSJ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Ride ALM\",\"col\":3}},{\"id\":\"JjKSfR8I0K\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Booking Settings\",\"col\":3}},{\"id\":\"8GoHgKEDJO\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"lxZZVo33ua\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Challan\",\"col\":3}},{\"id\":\"w3JfBA818h\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Maintenance\",\"col\":3}},{\"id\":\"heI_GkYtdj\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Pollution\",\"col\":3}},{\"id\":\"2BtqCOVIP6\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vehicle Insurance Details\",\"col\":3}}]",
+ "creation": "2024-09-11 11:56:13.936104",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "add-round",
+ "idx": 1,
+ "indicator_color": "",
+ "is_hidden": 0,
+ "label": "Vehicle Booking",
+ "links": [],
+ "modified": "2025-08-08 10:49:53.302689",
+ "modified_by": "Administrator",
+ "module": "Rentals",
+ "name": "Vehicle Booking",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 34.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Calender Booked ",
+   "type": "URL",
+   "url": "https://erp.vcmerp.in/app/ride-booking/view/calendar/Vehicle%20Booking"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Vehicle Challan",
+   "link_to": "Vehicle Challan",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Vehicle Department",
+   "link_to": "Vehicle Department",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "External Travel Agency Vehicle",
+   "link_to": "External Travel Agency Vehicle",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Red",
+   "doc_view": "List",
+   "label": "Vehicle Booking Users",
+   "link_to": "Vehicle Booking User",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Yellow",
+   "doc_view": "List",
+   "label": "Vehicle Pollution",
+   "link_to": "Vehicle Pollution Details",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Blue",
+   "doc_view": "List",
+   "label": "Vehicle Insurance Details",
+   "link_to": "Vehicle Insurance Details",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Vehicle Booking Settings",
+   "link_to": "Vehicle Booking Settings",
+   "type": "DocType"
+  },
+  {
+   "color": "Blue",
+   "doc_view": "List",
+   "label": "Drivers",
+   "link_to": "Vehicle Driver",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Vehicle Maintenance",
+   "link_to": "Vehicle Maintenance",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Cyan",
+   "doc_view": "List",
+   "label": "Ride ALM",
+   "link_to": "Ride ALM",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Cyan",
+   "doc_view": "List",
+   "label": "VcmVehicle",
+   "link_to": "VcmVehicle",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Green",
+   "doc_view": "List",
+   "label": "VCM Orders",
+   "link_to": "Ride Order",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Cyan",
+   "doc_view": "List",
+   "label": "Assign Vehicle",
+   "link_to": "Ride Booking",
+   "stats_filter": "[]",
+   "type": "DocType"
+  }
+ ],
+ "title": "Vehicle Booking"
+}
