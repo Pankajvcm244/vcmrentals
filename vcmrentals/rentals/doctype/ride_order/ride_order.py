@@ -144,7 +144,6 @@ class RideOrder(Document):
                             <tr><td style="padding: 8px;">🕒 <strong>Pickup Time</strong></td><td>{{ doc.pickup_time }}</td></tr>
                             <tr><td style="padding: 8px;">🕒 <strong>Drop Time</strong></td><td>{{ doc.drop_time }}</td></tr>
                             <tr><td style="padding: 8px;">🏢 <strong>Department</strong></td><td>{{ doc.department }}</td></tr>
-                            <tr><td style="padding: 8px;">🚘 <strong>Vehicle Type</strong></td><td>{{ doc.vehicle_type }}</td></tr>
                             <tr><td style="padding: 8px;">📍 <strong>Pickup Address</strong></td><td>{{ doc.pickup_address }}</td></tr>
                             <tr><td style="padding: 8px;">📌 <strong>Drop Address</strong></td><td>{{ doc.drop_address }}</td></tr>
                             {% if doc.intermediate_stop %}
@@ -155,11 +154,11 @@ class RideOrder(Document):
 
                         <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;">
 
-                        <p style="margin-top: 20px;">You’ll receive another email once your ride is confirmed.<br><strong>— Team VCM Rentals</strong></p>
+                        <p style="margin-top: 20px;">You’ll receive another email once your ride is confirmed.<br><strong>Team Vehicle Booking</strong></p>
                     </div>
 
                     <div style="background-color: #f9f9f9; padding: 10px 20px; text-align: center; font-size: 12px; color: #999;">
-                        © 2025 VCM Rentals • All rights reserved
+                        Team Vehicle Booking • All rights reserved
                     </div>
                 </div>
                 """,
@@ -193,7 +192,6 @@ class RideOrder(Document):
                             <tr><td style="padding: 8px;">🕒 <strong>Pickup Time</strong></td><td>{{ doc.pickup_time }}</td></tr>
                             <tr><td style="padding: 8px;">🕓 <strong>Drop Time</strong></td><td>{{ doc.drop_time }}</td></tr>
                             <tr><td style="padding: 8px;">🏢 <strong>Department</strong></td><td>{{ doc.department }}</td></tr>
-                            <tr><td style="padding: 8px;">🚘 <strong>Vehicle Type</strong></td><td>{{ doc.vehicle_type }}</td></tr>
                             <tr><td style="padding: 8px;">📍 <strong>Pickup Address</strong></td><td>{{ doc.pickup_address }}</td></tr>
                             <tr><td style="padding: 8px;">📌 <strong>Drop Address</strong></td><td>{{ doc.drop_address }}</td></tr>
                             {% if doc.intermediate_stop %}
@@ -203,11 +201,11 @@ class RideOrder(Document):
 
                         <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;">
 
-                        <p style="margin-top: 20px;">Have a safe and pleasant journey!<br><strong>— Team VCM Rentals</strong></p>
+                        <p style="margin-top: 20px;">Have a safe and pleasant journey!<br><strong>Team Vehicle Booking</strong></p>
                     </div>
 
                     <div style="background-color: #f9f9f9; padding: 10px 20px; text-align: center; font-size: 12px; color: #999;">
-                        © 2025 VCM Rentals • All rights reserved
+                        Team Vehicle Booking • All rights reserved
                     </div>
                 </div>
                 """,
@@ -238,11 +236,11 @@ class RideOrder(Document):
                                 <p><strong>Reason:</strong> {{ doc.rejection_reason }}</p>
                             {% endif %}
 
-                            <p style="margin-top: 20px;">Please contact support if you have any questions.<br><strong>— Team VCM Rentals</strong></p>
+                            <p style="margin-top: 20px;">Please contact support if you have any questions.<br><strong>Team Vehicle Booking</strong></p>
                         </div>
 
                         <div style="background-color: #f9f9f9; padding: 10px 20px; text-align: center; font-size: 12px; color: #999;">
-                            © 2025 VCM Rentals • All rights reserved
+                            Team Vehicle Booking • All rights reserved
                         </div>
                     </div>
                     """,
@@ -288,7 +286,6 @@ class RideOrder(Document):
                         <tr><td style="padding: 6px;"><strong>Pickup Time:</strong></td><td>{{ doc.pickup_time }}</td></tr>
                         <tr><td style="padding: 6px;"><strong>Pickup Address:</strong></td><td>{{ doc.pickup_address }}</td></tr>
                         <tr><td style="padding: 6px;"><strong>Drop Address:</strong></td><td>{{ doc.drop_address }}</td></tr>
-                        <tr><td style="padding: 6px;"><strong>Vehicle Type:</strong></td><td>{{ doc.vehicle_type }}</td></tr>
                         <tr><td style="padding: 6px;"><strong>Ride Type:</strong></td><td>{{ doc.ride_type }}</td></tr>
                     </table>
 
@@ -296,7 +293,7 @@ class RideOrder(Document):
                 </div>
 
                 <div style="background-color: #f1f1f1; padding: 15px; text-align: center; font-size: 12px; color: #777;">
-                    © 2025 VCM Rentals • All Rights Reserved
+                    Team Vehicle Booking • All Rights Reserved
                 </div>
             </div>
             """,
@@ -342,7 +339,7 @@ class RideOrder(Document):
                 </div>
 
                 <div style="background-color: #f1f1f1; padding: 15px; text-align: center; font-size: 12px; color: #777;">
-                    © 2025 VCM Rentals • All Rights Reserved
+                    Team Vehicle Booking • All Rights Reserved
                 </div>
             </div>
             """,

@@ -25,6 +25,7 @@ class RideBooking(Document):
     #     if self.is_new():
     #         self.send_draft_email()
     def validate(self):
+        self.validate_mandatory_fields()
         self.set_start_and_end()
         self.check_vehicle_availability()
         self.validate_odometer_start()
@@ -37,6 +38,31 @@ class RideBooking(Document):
         # 🔹 Send email only if the document is new
         if self.is_new():
             self.send_draft_email()
+
+    def validate_mandatory_fields(self):
+
+        # External Agency is NOT checked → require internal fields
+        if not self.external_agency:
+            if not self.vehicle:
+                frappe.throw("Please select a Vehicle before saving.")
+
+            if not self.driver:
+                frappe.throw("Please select a Driver before saving.")
+
+        # External Agency IS checked → require external fields
+        else:
+            if not self.travel_agency_name:
+                frappe.throw("Please Select External Agency Vehicle ")
+
+            if not self.vehicle_number:
+                frappe.throw("Please enter Vehicle Number.")
+
+            if not self.driver_number:
+                frappe.throw("Please enter Driver Mobile Number.")
+
+            if not self.driver_name:
+                frappe.throw("Please enter Driver Name.")
+
 
     def before_save(self):
         self.set_info_field()
@@ -203,11 +229,11 @@ class RideBooking(Document):
 
                 <p style="margin-top: 20px;">We'll keep you updated. For any changes, please contact VCM Rentals support.</p>
 
-                <p style="margin-top: 30px;">Safe journey!<br><strong>— Team VCM Rentals</strong></p>
+                <p style="margin-top: 30px;">Safe journey!<br><strong>Team Vehicle Booking</strong></p>
             </div>
 
             <div style="background-color: #f9f9f9; padding: 10px 20px; text-align: center; font-size: 12px; color: #777;">
-                © 2025 VCM Rentals • All rights reserved
+                Team Vehicle Booking • All rights reserved
             </div>
         </div>
         """, {"doc": self})
@@ -248,11 +274,11 @@ class RideBooking(Document):
                 <p style="margin-top: 20px;">If you have any questions or feedback, feel free to reach out.</p>
                 <p>Thanks again for choosing <strong>VCM Rentals</strong>!</p>
 
-                <p style="margin-top: 30px;">Warm regards,<br><strong>Team VCM Rentals</strong></p>
+                <p style="margin-top: 30px;">Warm regards,<br><strong>Team Vehicle Booking</strong></p>
             </div>
 
             <div style="background-color: #f1f1f1; padding: 10px 20px; text-align: center; font-size: 12px; color: #555;">
-                © 2025 VCM Rentals • All rights reserved
+                Team Vehicle Booking • All rights reserved
             </div>
         </div>
         """, {"doc": self})
