@@ -6,16 +6,16 @@
  "engine": "InnoDB",
  "field_order": [
   "emp_id",
+                                                                                                  "email",
   "driver_name",
   "mobile",
   "dob",
-  "driver_license_number",
   "column_break_nzxp",
   "disable",
   "driver_license_issue_date",
   "driver_license_expiry_date",
   "cost_center",
-  "email"
+  "driver_license_number"
  ],
  "fields": [
   {
@@ -25,9 +25,11 @@
    "reqd": 1
   },
   {
+   "fetch_from": "email.full_name",
    "fieldname": "driver_name",
    "fieldtype": "Data",
    "label": "Driver Name",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -56,11 +58,13 @@
    "reqd": 1
   },
   {
+   "fetch_from": "email.mobile_no",
    "fieldname": "mobile",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Mobile",
    "length": 10,
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -75,8 +79,9 @@
   },
   {
    "fieldname": "email",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "label": "Email",
+   "options": "User",
    "reqd": 1
   },
   {
@@ -86,10 +91,11 @@
    "reqd": 1
   }
  ],
+ "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-26 12:53:58.669511",
- "modified_by": "Administrator",
+ "modified": "2025-12-03 17:18:54.156542",
+ "modified_by": "aman.soni@vcm.org.in",
  "module": "Rentals",
  "name": "Vehicle Driver",
  "owner": "Administrator",
