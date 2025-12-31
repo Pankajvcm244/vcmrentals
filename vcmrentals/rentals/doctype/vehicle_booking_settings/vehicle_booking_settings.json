@@ -1,0 +1,104 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-07-22 16:21:42.045522",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "vehicle_booking_seetings_section",
+  "enable_email",
+  "enable_whatsup",
+  "emergency_contact_number",
+  "column_break_uhxo",
+  "ride_order_cc",
+  "section_break_qock",
+  "local_booking_closed",
+  "intercity_booking_closed",
+  "outstation_booking_closed"
+ ],
+ "fields": [
+  {
+   "fieldname": "vehicle_booking_seetings_section",
+   "fieldtype": "Section Break",
+   "label": "Vehicle Booking Seetings"
+  },
+  {
+   "fieldname": "enable_email",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Enable Email",
+   "options": "Yes\nNo",
+   "reqd": 1
+  },
+  {
+   "fieldname": "enable_whatsup",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Enable Whatsup",
+   "options": "Yes\nNo",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ride_order_cc",
+   "fieldtype": "Small Text",
+   "label": "Ride Order CC"
+  },
+  {
+   "fieldname": "column_break_uhxo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "emergency_contact_number",
+   "fieldtype": "Data",
+   "label": "Emergency Contact Number",
+   "length": 10
+  },
+  {
+   "fieldname": "section_break_qock",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "local_booking_closed",
+   "fieldtype": "Check",
+   "label": "Local Booking Closed"
+  },
+  {
+   "default": "0",
+   "fieldname": "intercity_booking_closed",
+   "fieldtype": "Check",
+   "label": "Intercity Booking Closed"
+  },
+  {
+   "default": "0",
+   "fieldname": "outstation_booking_closed",
+   "fieldtype": "Check",
+   "label": "Outstation Booking Closed"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2025-12-25 15:03:50.426766",
+ "modified_by": "Administrator",
+ "module": "Rentals",
+ "name": "Vehicle Booking Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

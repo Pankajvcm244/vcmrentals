@@ -7,23 +7,46 @@
  "engine": "InnoDB",
  "field_order": [
   "title",
+  "registration_number",
+  "registration_date",
+  "chassis_no",
+  "engine_number",
+  "curb_weight",
+  "wheelbase",
+  "engine_capacity_cc",
+  "fitness_upto",
+  "column_break_ckgb",
   "make",
-  "year",
-  "color",
-  "insurance_expiry",
-  "column_break_sgqo",
-  "is_published",
   "model",
+  "body_type",
+  "fuel_type",
+  "bs_category",
+  "color",
   "license_plate",
+  "seating_capacity",
   "vehicle_image",
+  "column_break_nuiu",
+  "cost_center",
+  "owner_name",
+  "actual_cost",
+  "is_hypothecated",
+  "loan_start_date",
+  "loan_end_date",
+  "loan_tenure_in_months",
+  "bank_name",
+  "bank_city",
+  "details_section",
+  "ncr_entry_allowed",
+  "condition",
+  "column_break_vhhe",
   "status",
-  "condition"
+  "location"
  ],
  "fields": [
   {
    "fieldname": "title",
    "fieldtype": "Data",
-   "label": "Title",
+   "label": "Vehicle Info",
    "read_only": 1
   },
   {
@@ -31,35 +54,23 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Make",
-   "reqd": 1
-  },
-  {
-   "fieldname": "year",
-   "fieldtype": "Int",
-   "in_list_view": 1,
-   "label": "Year",
-   "non_negative": 1,
-   "reqd": 1
+   "reqd": 1,
+   "set_only_once": 1
   },
   {
    "fieldname": "color",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Color",
-   "reqd": 1
-  },
-  {
-   "fieldname": "insurance_expiry",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Insurance Expiry",
-   "reqd": 1
+   "reqd": 1,
+   "set_only_once": 1
   },
   {
    "fieldname": "model",
    "fieldtype": "Data",
    "label": "Model",
-   "reqd": 1
+   "reqd": 1,
+   "set_only_once": 1
   },
   {
    "fieldname": "license_plate",
@@ -75,7 +86,7 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "Active\nOut of Service\nSold\nCrushed"
+   "options": "Active\nDamaged\nOut of Service\nIn Maintenance"
   },
   {
    "fieldname": "condition",
@@ -83,20 +94,194 @@
    "label": "Condition"
   },
   {
-   "default": "0",
-   "fieldname": "is_published",
-   "fieldtype": "Check",
-   "label": "Is Published?"
+   "fieldname": "fuel_type",
+   "fieldtype": "Select",
+   "label": "Fuel Type",
+   "options": "\nPetrol\nDiesel\nEV\nCNG",
+   "reqd": 1,
+   "set_only_once": 1
   },
   {
-   "fieldname": "column_break_sgqo",
+   "default": "0",
+   "fieldname": "ncr_entry_allowed",
+   "fieldtype": "Check",
+   "label": "NCR Entry Allowed?"
+  },
+  {
+   "fieldname": "bs_category",
+   "fieldtype": "Select",
+   "label": "BS Category",
+   "options": "BS-3 or below\nBS4\nBS6\nBS6 Phase 2\nBS6.2\nElectric\nHybrid",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "column_break_ckgb",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "details_section",
+   "fieldtype": "Section Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Location",
+   "options": "Budget Location"
+  },
+  {
+   "fieldname": "column_break_vhhe",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "chassis_no",
+   "fieldtype": "Data",
+   "label": "Chassis No",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "registration_number",
+   "fieldtype": "Data",
+   "label": "Registration Number",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "registration_date",
+   "fieldtype": "Date",
+   "label": "Registration Date",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "seating_capacity",
+   "fieldtype": "Select",
+   "label": "Seating Capacity",
+   "options": "5 Seater\n7 Seater\nBus\nLoader",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "actual_cost",
+   "fieldtype": "Currency",
+   "label": "Actual Cost",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "owner_name",
+   "fieldtype": "Data",
+   "label": "Owner Name",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "engine_number",
+   "fieldtype": "Data",
+   "label": "Engine Number",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "fitness_upto",
+   "fieldtype": "Date",
+   "label": "Fitness Upto",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "engine_capacity_cc",
+   "fieldtype": "Data",
+   "label": "Engine Capacity (CC)",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "body_type",
+   "fieldtype": "Select",
+   "label": "Body Type",
+   "options": "Sedan\nSUV\nHatchback",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "curb_weight",
+   "fieldtype": "Float",
+   "label": "Curb Weight",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "wheelbase",
+   "fieldtype": "Float",
+   "label": "Wheelbase",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "column_break_nuiu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.is_hypothecated==1",
+   "fieldname": "loan_start_date",
+   "fieldtype": "Date",
+   "label": "Loan Start Date",
+   "mandatory_depends_on": "eval:doc.is_hypothecated==1",
+   "set_only_once": 1
+  },
+  {
+   "depends_on": "eval:doc.is_hypothecated==1",
+   "fieldname": "loan_end_date",
+   "fieldtype": "Date",
+   "label": "Loan End Date",
+   "mandatory_depends_on": "eval:doc.is_hypothecated==1",
+   "set_only_once": 1
+  },
+  {
+   "depends_on": "eval:doc.is_hypothecated==1",
+   "fieldname": "loan_tenure_in_months",
+   "fieldtype": "Int",
+   "label": "Loan Tenure (in months)",
+   "mandatory_depends_on": "eval:doc.is_hypothecated==1",
+   "set_only_once": 1
+  },
+  {
+   "depends_on": "eval:doc.is_hypothecated==1",
+   "fieldname": "bank_name",
+   "fieldtype": "Data",
+   "label": "Bank Name",
+   "mandatory_depends_on": "eval:doc.is_hypothecated==1",
+   "set_only_once": 1
+  },
+  {
+   "depends_on": "eval:doc.is_hypothecated==1",
+   "fieldname": "bank_city",
+   "fieldtype": "Data",
+   "label": "Bank City",
+   "mandatory_depends_on": "eval:doc.is_hypothecated==1",
+   "set_only_once": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_hypothecated",
+   "fieldtype": "Check",
+   "label": "Vehicle under Hypothecation",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "set_only_once": 1
   }
  ],
+ "grid_page_length": 50,
  "image_field": "vehicle_image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-14 16:22:00.365395",
+ "modified": "2025-12-27 16:10:39.754427",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "VcmVehicle",
@@ -116,17 +301,39 @@
    "write": 1
   },
   {
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Driver",
+   "share": 1
+  },
+  {
    "create": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "CabAgent",
+   "role": "Vehicle Agent",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Ride User",
    "share": 1,
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
+ "search_fields": "seating_capacity,make,ncr_entry_allowed",
  "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",

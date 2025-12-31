@@ -1,237 +1,413 @@
+
 import frappe
 from frappe.model.document import Document
+from frappe.utils import getdate, now_datetime
+from frappe.model.naming import make_autoname
+from frappe.utils import getdate, nowdate
+
+from vcmrentals.rentals.doctype.ride_order.ridealm.ride import (
+    assign_and_notify_next_ride_authority,
+    get_preq_ride_level,
+)
+
 
 class RideOrder(Document):
+    def autoname(self):
+        today = now_datetime()
+        date_prefix = today.strftime("%y%m")  # e.g., 2507 for July 2025
+        prefix = f"RIDE-REQ-{date_prefix}-"
+        self.name = make_autoname(prefix + ".#####")
+
+    def before_save(self):
+        self.refresh_alm()
+
     def validate(self):
-        # Check if the document is new and send the approval email to the manager
+
+        settings = frappe.get_cached_doc("Vehicle Booking Settings")
+
+        ride_type_map = {
+            "Local": settings.local_booking_closed,
+            "Intercity": settings.intercity_booking_closed,
+            "Outstation": settings.outstation_booking_closed,
+        }
+
+        if self.ride_type in ride_type_map and ride_type_map[self.ride_type]:
+            frappe.throw(
+                f"Hare Krishna! {self.ride_type} Bookings are currently closed for some time."
+            )
+
+
+            
+        if self.date:
+            trip_start = getdate(self.date)
+            today = getdate(nowdate())
+
+            # Check if trip_start is before today
+            if trip_start < today:
+                frappe.throw("Trip Start Date cannot be before today")
+
+        if self.date and self.trip_end_date:
+            trip_start = getdate(self.date)
+            trip_end = getdate(self.trip_end_date)
+
+            if trip_end < trip_start:
+                frappe.throw("Trip End Date cannot be before Trip Start Date")
+
+
+
+    # def validate(self):
+    #     if self.date and self.trip_end_date:
+    #         trip_start = getdate(self.date)
+    #         trip_end = getdate(self.trip_end_date)
+
+    #         if trip_end < trip_start:
+    #             frappe.throw("Trip End Date cannot be before Trip Start Date")
+
+    def after_insert(self):
+        self.send_draft_email()
+        self.send_ride_order_app_notification()
+
+
+    def on_update(self):
+        if self.workflow_state == "Rejected":
+            self.send_rejection_email()
+
+        if self.workflow_state == "Trashed":
+            self.send_cancellation_email()
+            
+
+        if self.workflow_state == "Pending":
+            self.send_workflow_update_emails()
+            
+
         if self.is_new():
             self.send_approval_email_to_manager()
-        elif self.has_status_changed():
-            self.send_status_update_email()
 
-    def has_status_changed(self):
-        # Fetch the old status from the database
-        old_status = frappe.db.get_value("Ride Order", self.name, "status")
-        return old_status != self.status
 
-    def send_approval_email_to_manager(self):
-        # Fetch the email address from the linked Manager Email DocType
-        if self.manager_email:
-            manager_email_address = frappe.db.get_value("Manager Email", self.manager_email, "Email")
+        assign_and_notify_next_ride_authority(self)
 
-            if not manager_email_address:
-                frappe.log_error(message="Manager Email address not found", title="Email Sending Failed")
-                return
-            
-            subject = f"Approval Required for Ride Order {self.name}"
-            message = f"""
-                <html>
-                <body>
-                    <table width="100%" cellpadding="10" cellspacing="0" border="0">
-                        <tr>
-                            <td>
-                                <h2>Ride Order Approval Needed</h2>
-                                <p>Dear Manager,</p>
-                                <p>A new ride order has been created and requires your approval. Below are the details:</p>
-                                <table width="100%" cellpadding="8" cellspacing="0" border="1" style="border-collapse: collapse;">
-                                    <tr>
-                                        <td><b>Customer Name:</b></td>
-                                        <td>{self.customer_name}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Contact Number:</b></td>
-                                        <td>{self.contact_number}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Pickup Time:</b></td>
-                                        <td>{self.pickup_time}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Drop Time:</b></td>
-                                        <td>{self.drop_time}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Pickup Address:</b></td>
-                                        <td>{self.pickup_address}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Drop Address:</b></td>
-                                        <td>{self.drop_address}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Vehicle Type:</b></td>
-                                        <td>{self.vehicle_type}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Ride Type:</b></td>
-                                        <td>{self.ride_type}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Remarks:</b></td>
-                                        <td>{self.comment}</td>
-                                    </tr>
-                                    
-                                </table>
-                                <p>Please review the details and approve or reject the ride order.</p>
-                                <p>
-                                    <a href="http://13.235.73.38:8000/api/method/vcmrentals.api.update_ride_order_status?ride_order_id={self.name}&status=Accepted">Accept</a>
-                                    <a href="http://13.235.73.38:8000/api/method/vcmrentals.api.update_ride_order_status?ride_order_id={self.name}&status=Rejected">Reject</a>
 
-                                </p>
-                                <p>Best regards,<br>Your Ride Booking Team</p>
-                            </td>
-                        </tr>
-                    </table>
-                </body>
-                </html>
-                
-            """
+    def on_submit(self):
+        if self.docstatus == 1:
+            self.send_confirm_email()
 
-            try:
-                frappe.sendmail(
-                    recipients=[manager_email_address],
-                    subject=subject,
-                    message=message
-                )
-            except Exception as e:
-                frappe.log_error(message=str(e), title="Approval Email Sending Failed")
-        else:
-            frappe.log_error(message="Manager Email field is empty", title="Email Sending Failed")
+    def refresh_alm(self):
+        if not self.department:
+            frappe.throw("Department is not set.")
+        
+        alm_level = get_preq_ride_level(self)
 
-    def send_status_update_email(self):
-        submitter_email = self.email  # Email field in Ride Order DocType
-        cc_email = "amansoniofficial20@gmail.com,amansonimtr@gmail.com"  # CC Emails
+        if not alm_level:
+            # If no ALM level is configured, set workflow state to Final Level Approved
+            # self.workflow_state = "Final Level Approved"
+            return
 
-        if self.status == "Accepted":
-            subject = f"Confirmation of Your Ride Order {self.name}"
-            message = f"""
-                <html>
-                <body>
-                    <table width="100%" cellpadding="10" cellspacing="0" border="0">
-                        <tr>
-                            <td>
-                                <h2>Ride Order Confirmation</h2>
-                                <p>Dear {self.customer_name},</p>
-                                <p>Your ride order has been confirmed. Below are the details:</p>
-                                <table width="100%" cellpadding="8" cellspacing="0" border="1" style="border-collapse: collapse;">
-                                    <tr>
-                                        <td><b>Order Number:</b></td>
-                                        <td>{self.name}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Pickup Time:</b></td>
-                                        <td>{self.pickup_time}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Drop Time:</b></td>
-                                        <td>{self.drop_time}</td>
-                                    </tr>
+        self.l1_approving_authority = alm_level.l1_approver
+        self.l2_approving_authority = alm_level.l2_approver
+        self.l3_approving_authority = alm_level.l3_approver
+        self.final_approving_authority = alm_level.final_approver
 
-                                    <tr>
-                                        <td><b>Pickup Address:</b></td>
-                                        <td>{self.pickup_address}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Drop Address:</b></td>
-                                        <td>{self.drop_address}</td>
-                                    </tr>
-                                   
-                                    <tr>
-                                        <td><b>Vehicle Type:</b></td>
-                                        <td>{self.vehicle_type}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Ride Type:</b></td>
-                                        <td>{self.ride_type}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Remarks:</b></td>
-                                        <td>{self.comment}</td>
-                                    </tr>
-                                </table>
-                                <p>Thank you for choosing our service.</p>
-                                <p>Best regards,<br>Your Ride Booking Team</p>
-                            </td>
-                        </tr>
-                    </table>
-                </body>
-                </html>
-            """
-        elif self.status == "Rejected":
-            subject = f"Notification: Your Ride Order {self.name} is Rejected"
-            message = f"""
-                <html>
-                <body>
-                    <table width="100%" cellpadding="10" cellspacing="0" border="0">
-                        <tr>
-                            <td>
-                                <h2>Ride Order Rejected</h2>
-                                <p>Dear {self.customer_name},</p>
-                                <p>We regret to inform you that your ride order has been rejected. Below are the details:</p>
-                                <table width="100%" cellpadding="8" cellspacing="0" border="1" style="border-collapse: collapse;">
-                                    <tr>
-                                        <td><b>Order Number:</b></td>
-                                        <td>{self.name}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Pickup Time:</b></td>
-                                        <td>{self.pickup_time}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Drop Time:</b></td>
-                                        <td>{self.drop_time}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Pickup Address:</b></td>
-                                        <td>{self.pickup_address}</td>
-                                    </tr>
-                                     <tr>
-                                        <td><b>Drop Address:</b></td>
-                                        <td>{self.drop_address}</td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td><b>Vehicle Type:</b></td>
-                                        <td>{self.vehicle_type}</td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td><b>Ride Type:</b></td>
-                                        <td>{self.ride_type}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Remarks:</b></td>
-                                        <td>{self.comment}</td>
-                                    </tr>
-                                </table>
-                                <p>We apologize for any inconvenience this may have caused.</p>
-                                <p>Best regards,<br>Your Ride Booking Team</p>
-                            </td>
-                        </tr>
-                    </table>
-                </body>
-                </html>
-            """
 
+    # def refresh_alm(self):
+    #     if not self.department:
+    #         frappe.throw("Department is not set.")
+    #     alm_level = get_preq_ride_level(self)
+    #     if not alm_level:
+    #         frappe.throw("ALM Levels are not set for this document.")
+    #     self.l1_approving_authority = alm_level.l1_approver
+    #     self.l2_approving_authority = alm_level.l2_approver
+    #     self.l3_approving_authority = alm_level.l3_approver
+    #     self.final_approving_authority = alm_level.final_approver
+
+
+
+    def _build_cc_list(self):
         try:
-            frappe.sendmail(
-                recipients=[submitter_email],
-                cc=cc_email.split(","),
-                subject=subject,
-                message=message
+            settings = frappe.get_cached_doc("Vehicle Booking Settings")
+        except frappe.DoesNotExistError:
+            return [self.email] if self.email else []
+
+        cc = []
+        if settings.enable_email == "Yes" and settings.ride_order_cc:
+            cc = [email.strip() for email in settings.ride_order_cc.split(",") if email.strip()]
+
+        if self.email:
+            cc.append(self.email)
+
+        return cc
+
+
+    def send_ride_order_app_notification(self):
+        try:
+            settings = frappe.get_cached_doc("Vehicle Booking Settings")
+        except frappe.DoesNotExistError:
+            return
+
+        users = set()
+
+        # Creator
+        if self.owner:
+            users.add(self.owner)
+
+        # CC users
+        if settings.ride_order_cc:
+            users.update(
+                email.strip()
+                for email in settings.ride_order_cc.split(",")
+                if email.strip()
             )
-        except Exception as e:
-            frappe.log_error(message=str(e), title="Email Sending Failed")
+
+        if not users:
+            return
+
+        subject = "🚗 New Ride Order Created"
+        message = f"Ride Order {self.name} created by {self.booking_user_name}"
+
+        for user in users:
+            frappe.get_doc({
+                "doctype": "App Notification",
+                "app": "VCMERP",
+                "user": user,
+                "subject": subject,
+                "message": message,
+            }).insert(ignore_permissions=True)
 
 
-@frappe.whitelist()
-def update_ride_order_status(ride_order_id, status):
-    try:
-        ride_order = frappe.get_doc("Ride Order", ride_order_id)
-        ride_order.status = status
-        ride_order.save(ignore_permissions=True)
-        frappe.db.commit()
-        return {"success": True, "message": f"Ride order {ride_order_id} has been {status}."}
-    except Exception as e:
-        frappe.log_error(message=str(e), title="Ride Order Status Update Failed")
-        return {"success": False, "message": "Failed to update the ride order status."}
+
+
+    def send_draft_email(self):
+        settings = frappe.get_cached_doc("Vehicle Booking Settings")
+        if settings.enable_email != "Yes":
+            return
+
+        frappe.sendmail(
+            recipients=[self.email] if self.email else [],
+            cc=self._build_cc_list(),
+            subject=f"Ride Request - {self.name}",
+            message=frappe.render_template(
+                """
+                <div style="font-family: 'Segoe UI', sans-serif; color: #333; max-width: 600px; margin: auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
+                    <div style="background-color: #00bfa5; color: white; padding: 20px;">
+                        <h2 style="margin: 0;">Ride Request 🚘</h2>
+                        <p style="margin: 5px 0 0;">Hare Krishna {{ doc.user_name or "Guest" }},</p>
+                    </div>
+
+                    <div style="padding: 20px;">
+                        <p>We’ve received your request for ride <strong>{{ doc.name }}</strong>. Our team will confirm your booking shortly.</p>
+
+                        <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                            <tr><td style="padding: 8px;">📅 <strong>Trip Start Date</strong></td><td>{{ doc.date }}</td></tr>
+                            <tr><td style="padding: 8px;">📅 <strong>Trip End Date</strong></td><td>{{ doc.trip_end_date }}</td></tr>
+                            <tr><td style="padding: 8px;">🕒 <strong>Pickup Time</strong></td><td>{{ doc.pickup_time }}</td></tr>
+                            <tr><td style="padding: 8px;">🕒 <strong>Drop Time</strong></td><td>{{ doc.drop_time }}</td></tr>
+                            <tr><td style="padding: 8px;">🏢 <strong>Department</strong></td><td>{{ doc.department }}</td></tr>
+                            <tr><td style="padding: 8px;">📍 <strong>Pickup Address</strong></td><td>{{ doc.pickup_address }}</td></tr>
+                            <tr><td style="padding: 8px;">📌 <strong>Drop Address</strong></td><td>{{ doc.drop_address }}</td></tr>
+                            {% if doc.intermediate_stop %}
+                            <tr><td style="padding: 8px;">⏸️ <strong>Intermediate Stop</strong></td><td>{{ doc.intermediate_stop }}</td></tr>
+                            {% endif %}
+                            <tr><td style="padding: 8px;">🎯 <strong>Ride Type</strong></td><td>{{ doc.ride_type }}</td></tr>
+                        </table>
+
+                        <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;">
+
+                        <p style="margin-top: 20px;">You’ll receive another email once your ride is confirmed.<br><strong>Team Vehicle Booking</strong></p>
+                    </div>
+
+                    <div style="background-color: #f9f9f9; padding: 10px 20px; text-align: center; font-size: 12px; color: #999;">
+                        Team Vehicle Booking • All rights reserved
+                    </div>
+                </div>
+                """,
+                {"doc": self}
+            ),
+        )
+
+    def send_confirm_email(self):
+        settings = frappe.get_cached_doc("Vehicle Booking Settings")
+        if settings.enable_email != "Yes":
+            return
+
+        frappe.sendmail(
+            recipients=[self.email] if self.email else [],
+            cc=self._build_cc_list(),
+            subject=f"Ride Request - {self.name}",
+            message=frappe.render_template(
+                """
+                <div style="font-family: 'Segoe UI', sans-serif; color: #333; max-width: 600px; margin: auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
+                    <div style="background-color: #00bfa5; color: white; padding: 20px;">
+                        <h2 style="margin: 0;">Ride Confirmed ✅</h2>
+                        <p style="margin: 5px 0 0;">Hare Krishna {{ doc.user_name or "Guest" }},</p>
+                    </div>
+
+                    <div style="padding: 20px;">
+                        <p>Your ride <strong>{{ doc.name }}</strong> has been <span style="color: green;"><strong>CONFIRMED</strong></span>.</p>
+
+                        <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                            <tr><td style="padding: 8px;">📅 <strong>Trip Start Date</strong></td><td>{{ doc.date }}</td></tr>
+                            <tr><td style="padding: 8px;">📅 <strong>Trip End Date:</strong></td><td>{{ doc.trip_end_date }}</td></tr>
+                            <tr><td style="padding: 8px;">🕒 <strong>Pickup Time</strong></td><td>{{ doc.pickup_time }}</td></tr>
+                            <tr><td style="padding: 8px;">🕓 <strong>Drop Time</strong></td><td>{{ doc.drop_time }}</td></tr>
+                            <tr><td style="padding: 8px;">🏢 <strong>Department</strong></td><td>{{ doc.department }}</td></tr>
+                            <tr><td style="padding: 8px;">📍 <strong>Pickup Address</strong></td><td>{{ doc.pickup_address }}</td></tr>
+                            <tr><td style="padding: 8px;">📌 <strong>Drop Address</strong></td><td>{{ doc.drop_address }}</td></tr>
+                            {% if doc.intermediate_stop %}
+                            <tr><td style="padding: 8px;">⏸️ <strong>Intermediate Stop</strong></td><td>{{ doc.intermediate_stop }}</td></tr>
+                            {% endif %}
+                        </table>
+
+                        <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;">
+
+                        <p style="margin-top: 20px;">Have a safe and pleasant journey!<br><strong>Team Vehicle Booking</strong></p>
+                    </div>
+
+                    <div style="background-color: #f9f9f9; padding: 10px 20px; text-align: center; font-size: 12px; color: #999;">
+                        Team Vehicle Booking • All rights reserved
+                    </div>
+                </div>
+                """,
+                {"doc": self}
+            ),
+        )
+    def send_rejection_email(self):
+            settings = frappe.get_cached_doc("Vehicle Booking Settings")
+            if settings.enable_email != "Yes":
+                return
+
+            frappe.sendmail(
+                recipients=[self.email] if self.email else [],
+                cc=self._build_cc_list(),
+                subject=f"Ride Request - {self.name}",
+                message=frappe.render_template(
+                    """
+                    <div style="font-family: 'Segoe UI', sans-serif; color: #333; max-width: 600px; margin: auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
+                        <div style="background-color: #d32f2f; color: white; padding: 20px;">
+                            <h2 style="margin: 0;">Ride Request Rejected ❌</h2>
+                            <p style="margin: 5px 0 0;">Hare Krishna {{ doc.user_name or "User" }},</p>
+                        </div>
+
+                        <div style="padding: 20px;">
+                            <p>We're sorry to inform you that your ride request <strong>{{ doc.name }}</strong> has been <strong>rejected</strong>.</p>
+
+                            {% if doc.rejection_reason %}
+                                <p><strong>Reason:</strong> {{ doc.rejection_reason }}</p>
+                            {% endif %}
+
+                            <p style="margin-top: 20px;">Please contact support if you have any questions.<br><strong>Team Vehicle Booking</strong></p>
+                        </div>
+
+                        <div style="background-color: #f9f9f9; padding: 10px 20px; text-align: center; font-size: 12px; color: #999;">
+                            Team Vehicle Booking • All rights reserved
+                        </div>
+                    </div>
+                    """,
+                    {"doc": self}
+                )
+            )
+    def send_workflow_update_emails(self):
+        """Send email to all non-empty approving authorities on workflow state change."""
+        approvers = [
+            self.l1_approving_authority,
+            self.l2_approving_authority,
+            self.l3_approving_authority,
+            self.final_approving_authority,
+        ]
+
+        recipients = [email for email in approvers if email]
+
+        if not recipients:
+            return
+
+        subject = f"Ride Order {self.name} – Workflow Updated to {self.workflow_state}"
+        message = frappe.render_template(
+            """
+            <div style="font-family: 'Segoe UI', sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.06);">
+                <div style="background-color: #00695c; color: white; padding: 20px;">
+                    <h2 style="margin: 0;">Ride Order Update 🚘</h2>
+                    <p style="margin: 4px 0 0;">Ride ID: <strong>{{ doc.name}}</strong></p>
+                    
+                </div>
+
+                <div style="padding: 20px; color: #333;">
+                    <p>Dear Approver,</p>
+                    <p>The workflow status for this ride has changed to:</p>
+                    <p style="background-color: #e0f2f1; padding: 10px; border-left: 5px solid #00796b; font-weight: bold;">
+                        {{ doc.workflow_state }}
+                    </p>
+
+                    <table style="width: 100%; margin-top: 20px; border-collapse: collapse;">
+                        <tr><td style="padding: 6px;"><strong>Name:</strong></td><td>{{ doc.user_name or "Guest" }}</td></tr>
+                        <tr><td style="padding: 6px;"><strong>Department:</strong></td><td>{{ doc.department }}</td></tr>
+                        <tr><td style="padding: 6px;"><strong>Trip Start Date:</strong></td><td>{{ doc.date }}</td></tr>
+                        <tr><td style="padding: 6px;"><strong>Trip End Date:</strong></td><td>{{ doc.trip_end_date }}</td></tr>
+                        <tr><td style="padding: 6px;"><strong>Pickup Time:</strong></td><td>{{ doc.pickup_time }}</td></tr>
+                        <tr><td style="padding: 6px;"><strong>Pickup Address:</strong></td><td>{{ doc.pickup_address }}</td></tr>
+                        <tr><td style="padding: 6px;"><strong>Drop Address:</strong></td><td>{{ doc.drop_address }}</td></tr>
+                        <tr><td style="padding: 6px;"><strong>Ride Type:</strong></td><td>{{ doc.ride_type }}</td></tr>
+                    </table>
+
+                    <p style="margin-top: 20px;">Please log in to the system to take necessary action.</p>
+                </div>
+
+                <div style="background-color: #f1f1f1; padding: 15px; text-align: center; font-size: 12px; color: #777;">
+                    Team Vehicle Booking • All Rights Reserved
+                </div>
+            </div>
+            """,
+            {"doc": self}
+        )
+
+        frappe.sendmail(
+            recipients=recipients,
+            subject=subject,
+            message=message,
+            # cc=self._build_cc_list()
+        )
+
+    def send_cancellation_email(self):
+        """Send email when user cancels the ride (workflow_state = Trashed)."""
+        if not self.email:
+            return  # no recipient
+
+        subject = f"Ride Booking {self.name} – Cancelled 🗑️"
+        message = frappe.render_template(
+            """
+            <div style="font-family: 'Segoe UI', sans-serif; max-width: 600px; margin: auto; border: 1px solid #e0e0e0; border-radius: 8px;">
+                <div style="background-color: #b71c1c; color: white; padding: 20px;">
+                    <h2 style="margin: 0;">Ride Cancelled 🚘</h2>
+                    <p style="margin: 4px 0 0;">Ride ID: <strong>{{ doc.name }}</strong></p>
+                </div>
+
+                <div style="padding: 20px; color: #333;">
+                    <p>Dear {{ doc.user_name or "User" }},</p>
+                    <p>Your ride booking <strong>{{ doc.name }}</strong> has been successfully <strong>cancelled</strong>.</p>
+
+                    <table style="width: 100%; margin-top: 20px; border-collapse: collapse;">
+                        <tr><td style="padding: 6px;"><strong>Trip Start Date:</strong></td><td>{{ doc.date }}</td></tr>
+                        <tr><td style="padding: 6px;"><strong>Trip End Date:</strong></td><td>{{ doc.trip_end_date }}</td></tr>
+                        <tr><td style="padding: 6px;"><strong>Pickup Time:</strong></td><td>{{ doc.pickup_time }}</td></tr>
+                        <tr><td style="padding: 6px;"><strong>Drop Time:</strong></td><td>{{ doc.drop_time }}</td></tr>
+                        <tr><td style="padding: 6px;"><strong>Department:</strong></td><td>{{ doc.department }}</td></tr>
+                        <tr><td style="padding: 6px;"><strong>Pickup Address:</strong></td><td>{{ doc.pickup_address }}</td></tr>
+                        <tr><td style="padding: 6px;"><strong>Drop Address:</strong></td><td>{{ doc.drop_address }}</td></tr>
+                    </table>
+
+                    <p style="margin-top: 20px;">If this was a mistake, please create a new booking.</p>
+                </div>
+
+                <div style="background-color: #f1f1f1; padding: 15px; text-align: center; font-size: 12px; color: #777;">
+                    Team Vehicle Booking • All Rights Reserved
+                </div>
+            </div>
+            """,
+            {"doc": self}
+        )
+
+        frappe.sendmail(
+            recipients=[self.email],
+            cc=self._build_cc_list(),
+            subject=subject,
+            message=message
+        )
+
+
