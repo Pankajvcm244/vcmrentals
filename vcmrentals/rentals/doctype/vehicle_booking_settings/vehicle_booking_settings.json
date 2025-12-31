@@ -10,7 +10,11 @@
   "enable_whatsup",
   "emergency_contact_number",
   "column_break_uhxo",
-  "ride_order_cc"
+  "ride_order_cc",
+  "section_break_qock",
+  "local_booking_closed",
+  "intercity_booking_closed",
+  "outstation_booking_closed"
  ],
  "fields": [
   {
@@ -48,12 +52,35 @@
    "fieldtype": "Data",
    "label": "Emergency Contact Number",
    "length": 10
+  },
+  {
+   "fieldname": "section_break_qock",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "local_booking_closed",
+   "fieldtype": "Check",
+   "label": "Local Booking Closed"
+  },
+  {
+   "default": "0",
+   "fieldname": "intercity_booking_closed",
+   "fieldtype": "Check",
+   "label": "Intercity Booking Closed"
+  },
+  {
+   "default": "0",
+   "fieldname": "outstation_booking_closed",
+   "fieldtype": "Check",
+   "label": "Outstation Booking Closed"
   }
  ],
+ "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-08-01 12:02:27.535373",
+ "modified": "2025-12-25 15:03:50.426766",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Vehicle Booking Settings",
@@ -70,6 +97,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

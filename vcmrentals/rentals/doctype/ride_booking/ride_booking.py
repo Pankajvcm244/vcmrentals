@@ -192,13 +192,16 @@ class RideBooking(Document):
 
         cc_emails = self._build_cc_list()
 
-        subject = f"🚘 Ride Booking Created: {self.name}"
+        subject = f"Ride Request - {self.order}"
+
+        
+        
 
         message = frappe.render_template("""
         <div style="font-family: 'Segoe UI', sans-serif; max-width: 700px; margin: auto; border: 1px solid #eee; border-radius: 10px; overflow: hidden; box-shadow: 0 0 12px rgba(0,0,0,0.05);">
             <div style="background-color: #00796b; color: white; padding: 20px;">
                 <h2 style="margin: 0;">🚖 Ride Booking Confirmation</h2>
-                <p>Hi {{ doc.customer_name or "Customer" }}, your ride booking has been received!</p>
+                <p>Hare Krishna! {{ doc.customer_name or "Customer" }}, your ride booking has been received!</p>
             </div>
 
             <div style="padding: 20px;">
@@ -257,7 +260,7 @@ class RideBooking(Document):
         <div style="font-family: 'Segoe UI', sans-serif; max-width: 700px; margin: auto; border: 1px solid #eee; border-radius: 10px; overflow: hidden; box-shadow: 0 0 12px rgba(0,0,0,0.05);">
             <div style="background-color: #4caf50; color: white; padding: 20px;">
                 <h2 style="margin: 0;">🎉 Ride Completed</h2>
-                <p>Hi {{ doc.customer_name or "Customer" }}, your ride has been successfully completed!</p>
+                <p>Hare Krishna! {{ doc.customer_name or "Customer" }}, your ride has been successfully completed!</p>
             </div>
 
             <div style="padding: 20px;">

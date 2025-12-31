@@ -29,6 +29,7 @@
   "trip_end_date",
   "drop_time",
   "cancellation_reason",
+  "round_trip",
   "column_break_ehxr",
   "vehicle_type",
   "ride_type",
@@ -103,6 +104,7 @@
   {
    "fieldname": "vehicle_type",
    "fieldtype": "Select",
+   "hidden": 1,
    "in_list_view": 1,
    "label": "Vehicle Type",
    "options": "\n5-Seater Car\n7-Seater Car\nBus",
@@ -146,7 +148,8 @@
   {
    "fieldname": "intermediate_stop",
    "fieldtype": "Data",
-   "label": "Intermediate Stop"
+   "label": "Intermediate Stop",
+   "mandatory_depends_on": "eval: doc.round_trip == 1"
   },
   {
    "fieldname": "column_break_qrpa",
@@ -275,6 +278,12 @@
    "label": "Vehicle Status",
    "options": "Not Assigned\nAssigned",
    "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "round_trip",
+   "fieldtype": "Check",
+   "label": "Round Trip"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -285,7 +294,7 @@
    "link_fieldname": "order"
   }
  ],
- "modified": "2025-09-03 14:32:04.673231",
+ "modified": "2025-12-31 11:47:09.873335",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Ride Order",

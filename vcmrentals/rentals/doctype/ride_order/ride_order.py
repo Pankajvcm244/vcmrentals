@@ -22,6 +22,22 @@ class RideOrder(Document):
         self.refresh_alm()
 
     def validate(self):
+
+        settings = frappe.get_cached_doc("Vehicle Booking Settings")
+
+        ride_type_map = {
+            "Local": settings.local_booking_closed,
+            "Intercity": settings.intercity_booking_closed,
+            "Outstation": settings.outstation_booking_closed,
+        }
+
+        if self.ride_type in ride_type_map and ride_type_map[self.ride_type]:
+            frappe.throw(
+                f"Hare Krishna! {self.ride_type} Bookings are currently closed for some time."
+            )
+
+
+            
         if self.date:
             trip_start = getdate(self.date)
             today = getdate(nowdate())
@@ -49,6 +65,8 @@ class RideOrder(Document):
 
     def after_insert(self):
         self.send_draft_email()
+        self.send_ride_order_app_notification()
+
 
     def on_update(self):
         if self.workflow_state == "Rejected":
@@ -118,6 +136,45 @@ class RideOrder(Document):
 
         return cc
 
+
+    def send_ride_order_app_notification(self):
+        try:
+            settings = frappe.get_cached_doc("Vehicle Booking Settings")
+        except frappe.DoesNotExistError:
+            return
+
+        users = set()
+
+        # Creator
+        if self.owner:
+            users.add(self.owner)
+
+        # CC users
+        if settings.ride_order_cc:
+            users.update(
+                email.strip()
+                for email in settings.ride_order_cc.split(",")
+                if email.strip()
+            )
+
+        if not users:
+            return
+
+        subject = "🚗 New Ride Order Created"
+        message = f"Ride Order {self.name} created by {self.booking_user_name}"
+
+        for user in users:
+            frappe.get_doc({
+                "doctype": "App Notification",
+                "app": "VCMERP",
+                "user": user,
+                "subject": subject,
+                "message": message,
+            }).insert(ignore_permissions=True)
+
+
+
+
     def send_draft_email(self):
         settings = frappe.get_cached_doc("Vehicle Booking Settings")
         if settings.enable_email != "Yes":
@@ -126,7 +183,7 @@ class RideOrder(Document):
         frappe.sendmail(
             recipients=[self.email] if self.email else [],
             cc=self._build_cc_list(),
-            subject=f"Ride Request Received - {self.name}",
+            subject=f"Ride Request - {self.name}",
             message=frappe.render_template(
                 """
                 <div style="font-family: 'Segoe UI', sans-serif; color: #333; max-width: 600px; margin: auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
@@ -174,7 +231,7 @@ class RideOrder(Document):
         frappe.sendmail(
             recipients=[self.email] if self.email else [],
             cc=self._build_cc_list(),
-            subject=f"Ride {self.name} Confirmed - VCM Rentals",
+            subject=f"Ride Request - {self.name}",
             message=frappe.render_template(
                 """
                 <div style="font-family: 'Segoe UI', sans-serif; color: #333; max-width: 600px; margin: auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
@@ -220,7 +277,7 @@ class RideOrder(Document):
             frappe.sendmail(
                 recipients=[self.email] if self.email else [],
                 cc=self._build_cc_list(),
-                subject=f"Ride Request {self.name} - Rejected ❌",
+                subject=f"Ride Request - {self.name}",
                 message=frappe.render_template(
                     """
                     <div style="font-family: 'Segoe UI', sans-serif; color: #333; max-width: 600px; margin: auto; border: 1px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.05);">

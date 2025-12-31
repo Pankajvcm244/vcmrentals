@@ -75,7 +75,6 @@
   {
    "fieldname": "license_plate",
    "fieldtype": "Data",
-   "hidden": 1,
    "label": "License Plate"
   },
   {
@@ -278,10 +277,11 @@
    "set_only_once": 1
   }
  ],
+ "grid_page_length": 50,
  "image_field": "vehicle_image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-08-08 10:58:15.904034",
+ "modified": "2025-12-27 16:10:39.754427",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "VcmVehicle",
@@ -332,6 +332,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "search_fields": "seating_capacity,make,ncr_entry_allowed",
  "show_title_field_in_link": 1,
  "sort_field": "modified",

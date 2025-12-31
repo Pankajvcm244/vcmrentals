@@ -60,7 +60,8 @@
   "column_break_ehoy",
   "vehicle_number",
   "driver_number",
-  "driver_name"
+  "driver_name",
+  "amount"
  ],
  "fields": [
   {
@@ -294,7 +295,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Ride Status",
-   "options": "On Ride\nCompleted",
+   "options": "Pending\nOn Ride\nCompleted",
    "permlevel": 1
   },
   {
@@ -429,11 +430,19 @@
    "fieldtype": "Data",
    "label": "Owner Name",
    "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.external_agency==1",
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount",
+   "mandatory_depends_on": "eval:doc.external_agency==1"
   }
  ],
+ "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-08-11 13:21:28.610852",
+ "modified": "2025-12-24 12:03:17.153802",
  "modified_by": "Administrator",
  "module": "Rentals",
  "name": "Ride Booking",
@@ -489,6 +498,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []
